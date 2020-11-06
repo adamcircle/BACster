@@ -1,0 +1,10 @@
+[
+    {
+        "names": ["beer"],
+        "concentration": -1
+    },
+    {
+        "names": ["wine"],
+        "concentration": 0.1
+    }
+]
