@@ -16,11 +16,11 @@ class TrackerViewController: UIViewController, UICollectionViewDelegate, UIColle
     let drinkTypes = ["Beer", "Wine", "Cocktail", "Spirits"//, "Custom"
     ]
     
-    let drinkTypeImages: [UIImage] = [
-        UIImage(named: "Beer")!,
-        UIImage(named: "Wine")!,
-        UIImage(named: "Cocktail")!,
-        UIImage(named: "Spirit")! // ,
+    let drinkTypeImages: [UIImage?] = [
+        UIImage(named: "beer"),
+        UIImage(named: "wine"),
+        UIImage(named: "cocktail"),
+        UIImage(named: "spirit") // ,
         // UIImage(named: "Custom")!,
     ]
     
