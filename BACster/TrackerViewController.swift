@@ -28,7 +28,7 @@ class TrackerViewController: UIViewController, UICollectionViewDelegate, UIColle
         super.viewDidLoad()
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "DrinkTypeCell")
+        collectionView.register(DrinkTypeCell.self, forCellWithReuseIdentifier: "DrinkTypeCell")
         // Do any additional setup after loading the view.
     }
     
