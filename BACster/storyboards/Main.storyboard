@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="T4q-1e-5sc">
-    <device id="retina4_0" orientation="portrait" appearance="light"/>
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
@@ -36,7 +36,7 @@
                     <tabBarItem key="tabBarItem" title="Home" image="house.fill" catalog="system" id="em0-ag-ygp"/>
                     <navigationItem key="navigationItem" id="A5m-Pi-f7K"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="piz-rb-8e9">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -52,40 +52,52 @@
             <objects>
                 <viewController id="ge3-ow-F8K" customClass="TrackerViewController" customModule="BACster" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7OP-PG-eTn">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="sUP-5k-zyT">
-                                <rect key="frame" x="0.0" y="44" width="320" height="475"/>
+                                <rect key="frame" x="-2.260486721462712" y="1.6062464015840305" width="427.99999999999932" height="925.99999999999977"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemGray3Color"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Xho-wC-zX0">
-                                    <size key="itemSize" width="280" height="80"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" sectionInsetReference="safeArea" id="Xho-wC-zX0">
+                                    <size key="itemSize" width="256" height="80"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="15" minY="10" maxX="15" maxY="10"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DrinkTypeCell" id="oNU-FI-NOy" customClass="DrinkTypeCell" customModule="BACster" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="10" width="280" height="80"/>
+                                    <collectionViewCell autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" reuseIdentifier="DrinkTypeCell" id="oNU-FI-NOy" customClass="DrinkTypeCell" customModule="BACster" customModuleProvider="target">
+                                        <rect key="frame" x="74" y="10" width="280" height="80"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="UGi-fI-Tl4">
                                             <rect key="frame" x="0.0" y="0.0" width="280" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ia-Pu-PNu">
-                                                    <rect key="frame" x="156" y="30" width="42" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ia-Pu-PNu">
+                                                    <rect key="frame" x="122" y="18" width="158" height="44"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="32"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JtY-g4-WyV">
-                                                    <rect key="frame" x="32" y="3" width="102" height="75"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JtY-g4-WyV">
+                                                    <rect key="frame" x="20" y="0.0" width="80" height="80"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="JtY-g4-WyV" secondAttribute="height" multiplier="1:1" id="Prm-nM-4oe"/>
+                                                        <constraint firstAttribute="height" constant="75" id="ndc-Ya-QDV"/>
+                                                    </constraints>
                                                 </imageView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="JtY-g4-WyV" firstAttribute="centerY" secondItem="UGi-fI-Tl4" secondAttribute="centerY" id="0Ti-U4-ERr"/>
+                                                <constraint firstItem="2ia-Pu-PNu" firstAttribute="centerY" secondItem="UGi-fI-Tl4" secondAttribute="centerY" id="8PC-yn-Cvy"/>
+                                                <constraint firstAttribute="trailing" secondItem="2ia-Pu-PNu" secondAttribute="trailing" id="JIv-ag-DJW"/>
+                                                <constraint firstItem="2ia-Pu-PNu" firstAttribute="leading" secondItem="JtY-g4-WyV" secondAttribute="trailing" constant="22" id="QiI-rB-ta1"/>
+                                                <constraint firstItem="JtY-g4-WyV" firstAttribute="leading" secondItem="UGi-fI-Tl4" secondAttribute="leading" constant="20" symbolic="YES" id="dyO-jH-qb1"/>
+                                                <constraint firstItem="JtY-g4-WyV" firstAttribute="height" secondItem="UGi-fI-Tl4" secondAttribute="height" id="xWP-hv-cNL"/>
+                                            </constraints>
                                         </collectionViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <size key="customSize" width="280" height="80"/>
                                         <connections>
                                             <outlet property="DrinkTypeLabel" destination="2ia-Pu-PNu" id="hBP-er-YeF"/>
                                             <outlet property="DrinkTypeSprite" destination="JtY-g4-WyV" id="ve1-nP-Yyq"/>
@@ -104,7 +116,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d66-VX-eL5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1044.375" y="1294.0140845070423"/>
+            <point key="canvasLocation" x="-1044.3925233644859" y="1293.952483801296"/>
         </scene>
         <!--History-->
         <scene sceneID="cUW-KN-ePT">
@@ -113,7 +125,7 @@
                     <tabBarItem key="tabBarItem" title="History" image="chart.bar.fill" catalog="system" id="IF3-Aq-fvs"/>
                     <navigationItem key="navigationItem" id="0bR-zV-okK"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="tpe-nB-uUc">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -131,7 +143,7 @@
                     <tabBarItem key="tabBarItem" title="Tracker" image="plus.app.fill" catalog="system" id="2OF-Ph-0C5"/>
                     <navigationItem key="navigationItem" id="3NT-AL-NWo"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="9ln-6T-dzR">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -147,7 +159,7 @@
             <objects>
                 <viewController id="qfm-An-6vQ" customClass="HomeViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="RIv-kS-1pB">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="7Bi-Sp-eBV"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -163,7 +175,7 @@
             <objects>
                 <viewController id="QjR-eg-RBE" customClass="HistoryViewController" customModule="BACster" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="U0p-uU-tga">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="Vhz-Zi-paD"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>

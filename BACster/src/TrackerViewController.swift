@@ -17,10 +17,10 @@ class TrackerViewController: UIViewController, UICollectionViewDelegate, UIColle
     ]
     
     let drinkTypeImages: [UIImage?] = [
-        UIImage(named: "beer"),
-        UIImage(named: "wine"),
-        UIImage(named: "cocktail"),
-        UIImage(named: "spirit") // ,
+        UIImage(named: "Beer"),
+        UIImage(named: "Wine"),
+        UIImage(named: "Cocktail"),
+        UIImage(named: "Spirit") // ,
         // UIImage(named: "Custom")!,
     ]
     
@@ -28,7 +28,7 @@ class TrackerViewController: UIViewController, UICollectionViewDelegate, UIColle
         super.viewDidLoad()
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(DrinkTypeCell.self, forCellWithReuseIdentifier: "DrinkTypeCell")
+        // collectionView.register(DrinkTypeCell.self, forCellWithReuseIdentifier: "DrinkTypeCell")
         // Do any additional setup after loading the view.
     }
     
@@ -51,6 +51,14 @@ class TrackerViewController: UIViewController, UICollectionViewDelegate, UIColle
         cell.DrinkTypeSprite.image = drinkTypeImages[indexPath.item]
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+        let height = view.frame.size.height
+        let width = view.frame.size.width
+        // in case you you want the cell to be 40% of your controllers view
+        return CGSize(width: width * 0.4, height: height * 0.4)
     }
 
 }

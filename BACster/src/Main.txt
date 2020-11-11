@@ -1,0 +1,1039 @@
+//
+//  Main.swift
+//  SoberD
+//
+//  Created by Adam Circle on 11/1/20.
+//  Copyright © 2020 Adam Circle. All rights reserved.
+//
+
+import Foundation
+
+struct Drink {
+    var sizeOz: Float
+    var pctAlc: Float
+    var type: String
+    var time: Date
+    
+}
+
+
+
+
+
+var drinksConsumed = [Drink]()
+
+
+let BAC_REDUCTION_PER_MINUTE = 25e-5
+
+let drink_details = [
+    "Beer": [
+        "sizeMLId1": "glassML",
+        "sizeMLLabel1": "Glass (285mL)",
+        "sizeMLValue1": "0.285",
+        "sizeMLId2": "bottleML",
+        "sizeMLLabel2": "Bottle (375mL)",
+        "sizeMLValue2": "0.375",
+        "sizeMLId3": "pintML",
+        "sizeMLLabel3": "Pint (570mL)",
+        "sizeMLValue3": "0.570",
+        "sizeFLOZId1": "glassFLOZ",
+        "sizeFLOZLabel1": "Glass (10 fl oz)",
+        "sizeFLOZValue1": "0.295735",
+        "sizeFLOZId2": "bottleFLOZ",
+        "sizeFLOZLabel2": "Bottle (13 fl oz)",
+        "sizeFLOZValue2": "0.384456",
+        "sizeFLOZId3": "pintFLOZ",
+        "sizeFLOZLabel3": "Pint (16 fl oz)",
+        "sizeFLOZValue3": "0.473176",
+        "strengthId1": "lightStrength",
+        "strengthLabel1": "Light (2.7%)",
+        "strengthValue1": "0.027",
+        "strengthId2": "midStrength",
+        "strengthLabel2": "Mid (3.5%)",
+        "strengthValue2": "0.035",
+        "strengthId3": "fullStrength",
+        "strengthLabel3": "Full (4.8%)",
+        "strengthValue3": "0.048"
+    ],
+    "Cider": [
+        "sizeMLId1": "glassML",
+        "sizeMLLabel1": "Glass (285mL)",
+        "sizeMLValue1": "0.285",
+        "sizeMLId2": "bottleML",
+        "sizeMLLabel2": "Bottle (375mL)",
+        "sizeMLValue2": "0.375",
+        "sizeMLId3": "pintML",
+        "sizeMLLabel3": "Pint (570mL)",
+        "sizeMLValue3": "0.570",
+        "sizeFLOZId1": "glassFLOZ",
+        "sizeFLOZLabel1": "Glass (10 fl oz)",
+        "sizeFLOZValue1": "0.295735",
+        "sizeFLOZId2": "bottleFLOZ",
+        "sizeFLOZLabel2": "Bottle (13 fl oz)",
+        "sizeFLOZValue2": "0.384456",
+        "sizeFLOZId3": "pintFLOZ",
+        "sizeFLOZLabel3": "Pint (16 fl oz)",
+        "sizeFLOZValue3": "0.473176",
+        "strengthId1": "lightStrength",
+        "strengthLabel1": "Light (2.7%)",
+        "strengthValue1": "0.027",
+        "strengthId2": "midStrength",
+        "strengthLabel2": "Mid (3.5%)",
+        "strengthValue2": "0.035",
+        "strengthId3": "fullStrength",
+        "strengthLabel3": "Full (4.8%)",
+        "strengthValue3": "0.048"
+    ],
+    "Spirits": [
+        "sizeMLId1": "halfShotML",
+        "sizeMLLabel1": "Half Shot (15mL)",
+        "sizeMLValue1": "0.015",
+        "sizeMLId2": "shotML",
+        "sizeMLLabel2": "Single Shot (30mL)",
+        "sizeMLValue2": "0.030",
+        "sizeMLId3": "doubleShotML",
+        "sizeMLLabel3": "Double Shot (60mL)",
+        "sizeMLValue3": "0.060",
+        "sizeFLOZId1": "halfShotFLOZ",
+        "sizeFLOZLabel1": "Small Shot (1 fl oz)",
+        "sizeFLOZValue1": "0.0295735",
+        "sizeFLOZId2": "shotFLOZ",
+        "sizeFLOZLabel2": "Shot (1.5 fl oz)",
+        "sizeFLOZValue2": "0.0443603",
+        "sizeFLOZId3": "doubleShotFLOZ",
+        "sizeFLOZLabel3": "Double Shot (2 fl oz)",
+        "sizeFLOZValue3": "0.0591471",
+        "strengthId1": "normalSpirits",
+        "strengthLabel1": "Normal (40%)",
+        "strengthValue1": "0.400",
+        "strengthId2": "strongSpirits",
+        "strengthLabel2": "Strong (45%)",
+        "strengthValue2": "0.450",
+        "strengthId3": "strongerSpirits",
+        "strengthLabel3": "Stronger (50%)",
+        "strengthValue3": "0.500"
+    ],
+    "Wine": [
+        "sizeMLId1": "wineGlassML",
+        "sizeMLLabel1": "Glass (150mL)",
+        "sizeMLValue1": "0.150",
+        "sizeMLId2": "halfBottleML",
+        "sizeMLLabel2": "1/2 Bottle (375mL)",
+        "sizeMLValue2": "0.375",
+        "sizeMLId3": "fullBottleML",
+        "sizeMLLabel3": "Bottle (750mL)",
+        "sizeMLValue3": "0.750",
+        "sizeFLOZId1": "wineGlassFLOZ",
+        "sizeFLOZLabel1": "Glass (5 fl oz)",
+        "sizeFLOZValue1": "0.147868",
+        "sizeFLOZId2": "halfBottleFLOZ",
+        "sizeFLOZLabel2": "1/2 Bottle (12.5 fl oz)",
+        "sizeFLOZValue2": "0.3696691",
+        "sizeFLOZId3": "fullBottleFLOZ",
+        "sizeFLOZLabel3": "Bottle (25 fl oz)",
+        "sizeFLOZValue3": "0.739338",
+        "strengthId1": "whiteWine",
+        "strengthLabel1": "White Wine (11.5%)",
+        "strengthValue1": "0.115",
+        "strengthId2": "champagne",
+        "strengthLabel2": "Champagne (12%)",
+        "strengthValue2": "0.120",
+        "strengthId3": "redWine",
+        "strengthLabel3": "Red Wine (13%)",
+        "strengthValue3": "0.130"
+    ]
+]
+//
+//function setEventListeners() {
+//    document.querySelector(".js-uber-button-step-3").addEventListener("click", getUber),
+//    document.querySelector("input#weight-kg").addEventListener("change", isWeightKGValid),
+//    document.querySelector("input#weight-lbs").addEventListener("change", isWeightLBSValid),
+//    document.querySelector("input#height-cm").addEventListener("change", isHeightCMValid),
+//    document.querySelector("input#height-ft").addEventListener("change", isHeightImperialValid),
+//    document.querySelector("input#height-in").addEventListener("change", isHeightImperialValid),
+//    document.querySelector("input#alcoholSizeCustomML").addEventListener("change", isCustomDrinkSizeMLValid),
+//    document.querySelector("input#alcoholSizeCustomFLOZ").addEventListener("change", isCustomDrinkSizeFLOZValid),
+//    document.querySelector("input#alcoholStrengthCustom").addEventListener("change", isCustomDrinkStrengthValid),
+//    document.querySelector(".js-add-drink-button").addEventListener("click", addDrink),
+//    document.querySelector(".js-next-button-step-1").addEventListener("click", step1ToStep2),
+//    document.querySelector(".js-next-button-step-2").addEventListener("click", step2ToStep3),
+//    document.querySelector(".js-back-button-step-2").addEventListener("click", step2ToStep1),
+//    document.querySelector(".js-back-button-step-3").addEventListener("click", step3ToStep2),
+//    document.querySelector(".js-cm-toggle").addEventListener("click", loadHeightCM),
+//    document.querySelector(".js-ftin-toggle").addEventListener("click", loadHeightFTIN),
+//    document.querySelector(".js-kg-toggle").addEventListener("click", loadWeightKG),
+//    document.querySelector(".js-lb-toggle").addEventListener("click", loadWeightLB),
+//    document.querySelector(".js-ml-custom-toggle").addEventListener("click", toggleToML),
+//    document.querySelector(".js-floz-custom-toggle").addEventListener("click", toggleToFLOZ),
+//    document.querySelector(".js-clear-drinks-toggle").addEventListener("click", clearDrinks),
+//    document.querySelector(".js-start-calc-button").addEventListener("click", homeToStep1),
+//    document.querySelector(".js-menu-text-info-link").addEventListener("click", menuToInfo),
+//    document.querySelector(".js-back-button-step-1").addEventListener("click", step1ToHome),
+//    document.querySelector(".js-back-button-info").addEventListener("click", infoToHome),
+//    document.querySelector(".js-next-button-info").addEventListener("click", infoToStep1),
+//    document.querySelector(".js-results-definition-list-refresh-icon").addEventListener("click", reDisplayBAC),
+//    document.querySelector(".js-results-chart-refresh-icon").addEventListener("click", reDisplayBAC),
+//    document.querySelectorAll("input[name=alcoholType]").forEach(e=>{
+//        e.addEventListener("change", displayDrinkInputs)
+//    }
+//    ),
+//    window.addEventListener("keydown", checkIfUserIsTabbing)
+//}
+//function createTimePicker() {
+//    flatpickr(document.querySelector("#time"), {
+//        enableTime: !0,
+//        noCalendar: !0,
+//        dateFormat: "H:i"
+//    }),
+//    document.querySelector("input#time").addEventListener("change", isDrinkTimeValid)
+//}
+//function checkIfUserIsTabbing(e) {
+//    "Tab" === e.key && document.body.classList.add("user-is-tabbing")
+//}
+function setupPage() {
+    showImperialHideMetricPersonalDetailsDivs(),
+    setEventListeners(),
+    tryGetLocalStorage(),
+    loadPageByUrlFragment(window.location.hash.split("#")[1]),
+    window.onbeforeunload = function() {
+        scrollToTop()
+    }
+}
+function getUber() {
+    window.open("https://m.uber.com/ul/?action=setPickup", "_blank")
+}
+function tryGetLocalStorage() {
+    null !== localStorage.getItem("drinksConsumed") && (drinksConsumed = JSON.parse(localStorage.getItem("drinksConsumed"))).forEach(e=>{
+        e.drinkConsumedTimeAsDateObject = setDateObjectSecondsAndMillisecondsToZero(new Date(e.drinkConsumedTimeAsDateObject)),
+        e.drinkFullyAbsorbedTimeAsDateObject = setDateObjectSecondsAndMillisecondsToZero(new Date(e.drinkFullyAbsorbedTimeAsDateObject))
+    }
+    ),
+    null !== localStorage.getItem("sex") && ("Female" === localStorage.getItem("sex") ? (document.querySelector("#female").checked = !0,
+    personalDetails.sex = "Female") : (document.querySelector("#male").checked = !0,
+    personalDetails.sex = "Male")),
+    null !== localStorage.getItem("weight") && ("Pounds" === JSON.parse(localStorage.getItem("weight")).units ? (document.querySelector(".js-weight-metric-input-div").displayNone(),
+    document.querySelector(".js-weight-imperial-input-div").displayBlock(),
+    document.querySelector("#weight-lbs").value = Number(JSON.parse(localStorage.getItem("weight")).value),
+    personalDetails.weight = {
+        units: "Pounds",
+        value: Number(JSON.parse(localStorage.getItem("weight")).value)
+    }) : (document.querySelector(".js-weight-imperial-input-div").displayNone(),
+    document.querySelector(".js-weight-metric-input-div").displayBlock(),
+    document.querySelector("#weight-kg").value = Number(JSON.parse(localStorage.getItem("weight")).value),
+    personalDetails.weight = {
+        units: "Kilograms",
+        value: Number(JSON.parse(localStorage.getItem("weight")).value)
+    })),
+    null !== localStorage.getItem("height") && ("Inches" === JSON.parse(localStorage.getItem("height")).units ? (document.querySelector(".js-height-metric-input-div").displayNone(),
+    document.querySelector(".js-height-imperial-input-div").displayBlock(),
+    document.querySelector("#height-ft").value = Math.floor(Number(JSON.parse(localStorage.getItem("height")).value / 12)),
+    document.querySelector("#height-in").value = Math.round(Number(JSON.parse(localStorage.getItem("height")).value % 12)),
+    personalDetails.height = {
+        units: "Inches",
+        value: Number(JSON.parse(localStorage.getItem("height")).value)
+    }) : (document.querySelector(".js-height-imperial-input-div").displayNone(),
+    document.querySelector(".js-height-metric-input-div").displayBlock(),
+    document.querySelector("#height-cm").value = Number(JSON.parse(localStorage.getItem("height")).value),
+    personalDetails.height = {
+        units: "Centimetres",
+        value: Number(JSON.parse(localStorage.getItem("height")).value)
+    })),
+    null !== localStorage.getItem("widmarkFactor") && (personalDetails.widmarkFactor = localStorage.getItem("widmarkFactor"))
+}
+func setPersonalLocalStorage() {
+    let e, t;
+    e = "block" !== getComputedStyle(document.querySelector(".js-weight-metric-input-div"), null).display ? {
+        units: "Pounds",
+        value: Number(document.querySelector("input#weight-lbs").value)
+    } : {
+        units: "Kilograms",
+        value: Number(document.querySelector("input#weight-kg").value)
+    },
+    t = "block" !== getComputedStyle(document.querySelector(".js-height-metric-input-div"), null).display ? {
+        units: "Inches",
+        value: 12 * Number(document.querySelector("input#height-ft").value) + Number(document.querySelector("input#height-in").value)
+    } : {
+        units: "Centimetres",
+        value: Number(document.querySelector("input#height-cm").value)
+    },
+    localStorage.setItem("weight", JSON.stringify(e)),
+    personalDetails.weight = e,
+    localStorage.setItem("height", JSON.stringify(t)),
+    personalDetails.height = t;
+    const o = calculateWeightKilograms(personalDetails.weight.units, personalDetails.weight.value)
+      , i = calculateHeightMetres(personalDetails.height.units, personalDetails.height.value);
+    document.querySelector("#female").checked ? (localStorage.setItem("sex", "Female"),
+    localStorage.setItem("widmarkFactor", calculateWidmarkFactorFemale(i, o)),
+    personalDetails.sex = "Female",
+    personalDetails.widmarkFactor = calculateWidmarkFactorFemale(i, o)) : (localStorage.setItem("sex", "Male"),
+    localStorage.setItem("widmarkFactor", calculateWidmarkFactorMale(i, o, 30)),
+    personalDetails.sex = "Male",
+    personalDetails.widmarkFactor = calculateWidmarkFactorMale(i, o, 30))
+}
+
+func calculateWeightKilograms(weightInLbs:Float) -> Float {
+    return weightInLbs / 2.205
+}
+
+func calculateHeightMeters(heightInInches:Float) -> Float {
+    return heightInInches / 39.37
+}
+
+func calculateWeightLbs(weightInKgs:Float) -> Float {
+    return weightInKgs * 2.205
+}
+
+func calculateHeightInches(heightInMeters:Float) -> Float {
+    return heightInMeters * 39.37
+}
+
+func calculateWidmarkFactorMale(heightMeters:Float, weightKG:Float, age:Float) -> Float {
+    // Source: Posey et al. 2006. DOI: 10.1385/Forensic Sci. Med. Pathol.:3:1:33, page 35
+    return 0.62544 + 0.13664 * heightMeters - weightKG * (0.00189 + 0.002425 / (heightMeters * heightMeters)) + 1 / (weightKG * (0.57986 + 2.54 * heightMeters - 0.02255 * age))
+}
+
+func calculateWidmarkFactorFemale(heightMeters:Float, weightKG:Float) -> Float {
+    // Source: Posey et al. 2006. DOI: 10.1385/Forensic Sci. Med. Pathol.:3:1:33, page 35
+    return 0.50766 + 0.11165 * heightMeters - weightKG * (0.001612 + 0.0031 / (heightMeters * heightMeters)) - 1 / (weightKG * (0.62115 - 3.1665 * heightMeters))
+}
+function setDrinkLocalStorage() {
+    localStorage.setItem("drinksConsumed", JSON.stringify(drinksConsumed))
+}
+function createDrink() {
+    return {
+        drinkName: getDrinkName(),
+        drinkType: getDrinkType(),
+        drinkStrength: getDrinkStrength(),
+        drinkSize: getDrinkSize(),
+        drinkHalfLife: getDrinkHalfLife(),
+        drinkFullLife: getDrinkFullLife(),
+        drinkAlcoholGrams: getAlcoholGrams(),
+        drinkUnits: getDrinkUnits(),
+        drinkConsumedTimeAsDateObject: getDrinkConsumedTimeAsDateObject(),
+        drinkFullyAbsorbedTimeAsDateObject: getDrinkFullyAbsorbedTimeAsDateObject()
+    }
+}
+function getDrinkName() {
+    return isDrinkCocktail() ? getCocktailName() : getDrinkType()
+}
+function getDrinkType() {
+    return document.querySelector('input[name="alcoholType"]:checked').value
+}
+function getDrinkStrength() {
+    return isDrinkCocktail() ? null : isDrinkFullyCustom() || isCustomDrinkStrength() ? getCustomDrinkStrength() : Number(document.querySelector('input[name="alcoholStrength"]:checked').value)
+}
+function getDrinkSize() {
+    return isDrinkCocktail() ? null : isDrinkFullyCustom() || isCustomDrinkSize() ? getCustomDrinkSize() : isDrinkSizeML() ? Number(document.querySelector('input[name="alcoholSizeML"]:checked').value) : Number(document.querySelector('input[name="alcoholSizeFLOZ"]:checked').value)
+}
+function isDrinkSizeML() {
+    return "block" === getComputedStyle(document.querySelector(".js-drink-size-ml-div"), null).display
+}
+func getDrinkHalfLife() -> Int {
+    return hunger
+}
+func getDrinkFullLife(hunger_level: Int) -> Float {
+    return 6.66 * Float(hunger_level)
+}
+func getAlcoholGrams() {
+    if isDrinkCocktail() {
+        return getCocktailAlcoholGrams()
+    } else {
+        return calculateAlcoholGrams(getDrinkSize(), getDrinkStrength())
+    }
+}
+func getDrinkUnits() {
+    return isDrinkCocktail() ? null : isDrinkFullyCustom() || isCustomDrinkSize() ? isCustomDrinkSizeML() ? "mL" : "fl oz" : isDrinkSizeML() ? "mL" : "fl oz"
+}
+function getDrinkConsumedTimeAsDateObject() {
+    const e = setDateObjectSecondsAndMillisecondsToZero(new Date)
+      , t = 60 * e.getHours() + e.getMinutes()
+      , o = document.querySelector("input#time").value.split(":")
+      , i = 60 * Number(o[0]) + Number(o[1])
+      , n = i > t ? 1440 : 0;
+    return setDateObjectSecondsAndMillisecondsToZero(new Date(e.getTime() - (6e4 * t - 6e4 * (i - n))))
+}
+function setDateObjectSecondsAndMillisecondsToZero(e) {
+    return new Date(e.setSeconds(0, 0))
+}
+function isDrinkCocktail() {
+    return "Cocktail" === getDrinkType()
+}
+function getCocktailName() {
+    return document.querySelector('input[name="cocktailChoice"]:checked').labels[0].textContent
+}
+function isDrinkFullyCustom() {
+    return "Custom" === getDrinkType()
+}
+function isCustomDrinkStrength() {
+    return null !== document.querySelector('input[name="alcoholStrength"]:checked') && "Custom" === document.querySelector('input[name="alcoholStrength"]:checked').value
+}
+function getCustomDrinkStrength() {
+    return Number(document.querySelector("#alcoholStrengthCustom").value) / 100
+}
+function isCustomDrinkSize() {
+    return "block" === getComputedStyle(document.querySelector(".js-drink-size-custom-ml-div"), null).display || "block" === getComputedStyle(document.querySelector(".js-drink-size-custom-floz-div"), null).display
+}
+function getCustomDrinkSize() {
+    return isCustomDrinkSizeML() ? Number(document.querySelector("#alcoholSizeCustomML").value) / 1e3 : Math.round(29.5735 * Number(document.querySelector("#alcoholSizeCustomFLOZ").value)) / 1e3
+}
+function isCustomDrinkSizeML() {
+    return "block" === getComputedStyle(document.querySelector(".js-drink-size-custom-ml-div"), null).display
+}
+function getCocktailAlcoholGrams() {
+    return Number(document.querySelector('input[name="cocktailChoice"]:checked').value)
+}
+function calculateAlcoholGrams(e, t) {
+    return t * (1e3 * e) * .789
+}
+function getDrinkFullyAbsorbedTimeAsDateObject() {
+    return setDateObjectSecondsAndMillisecondsToZero(new Date(getDrinkConsumedTimeAsDateObject().getTime() + 6e4 * getDrinkFullLife()))
+}
+function addDrink() {
+    if (document.querySelector(".js-drink-next-step-text").hideValidationMessage(),
+    document.querySelector(".js-add-drinks-text").hideValidationMessage(),
+    !isDrinkValid())
+        return void document.querySelector(".js-add-drinks-text").showValidationMessage("Drink is not valid");
+    const e = window.scrollY;
+    drinksConsumed.push(createDrink()),
+    setDrinkLocalStorage(),
+    displayDrinks(),
+    window.scrollTo(0, e)
+}
+function deleteDrink(e) {
+    drinksConsumed.splice(e, 1),
+    setDrinkLocalStorage(),
+    displayDrinks()
+}
+function clearDrinks() {
+    window.confirm("Are you sure you want to clear all drinks?") && (drinksConsumed = [],
+    setDrinkLocalStorage(),
+    displayDrinks())
+}
+function clearAndHideDrinkRows() {
+    document.querySelector(".js-drink-size-div").clearHTML(),
+    document.querySelector(".js-drink-strength-div").clearHTML(),
+    document.querySelector(".js-drink-size-custom-ml-div").displayNone(),
+    document.querySelector(".js-drink-size-custom-floz-div").displayNone(),
+    document.querySelector(".js-drink-strength-custom-div").displayNone(),
+    document.querySelector(".js-drink-cocktail-div").displayNone()
+}
+function displayDrink(e, t) {
+    let o = "mL" === e.drinkUnits ? Math.round(1e3 * e.drinkSize * 10) / 10 : Math.round(1e3 * e.drinkSize * 10 / 29.5735) / 10
+      , i = "mL" === e.drinkUnits ? e.drinkUnits : " " + e.drinkUnits
+      , n = e.drinkConsumedTimeAsDateObject.getDate()
+      , l = getDaySuffix(n)
+      , s = "Cocktail" === e.drinkType ? "1 " + e.drinkName + " " : o + i + " of " + e.drinkName + " (" + (100 * e.drinkStrength).toFixed(1) + "%)"
+      , r = n + l + " of " + getMonthFromDateObject(e.drinkConsumedTimeAsDateObject) + " at " + formatAsClockTime(drinksConsumed[t].drinkConsumedTimeAsDateObject);
+    document.querySelector(".js-drink-list-text").innerHTML += '<div class="drinks-entry"><p>' + s + '<span class="drinks-subtext">' + r + '</span></p><svg onclick="deleteDrink(' + t + ')" class="delete-drink-button js-delete-drink-button" height="36px" width="36px" fill="#f44336" viewBox="0 0 365.696 365.696" xmlns="http://www.w3.org/2000/svg"><path d="m243.1875 182.859375 113.132812-113.132813c12.5-12.5 12.5-32.765624 0-45.246093l-15.082031-15.082031c-12.503906-12.503907-32.769531-12.503907-45.25 0l-113.128906 113.128906-113.132813-113.152344c-12.5-12.5-32.765624-12.5-45.246093 0l-15.105469 15.082031c-12.5 12.503907-12.5 32.769531 0 45.25l113.152344 113.152344-113.128906 113.128906c-12.503907 12.503907-12.503907 32.769531 0 45.25l15.082031 15.082031c12.5 12.5 32.765625 12.5 45.246093 0l113.132813-113.132812 113.128906 113.132812c12.503907 12.5 32.769531 12.5 45.25 0l15.082031-15.082031c12.5-12.503906 12.5-32.769531 0-45.25zm0 0"/></svg></div>'
+}
+function displayDrinks() {
+    document.querySelector(".js-drinks-consumed-container").displayNone(),
+    document.querySelector(".js-clear-drinks-toggle").displayNone(),
+    document.querySelector(".js-drink-list-text").clearHTML(),
+    0 !== drinksConsumed.length && (document.querySelector(".js-drinks-consumed-container").displayBlock(),
+    sortDrinks(),
+    drinksConsumed.forEach(displayDrink),
+    drinksConsumed.length >= 3 && document.querySelector(".js-clear-drinks-toggle").displayInlineBlock())
+}
+function sortDrinks() {
+    drinksConsumed.sort((e,t)=>t.drinkConsumedTimeAsDateObject - e.drinkConsumedTimeAsDateObject)
+}
+function formatAsMinutesOrHoursOrDays(e) {
+    return 1 === e ? "1 minute" : e < 60 ? `${e} minutes` : 60 === e ? "1 hour" : e < 1440 ? `${(e / 60).toFixed(1)} hours` : 1440 === e ? "1 day" : `${(e / 1440).toFixed(1)} days`
+}
+function formatAsClockTime(e) {
+    return e.toLocaleString("en-US", {
+        hour: "numeric",
+        minute: "numeric",
+        hour12: !0
+    })
+}
+function getTimeDifferenceBetweenDateObjectsInMinutes(e, t) {
+    return Math.round((e.getTime() - t.getTime()) / 6e4)
+}
+function getDaySuffix(e) {
+    return 1 === e || 21 === e || 31 === e ? "st" : 2 === e || 22 === e ? "nd" : 3 === e || 23 === e ? "rd" : "th"
+}
+function getMonthFromDateObject(e) {
+    return e.toLocaleString("en-US", {
+        month: "short"
+    })
+}
+function formatDateForChartLabel(e) {
+    const t = e.getDate()
+      , o = getDaySuffix(t)
+      , i = getMonthFromDateObject(e);
+    return [formatAsClockTime(e), t + o + " of " + i]
+}
+function calculateCurrentBAC() {
+    return calculateBAC(setDateObjectSecondsAndMillisecondsToZero(new Date))
+}
+function calculatePeak() {
+    let e = setDateObjectSecondsAndMillisecondsToZero(new Date)
+      , t = calculateCurrentBAC()
+      , o = setDateObjectSecondsAndMillisecondsToZero(new Date(Date.now() + 6e4))
+      , i = calculateBAC(o);
+    for (; i >= t && (0 !== i || 0 !== t); )
+        (i = calculateBAC(o)) > t && (t = i,
+        e = o,
+        o = setDateObjectSecondsAndMillisecondsToZero(new Date(o.getTime() + 6e4)));
+    return {
+        BAC: t,
+        timeAsDateObject: e
+    }
+}
+function calculateZeroTimeAsDateObject() {
+    if (isZeroTimeSameAsLastDrinkTime())
+        return getTimeOfLastDrinkAsDateObject();
+    let e = setDateObjectSecondsAndMillisecondsToZero(new Date(getTimeOfLastDrinkAsDateObject().getTime() + 6e4))
+      , t = calculateBAC(e);
+    const o = getAlcoholFullyAbsorbedTimeAsDateObject();
+    for (; t > 0; )
+        t = (e = setDateObjectSecondsAndMillisecondsToZero(new Date(e.getTime() + 6e4))) > o ? t - BAC_REDUCTION_PER_MINUTE : calculateBAC(e);
+    return e
+}
+function isZeroTimeSameAsLastDrinkTime() {
+    return 0 === calculateBAC(setDateObjectSecondsAndMillisecondsToZero(new Date(getTimeOfLastDrinkAsDateObject().getTime() + 6e4)))
+}
+function getAlcoholFullyAbsorbedTimeAsDateObject() {
+    return setDateObjectSecondsAndMillisecondsToZero(new Date(Math.max.apply(Math, drinksConsumed.map(e=>e.drinkFullyAbsorbedTimeAsDateObject))))
+}
+function calculateBAC(e) {
+    let t = getTimeDifferenceBetweenDateObjectsInMinutes(e, getTimeOfFirstDrinkAsDateObject())
+      , o = 0;
+    for (; t >= 0; )
+        o += increaseBACEveryMinute(e, t),
+        o -= reduceBACEveryMinute(o),
+        t--;
+    return o
+}
+function getTimeOfFirstDrinkAsDateObject() {
+    return drinksConsumed[drinksConsumed.length - 1].drinkConsumedTimeAsDateObject
+}
+function getTimeOfLastDrinkAsDateObject() {
+    return drinksConsumed[0].drinkConsumedTimeAsDateObject
+}
+function reduceBACEveryMinute(e) {
+    return e >= BAC_REDUCTION_PER_MINUTE ? BAC_REDUCTION_PER_MINUTE : e
+}
+function increaseBACEveryMinute(e, t) {
+    let o = 0;
+    const i = setDateObjectSecondsAndMillisecondsToZero(new Date(e.getTime() - 6e4 * t));
+    return drinksConsumed.forEach(e=>{
+        const t = getTimeDifferenceBetweenDateObjectsInMinutes(i, e.drinkConsumedTimeAsDateObject);
+        t >= 0 && e.drinkFullyAbsorbedTimeAsDateObject >= i && (o += calculateBACToAdd(e, t))
+    }
+    ),
+    o
+}
+function calculateBACToAdd(e, t) {
+    const o = Number(e.drinkAlcoholGrams);
+    return (calculatePercentAlcoholAbsorbedByMinute(t, e.drinkHalfLife) - calculatePercentAlcoholAbsorbedByMinute(t - 1, e.drinkHalfLife)) * o / (personalDetails.widmarkFactor * calculateWeightKilograms(personalDetails.weight.units, personalDetails.weight.value) * 1e3) * 100
+}
+function calculatePercentAlcoholAbsorbedByMinute(e, t) {
+    return e >= 0 ? (100 - 100 / 2 ** (e / t)) / 100 : 0
+}
+function reDisplayBAC() {
+    const e = setDateObjectSecondsAndMillisecondsToZero(new Date)
+      , t = calculateCurrentBAC()
+      , o = calculatePeak()
+      , i = calculateZeroTimeAsDateObject();
+    document.querySelector(".js-results-definition-list-container").fadeOut(),
+    document.querySelector(".js-results-first-text").fadeOut(),
+    document.querySelector(".js-results-chart-container").fadeOut(),
+    document.querySelector(".js-results-second-text").fadeOut(),
+    setTimeout(()=>{
+        document.querySelector(".js-results-definition-list-container").displayNone(),
+        document.querySelector(".js-results-first-text").displayNone(),
+        document.querySelector(".js-results-chart-container").displayNone(),
+        document.querySelector(".js-results-second-text").displayNone(),
+        document.querySelector(".js-results-definition-list-container").fadeIn(),
+        document.querySelector(".js-results-first-text").fadeIn(),
+        document.querySelector(".js-results-chart-container").fadeIn(),
+        document.querySelector(".js-results-second-text").fadeIn(),
+        displayResultsDefinitionList(e, t, o.timeAsDateObject, o.BAC, i),
+        displayResultsFirstText(),
+        (t > 0 || o.BAC > 0) && (displayResultsChart(e, t, o.timeAsDateObject, o.BAC, i),
+        displayResultsSecondText())
+    }
+    , 250)
+}
+function initialDisplayBAC() {
+    const e = setDateObjectSecondsAndMillisecondsToZero(new Date)
+      , t = calculateCurrentBAC()
+      , o = calculatePeak()
+      , i = calculateZeroTimeAsDateObject();
+    document.querySelector(".js-results-definition-list-container").displayNone(),
+    document.querySelector(".js-results-first-text").displayNone(),
+    document.querySelector(".js-results-chart-container").displayNone(),
+    document.querySelector(".js-results-second-text").displayNone(),
+    displayResultsDefinitionList(e, t, o.timeAsDateObject, o.BAC, i),
+    displayResultsFirstText(),
+    (t > 0 || o.BAC > 0) && (displayResultsChart(e, t, o.timeAsDateObject, o.BAC, i),
+    displayResultsSecondText())
+}
+function displayResultsDefinitionList(e, t, o, i, n) {
+    if (document.querySelector(".js-current-bac-row").displayNone(),
+    document.querySelector(".js-peak-bac-row").displayNone(),
+    document.querySelector(".js-peak-time-row").displayNone(),
+    document.querySelector(".js-zero-time-row").displayNone(),
+    document.querySelector(".js-results-definition-list-container").displayBlock(),
+    document.querySelector(".js-current-bac-row").displayFlex(),
+    document.querySelector(".js-current-bac-rounded").textContent = t.toFixed(2) + "%",
+    document.querySelector(".js-current-bac-unrounded").textContent = t.toFixed(6) + "%",
+    document.querySelector(".js-results-definition-list-refresh-time").textContent = "Updated at " + formatAsClockTime(e),
+    i > t) {
+        document.querySelector(".js-peak-bac-row").displayFlex(),
+        document.querySelector(".js-peak-bac-rounded").textContent = i.toFixed(2) + "%",
+        document.querySelector(".js-peak-bac-unrounded").textContent = i.toFixed(6) + "%",
+        document.querySelector(".js-peak-time-row").displayFlex();
+        const t = formatAsMinutesOrHoursOrDays(getTimeDifferenceBetweenDateObjectsInMinutes(o, e));
+        document.querySelector(".js-peak-time-number").textContent = t.split(" ")[0],
+        document.querySelector(".js-peak-time-units").textContent = t.split(" ")[1]
+    }
+    if (t > 0 || i > 0) {
+        document.querySelector(".js-zero-time-row").displayFlex();
+        const t = formatAsMinutesOrHoursOrDays(getTimeDifferenceBetweenDateObjectsInMinutes(n, e));
+        document.querySelector(".js-zero-time-number").textContent = t.split(" ")[0],
+        document.querySelector(".js-zero-time-units").textContent = t.split(" ")[1]
+    }
+}
+function displayResultsFirstText() {
+    document.querySelector(".js-results-first-text").displayBlock()
+}
+function displayResultsSecondText() {
+    document.querySelector(".js-results-second-text").displayBlock()
+}
+function displayResultsChart(e, t, o, i, n) {
+    document.querySelector(".js-results-chart").clearHTML(),
+    document.querySelector(".js-results-chart-container").displayBlock(),
+    document.querySelector(".js-results-chart-refresh-time").textContent = "Updated at " + formatAsClockTime(e),
+    document.querySelector(".js-results-chart").innerHTML = '<canvas id="chart"></canvas>';
+    const l = getChartData(t, e, i, n, o);
+    new Chart(document.querySelector("#chart").getContext("2d"),{
+        type: "line",
+        data: {
+            labels: l.labels,
+            datasets: [{
+                fill: !1,
+                lineTension: 0,
+                data: l.data,
+                backgroundColor: "#53f",
+                borderColor: "#53f",
+                pointRadius: l.pointSizes
+            }]
+        },
+        options: {
+            legend: {
+                display: !1
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        callback: function(e) {
+                            return (Math.round((e + Number.EPSILON) * l.roundingPrecision) / l.roundingPrecision).toFixed(l.numberOfDecimalPlaces) + "%"
+                        },
+                        min: 0,
+                        max: l.maximumYValue,
+                        stepSize: l.maximumYValue / 5
+                    }
+                }],
+                xAxes: [{
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    },
+                    ticks: {
+                        callback: function(t, o) {
+                            return chartArraysMatch(t, formatDateForChartLabel(e)) ? t : o === Math.floor(getTimeDifferenceBetweenDateObjectsInMinutes(n, e) / l.minutesBetweenDataPoints / 2) ? t : chartArraysMatch(t, formatDateForChartLabel(n)) ? t : void 0
+                        },
+                        autoSkip: !1,
+                        maxTicksLimit: 3,
+                        lineHeight: 1.35,
+                        maxRotation: 0,
+                        minRotation: 0
+                    }
+                }]
+            },
+            tooltips: {
+                displayColors: !1,
+                titleAlign: "center",
+                bodyAlign: "center",
+                bodyFontStyle: "bold",
+                titleSpacing: 2,
+                titleMarginBottom: 12,
+                caretPadding: 5,
+                callbacks: {
+                    title: e=>e[0].label.split(","),
+                    label: e=>e.value + "%"
+                }
+            },
+            responsive: !0,
+            maintainAspectRatio: !0,
+            aspectRatio: 1.125
+        }
+    })
+}
+function getChartData(e, t, o, i, n) {
+    const l = getTimeDifferenceBetweenDateObjectsInMinutes(i, t)
+      , s = Math.ceil(l / 300)
+      , r = getAlcoholFullyAbsorbedTimeAsDateObject()
+      , a = o >= .01 ? 5 * Math.ceil(100 * o / 5) / 100 : 5 * Math.ceil(1e3 * o / 5) / 1e3
+      , c = o >= .01 ? 2 : 3
+      , u = 10 ** c;
+    let d = []
+      , m = []
+      , h = [];
+    d.push(Math.ceil(1e5 * e) / 1e5),
+    m.push(formatDateForChartLabel(t)),
+    h.push(4);
+    let g = setDateObjectSecondsAndMillisecondsToZero(new Date(t.getTime() + 6e4 * s));
+    for (; g < n; )
+        d.push(Math.ceil(1e5 * calculateBAC(g)) / 1e5),
+        m.push(formatDateForChartLabel(g)),
+        h.push(1),
+        g = setDateObjectSecondsAndMillisecondsToZero(new Date(g.getTime() + 6e4 * s));
+    if (n > t && (d.push(Math.ceil(1e5 * o) / 1e5),
+    m.push(formatDateForChartLabel(n)),
+    h.push(4)),
+    g.getTime() === n.getTime() && (g = setDateObjectSecondsAndMillisecondsToZero(new Date(g.getTime() + 6e4 * s))),
+    i > r) {
+        for (; g <= r; )
+            d.push(Math.ceil(1e5 * calculateBAC(g)) / 1e5),
+            m.push(formatDateForChartLabel(g)),
+            h.push(1),
+            g = setDateObjectSecondsAndMillisecondsToZero(new Date(g.getTime() + 6e4 * s));
+        let e = calculateBAC(g);
+        const t = e / getTimeDifferenceBetweenDateObjectsInMinutes(i, g);
+        for (; g < i; )
+            d.push(Math.ceil(1e5 * e) / 1e5),
+            m.push(formatDateForChartLabel(g)),
+            h.push(1),
+            g = setDateObjectSecondsAndMillisecondsToZero(new Date(g.getTime() + 6e4 * s)),
+            e -= t * s
+    } else
+        for (; g < i; )
+            d.push(Math.ceil(1e5 * calculateBAC(g)) / 1e5),
+            m.push(formatDateForChartLabel(g)),
+            h.push(1),
+            g = setDateObjectSecondsAndMillisecondsToZero(new Date(g.getTime() + 6e4 * s));
+    return d.push(0),
+    m.push(formatDateForChartLabel(i)),
+    h.push(4),
+    {
+        minutesBetweenDataPoints: s,
+        maximumYValue: a,
+        numberOfDecimalPlaces: c,
+        roundingPrecision: u,
+        data: d,
+        labels: m,
+        pointSizes: h
+    }
+}
+function chartArraysMatch(e, t) {
+    if (e.length !== t.length)
+        return !1;
+    for (let o = 0; o < e.length; o++)
+        if (e[o] !== t[o])
+            return !1;
+    return !0
+}
+function loadHeightCM() {
+    document.querySelector(".js-height-imperial-input-div").displayNone(),
+    document.querySelector(".js-height-metric-input-div").displayBlock(),
+    "" === document.querySelector("#height-ft").value && "" === document.querySelector("#height-in").value || (document.querySelector("#height-cm").value = Math.round(2.54 * (12 * Number(document.querySelector("input#height-ft").value) + Number(document.querySelector("input#height-in").value))),
+    isHeightCMValid())
+}
+function loadHeightFTIN() {
+    document.querySelector(".js-height-metric-input-div").displayNone(),
+    document.querySelector(".js-height-imperial-input-div").displayBlock(),
+    "" !== document.querySelector("#height-cm").value && (document.querySelector("#height-ft").value = Math.floor(Number(document.querySelector("#height-cm").value / 30.48)),
+    document.querySelector("#height-in").value = Math.round(Number(document.querySelector("#height-cm").value % 30.48) / 30.48 * 12),
+    isHeightImperialValid())
+}
+function loadWeightKG() {
+    document.querySelector(".js-weight-imperial-input-div").displayNone(),
+    document.querySelector(".js-weight-metric-input-div").displayBlock(),
+    "" !== document.querySelector("#weight-lbs").value && (document.querySelector("#weight-kg").value = Math.round(document.querySelector("#weight-lbs").value / 2.205),
+    isWeightKGValid())
+}
+function loadWeightLB() {
+    document.querySelector(".js-weight-metric-input-div").displayNone(),
+    document.querySelector(".js-weight-imperial-input-div").displayBlock(),
+    "" !== document.querySelector("#weight-kg").value && (document.querySelector("#weight-lbs").value = Math.round(2.205 * document.querySelector("#weight-kg").value),
+    isWeightLBSValid())
+}
+function showImperialHideMetricPersonalDetailsDivs() {
+    document.querySelector(".js-weight-imperial-input-div").displayBlock(),
+    document.querySelector(".js-height-imperial-input-div").displayBlock(),
+    document.querySelector(".js-weight-metric-input-div").displayNone(),
+    document.querySelector(".js-height-metric-input-div").displayNone()
+}
+function displayDrinkInputs() {
+    clearAndHideDrinkRows(),
+    isDrinkFullyCustom() ? (showCustomDrinkSizeFLOZ(),
+    showCustomDrinkStrength()) : isDrinkCocktail() ? showCocktails() : (loadDrinkSizes(getDrinkType()),
+    loadDrinkStrengths(getDrinkType()))
+}
+function loadDrinkSizes(e) {
+    document.querySelector(".js-drink-size-div").innerHTML = `<div class='js-drink-size-floz-div'>\n\t\t<p class='input-label'>Drink Size (fl oz)</p>\n\t\t<div class='flex'>\n\t\t\t<input type='radio' id='${DRINK_DETAILS[e].sizeFLOZId1}' name='alcoholSizeFLOZ' value='${DRINK_DETAILS[e].sizeFLOZValue1}' checked>\n\t\t\t<label class='flex-4-buttons' for='${DRINK_DETAILS[e].sizeFLOZId1}'>${DRINK_DETAILS[e].sizeFLOZLabel1}</label>\n\t\t\t<input type='radio' id='${DRINK_DETAILS[e].sizeFLOZId2}' name='alcoholSizeFLOZ' value='${DRINK_DETAILS[e].sizeFLOZValue2}'>\n\t\t\t<label class='flex-4-buttons' for='${DRINK_DETAILS[e].sizeFLOZId2}'>${DRINK_DETAILS[e].sizeFLOZLabel2}</label>\n\t\t\t<input type='radio' id='${DRINK_DETAILS[e].sizeFLOZId3}' name='alcoholSizeFLOZ' value='${DRINK_DETAILS[e].sizeFLOZValue3}'>\n\t\t\t<label class='flex-4-buttons' for='${DRINK_DETAILS[e].sizeFLOZId3}'>${DRINK_DETAILS[e].sizeFLOZLabel3}</label>\n\t\t\t<input type='radio' id='customDrinkSizeFLOZ' name='alcoholSizeFLOZ' value='Custom'>\n\t\t\t<label class='flex-4-buttons' for='customDrinkSizeFLOZ'>Custom</label>\n\t\t</div>\n\t\t<div class='toggle-and-val'>\n\t\t\t<span class='toggle metric-imperial-toggle js-ml-toggle'>Change to mL</span>\n\t\t</div>\n\t</div>\n\t<div class='js-drink-size-ml-div'>\n\t\t<p class='input-label'>Drink Size (mL)</p>\n\t\t<div class='flex'>\n\t\t\t<input type='radio' id='${DRINK_DETAILS[e].sizeMLId1}' name='alcoholSizeML' value='${DRINK_DETAILS[e].sizeMLValue1}' checked>\n\t\t\t<label class='flex-4-buttons' for='${DRINK_DETAILS[e].sizeMLId1}'>${DRINK_DETAILS[e].sizeMLLabel1}</label>\n\t\t\t<input type='radio' id='${DRINK_DETAILS[e].sizeMLId2}' name='alcoholSizeML' value='${DRINK_DETAILS[e].sizeMLValue2}'>\n\t\t\t<label class='flex-4-buttons' for='${DRINK_DETAILS[e].sizeMLId2}'>${DRINK_DETAILS[e].sizeMLLabel2}</label>\n\t\t\t<input type='radio' id='${DRINK_DETAILS[e].sizeMLId3}' name='alcoholSizeML' value='${DRINK_DETAILS[e].sizeMLValue3}'>\n\t\t\t<label class='flex-4-buttons' for='${DRINK_DETAILS[e].sizeMLId3}'>${DRINK_DETAILS[e].sizeMLLabel3}</label>\n\t\t\t<input type='radio' id='customDrinkSizeML' name='alcoholSizeML' value='Custom'>\n\t\t\t<label class='flex-4-buttons' for='customDrinkSizeML'>Custom</label>\n\t\t</div>\n\t\t<div class='toggle-and-val'>\n\t\t\t<span class='toggle metric-imperial-toggle js-floz-toggle'>Change to fl oz</span>\n\t\t</div>\n\t</div>`,
+    document.querySelector(".js-drink-size-ml-div").displayNone(),
+    document.querySelector(".js-ml-toggle").addEventListener("click", toggleToML),
+    document.querySelector(".js-floz-toggle").addEventListener("click", toggleToFLOZ),
+    document.querySelectorAll("input[name=alcoholSizeFLOZ]").forEach(e=>{
+        e.addEventListener("change", function() {
+            hideCustomDrinkSize(),
+            this.checked && "Custom" === this.value && showCustomDrinkSizeFLOZ()
+        })
+    }
+    ),
+    document.querySelectorAll("input[name=alcoholSizeML]").forEach(e=>{
+        e.addEventListener("change", function() {
+            hideCustomDrinkSize(),
+            this.checked && "Custom" === this.value && showCustomDrinkSizeML()
+        })
+    }
+    )
+}
+function toggleToML() {
+    isDrinkFullyCustom() ? (showCustomDrinkSizeML(),
+    convertCustomSizeToML()) : (document.querySelector(".js-drink-size-floz-div").displayNone(),
+    document.querySelector(".js-drink-size-ml-div").displayBlock(),
+    document.querySelectorAll("input[name=alcoholSizeFLOZ]").forEach(function(e, t) {
+        !0 === e.checked && (document.querySelectorAll("input[name=alcoholSizeML]")[t].checked = !0,
+        "Custom" === e.value && (showCustomDrinkSizeML(),
+        convertCustomSizeToML()))
+    }))
+}
+function toggleToFLOZ() {
+    isDrinkFullyCustom() ? (showCustomDrinkSizeFLOZ(),
+    convertCustomSizeToFLOZ()) : (document.querySelector(".js-drink-size-ml-div").displayNone(),
+    document.querySelector(".js-drink-size-floz-div").displayBlock(),
+    document.querySelectorAll("input[name=alcoholSizeML]").forEach(function(e, t) {
+        !0 === e.checked && (document.querySelectorAll("input[name=alcoholSizeFLOZ]")[t].checked = !0,
+        "Custom" === e.value && (showCustomDrinkSizeFLOZ(),
+        convertCustomSizeToFLOZ()))
+    }))
+}
+function convertCustomSizeToML() {
+    "" !== document.querySelector("#alcoholSizeCustomFLOZ").value && (document.querySelector("#alcoholSizeCustomML").value = (29.5735 * document.querySelector("#alcoholSizeCustomFLOZ").value).toFixed(0),
+    isCustomDrinkSizeMLValid())
+}
+function convertCustomSizeToFLOZ() {
+    "" !== document.querySelector("#alcoholSizeCustomML").value && (document.querySelector("#alcoholSizeCustomFLOZ").value = (document.querySelector("#alcoholSizeCustomML").value / 29.5735).toFixed(2),
+    isCustomDrinkSizeFLOZValid())
+}
+function showCustomDrinkSize() {
+    document.querySelector(".js-drink-size-custom-ml-div").displayBlock(),
+    document.querySelector(".js-drink-size-custom-floz-div").displayBlock()
+}
+function showCustomDrinkSizeML() {
+    hideCustomDrinkSize(),
+    document.querySelector(".js-drink-size-custom-ml-div").displayBlock()
+}
+function showCustomDrinkSizeFLOZ() {
+    hideCustomDrinkSize(),
+    document.querySelector(".js-drink-size-custom-floz-div").displayBlock()
+}
+function hideCustomDrinkSize() {
+    document.querySelector(".js-drink-size-custom-ml-div").displayNone(),
+    document.querySelector(".js-drink-size-custom-floz-div").displayNone()
+}
+function showCustomDrinkStrength() {
+    document.querySelector(".js-drink-strength-custom-div").displayBlock()
+}
+function hideCustomDrinkStrength() {
+    document.querySelector(".js-drink-strength-custom-div").displayNone()
+}
+function loadDrinkStrengths(e) {
+    document.querySelector(".js-drink-strength-div").innerHTML = `<p class='input-label'>Drink Strength (%)</p>\n\t<div class='flex'>\n\t\t<input type='radio' id='${DRINK_DETAILS[e].strengthId1}' name='alcoholStrength' value='${DRINK_DETAILS[e].strengthValue1}' checked>\n\t\t<label class='flex-4-buttons' for='${DRINK_DETAILS[e].strengthId1}'>${DRINK_DETAILS[e].strengthLabel1}</label>\n\t\t<input type='radio' id='${DRINK_DETAILS[e].strengthId2}' name='alcoholStrength' value='${DRINK_DETAILS[e].strengthValue2}'>\n\t\t<label class='flex-4-buttons' for='${DRINK_DETAILS[e].strengthId2}'>${DRINK_DETAILS[e].strengthLabel2}</label>\n\t\t<input type='radio' id='${DRINK_DETAILS[e].strengthId3}' name='alcoholStrength' value='${DRINK_DETAILS[e].strengthValue3}'>\n\t\t<label class='flex-4-buttons' for='${DRINK_DETAILS[e].strengthId3}'>${DRINK_DETAILS[e].strengthLabel3}</label>\n\t\t<input type='radio' id='customDrinkStrength' name='alcoholStrength' value='Custom'>\n\t\t<label class='flex-4-buttons' for='customDrinkStrength'>Custom</label>\n\t</div>\n\t<div class='toggle-and-val'>\n\t\t<span class='validation-text js-drink-strength-text'></span>\n\t</div>`,
+    document.querySelectorAll("input[name=alcoholStrength]").forEach(e=>{
+        e.addEventListener("change", function() {
+            hideCustomDrinkStrength(),
+            this.checked && "Custom" === this.value && showCustomDrinkStrength()
+        })
+    }
+    )
+}
+function showCocktails() {
+    document.querySelector(".js-drink-cocktail-div").displayBlock()
+}
+function arePersonalDetailsValid() {
+    let e = !0;
+    return isHeightValid() || (e = !1),
+    isWeightValid() || (e = !1),
+    e
+}
+function isHeightValid() {
+    return !(isHeightCM() && !isHeightCMValid()) && !(!isHeightCM() && !isHeightImperialValid())
+}
+function isHeightCM() {
+    return "block" === getComputedStyle(document.querySelector(".js-height-metric-input-div"), null).display
+}
+function isWeightValid() {
+    return !(isWeightKG() && !isWeightKGValid()) && !(!isWeightKG() && !isWeightLBSValid())
+}
+function isWeightKG() {
+    return "block" === getComputedStyle(document.querySelector(".js-weight-metric-input-div"), null).display
+}
+function isHeightCMValid() {
+    let e = document.querySelector("#height-cm").value;
+    return document.querySelector(".js-height-cm-text").hideValidationMessage(),
+    "" === e ? (document.querySelector(".js-height-cm-text").showValidationMessage("Height can't be blank"),
+    !1) : Number(e) < 100 ? (document.querySelector(".js-height-cm-text").showValidationMessage("Height can't be below 100 cm"),
+    !1) : !(Number(e) > 250) || (document.querySelector(".js-height-cm-text").showValidationMessage("Height can't exceed 250 cm"),
+    !1)
+}
+function isHeightImperialValid() {
+    let e = document.querySelector("#height-in").value
+      , t = document.querySelector("#height-ft").value;
+    return document.querySelector(".js-height-imperial-text").hideValidationMessage(),
+    "" === t ? (document.querySelector(".js-height-imperial-text").showValidationMessage("Feet can't be blank"),
+    !1) : Number(t) < 2 ? (document.querySelector(".js-height-imperial-text").showValidationMessage("Feet can't be below 2"),
+    !1) : Number(t) > 8 ? (document.querySelector(".js-height-imperial-text").showValidationMessage("Feet can't exceed 8"),
+    !1) : Number(t) % 1 != 0 ? (document.querySelector(".js-height-imperial-text").showValidationMessage("Feet can't have a decimal"),
+    !1) : Number(e) < 0 ? (document.querySelector(".js-height-imperial-text").showValidationMessage("Inches can't be negative"),
+    !1) : !(Number(e) >= 12) || (document.querySelector(".js-height-imperial-text").showValidationMessage("Inches can't exceed 11"),
+    !1)
+}
+function isWeightKGValid() {
+    let e = document.querySelector("#weight-kg").value;
+    return document.querySelector(".js-weight-kg-text").hideValidationMessage(),
+    "" === e ? (document.querySelector(".js-weight-kg-text").showValidationMessage("Weight can't be blank"),
+    !1) : Number(e) < 30 ? (document.querySelector(".js-weight-kg-text").showValidationMessage("Weight can't be below 30 kg"),
+    !1) : !(Number(e) > 500) || (document.querySelector(".js-weight-kg-text").showValidationMessage("Weight can't exceed 500 kg"),
+    !1)
+}
+function isWeightLBSValid() {
+    let e = document.querySelector("#weight-lbs").value;
+    return document.querySelector(".js-weight-lbs-text").hideValidationMessage(),
+    "" === e ? (document.querySelector(".js-weight-lbs-text").showValidationMessage("Weight can't be blank"),
+    !1) : Number(e) < 66 ? (document.querySelector(".js-weight-lbs-text").showValidationMessage("Weight can't be below 66 lbs"),
+    !1) : !(Number(e) > 1100) || (document.querySelector(".js-weight-lbs-text").showValidationMessage("Weight can't exceed 1100 lbs"),
+    !1)
+}
+function isDrinkValid() {
+    let e = !0;
+    return (isDrinkFullyCustom() || isCustomDrinkSize()) && (isCustomDrinkSizeML() && !isCustomDrinkSizeMLValid() && (e = !1),
+    isCustomDrinkSizeML() || isCustomDrinkSizeFLOZValid() || (e = !1)),
+    !isDrinkFullyCustom() && !isCustomDrinkStrength() || isCustomDrinkStrengthValid() || (e = !1),
+    isDrinkTimeValid() || (e = !1),
+    e
+}
+function isCustomDrinkSizeFLOZValid() {
+    return document.querySelector(".js-alcohol-custom-size-floz-text").hideValidationMessage(),
+    "" === document.querySelector("#alcoholSizeCustomFLOZ").value ? (document.querySelector(".js-alcohol-custom-size-floz-text").showValidationMessage("Drink size can't be blank"),
+    !1) : 0 === Number(document.querySelector("#alcoholSizeCustomFLOZ").value) ? (document.querySelector(".js-alcohol-custom-size-floz-text").showValidationMessage("Drink size can't be 0"),
+    !1) : Number(document.querySelector("#alcoholSizeCustomFLOZ").value) < 0 ? (document.querySelector(".js-alcohol-custom-size-floz-text").showValidationMessage("Drink size can't be negative"),
+    !1) : !(Number(document.querySelector("#alcoholSizeCustomFLOZ").value) > 34) || (document.querySelector(".js-alcohol-custom-size-floz-text").showValidationMessage("Drink size can't exceed 34 floz"),
+    !1)
+}
+function isCustomDrinkSizeMLValid() {
+    return document.querySelector(".js-alcohol-custom-size-ml-text").hideValidationMessage(),
+    "" === document.querySelector("#alcoholSizeCustomML").value ? (document.querySelector(".js-alcohol-custom-size-ml-text").showValidationMessage("Drink size can't be blank"),
+    !1) : 0 === Number(document.querySelector("#alcoholSizeCustomML").value) ? (document.querySelector(".js-alcohol-custom-size-ml-text").showValidationMessage("Drink size can't be 0"),
+    !1) : Number(document.querySelector("#alcoholSizeCustomML").value) < 0 ? (document.querySelector(".js-alcohol-custom-size-ml-text").showValidationMessage("Drink size can't be negative"),
+    !1) : !(Number(document.querySelector("#alcoholSizeCustomML").value) > 999) || (document.querySelector(".js-alcohol-custom-size-ml-text").showValidationMessage("Drink size can't exceed 999mL"),
+    !1)
+}
+function isCustomDrinkStrengthValid() {
+    return document.querySelector(".js-alcohol-custom-strength-text").hideValidationMessage(),
+    "" === document.querySelector("#alcoholStrengthCustom").value ? (document.querySelector(".js-alcohol-custom-strength-text").showValidationMessage("Drink strength can't be blank"),
+    !1) : 0 === Number(document.querySelector("#alcoholStrengthCustom").value) ? (document.querySelector(".js-alcohol-custom-strength-text").showValidationMessage("Drink strength can't be 0"),
+    !1) : Number(document.querySelector("#alcoholStrengthCustom").value) < 0 ? (document.querySelector(".js-alcohol-custom-strength-text").showValidationMessage("Drink strength can't be negative"),
+    !1) : !(Number(document.querySelector("#alcoholStrengthCustom").value) > 100) || (document.querySelector(".js-alcohol-custom-strength-text").showValidationMessage("Drink strength can't exceed 100%"),
+    !1)
+}
+function isDrinkTimeValid() {
+    return document.querySelector(".js-alcohol-time-text").hideValidationMessage(),
+    "" !== document.querySelector("#time").value || (document.querySelector(".js-alcohol-time-text").showValidationMessage("Time of drink must be entered"),
+    !1)
+}
+function infoToHome() {
+    document.querySelector(".js-site-info").displayNoneFadeOut(),
+    document.querySelector(".js-splash-screen").displayFlexFadeIn(),
+    window.location.hash = "home",
+    scrollToTop()
+}
+function infoToStep1() {
+    document.querySelector(".js-site-info").displayNoneFadeOut(),
+    document.querySelector(".js-calculator").displayBlockFadeIn(),
+    document.querySelector(".js-calculation-step-1").displayBlockFadeIn(),
+    window.location.hash = "step-one",
+    scrollToTop()
+}
+function menuToInfo() {
+    document.querySelector(".js-splash-screen").displayNoneFadeOut(),
+    document.querySelector(".js-calculator").displayNoneFadeOut(),
+    document.querySelector(".js-calculation-step-1").displayNoneFadeOut(),
+    document.querySelector(".js-calculation-step-2").displayNoneFadeOut(),
+    document.querySelector(".js-calculation-step-3").displayNoneFadeOut(),
+    document.querySelector(".js-site-info").displayBlockFadeIn(),
+    window.location.hash = "info",
+    scrollToTop()
+}
+function homeToStep1() {
+    document.querySelector(".js-splash-screen").displayNoneFadeOut(),
+    document.querySelector(".js-calculator").displayBlockFadeIn(),
+    document.querySelector(".js-calculation-step-1").displayBlockFadeIn(),
+    window.location.hash = "step-one",
+    scrollToTop()
+}
+function step1ToHome() {
+    document.querySelector(".js-calculator").displayNoneFadeOut(),
+    document.querySelector(".js-calculation-step-1").displayNoneFadeOut(),
+    document.querySelector(".js-splash-screen").displayFlexFadeIn(),
+    window.location.hash = "home",
+    scrollToTop()
+}
+function step1ToStep2() {
+    arePersonalDetailsValid() && (document.querySelector(".js-calculation-step-1").displayNoneFadeOut(),
+    document.querySelector(".js-calculation-step-2").displayBlockFadeIn(),
+    createTimePicker(),
+    displayDrinkInputs(),
+    displayDrinks(),
+    setPersonalLocalStorage(),
+    window.location.hash = "step-two",
+    scrollToTop())
+}
+function step2ToStep1() {
+    document.querySelector(".js-calculation-step-2").displayNoneFadeOut(),
+    document.querySelector(".js-calculation-step-1").displayBlockFadeIn(),
+    window.location.hash = "step-one",
+    scrollToTop()
+}
+function step2ToStep3() {
+    0 === drinksConsumed.length ? document.querySelector(".js-drink-next-step-text").showValidationMessage("At least one drink is required") : (document.querySelector(".js-calculation-step-2").displayNoneFadeOut(),
+    document.querySelector(".js-calculation-step-3").displayBlockFadeIn(),
+    initialDisplayBAC(),
+    window.location.hash = "step-three",
+    scrollToTop())
+}
+function step3ToStep2() {
+    document.querySelector(".js-calculation-step-3").displayNoneFadeOut(),
+    document.querySelector(".js-calculation-step-2").displayBlockFadeIn(),
+    displayDrinks(),
+    window.location.hash = "step-two",
+    scrollToTop()
+}
+function loadPageByUrlFragment(e) {
+    "step-one" === e ? (document.querySelector(".js-calculator").displayBlockFadeIn(),
+    document.querySelector(".js-calculation-step-1").displayBlockFadeIn()) : "step-two" === e ? tryShowStep2() : "step-three" === e ? tryShowStep3() : "info" === e ? document.querySelector(".js-site-info").displayBlockFadeIn() : document.querySelector(".js-splash-screen").displayFlexFadeIn()
+}
+function tryShowStep2() {
+    arePersonalDetailsValid() ? (document.querySelector(".js-calculator").displayBlockFadeIn(),
+    document.querySelector(".js-calculation-step-2").displayBlockFadeIn(),
+    createTimePicker(),
+    displayDrinkInputs(),
+    displayDrinks()) : document.querySelector(".js-splash-screen").displayFlexFadeIn()
+}
+function tryShowStep3() {
+    0 === drinksConsumed.length ? document.querySelector(".js-splash-screen").displayFlexFadeIn() : (document.querySelector(".js-calculator").displayBlockFadeIn(),
+    document.querySelector(".js-calculation-step-3").displayBlockFadeIn(),
+    createTimePicker(),
+    displayDrinkInputs(),
+    sortDrinks(),
+    initialDisplayBAC())
+}
+setupPage();
+
+
