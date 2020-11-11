@@ -50,6 +50,7 @@
 		5A2E7A092550A37B002BAE79 /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		5A2E7A0B2551BED6002BAE79 /* Attribution.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Attribution.rtf; sourceTree = "<group>"; };
 		5AA5FA602553233900E574F2 /* DrinkTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkTypeCell.swift; sourceTree = "<group>"; };
+		5AA5FA6A255B098A00E574F2 /* Main.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Main.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,19 +92,10 @@
 		5A2E79D92550A24B002BAE79 /* BACster */ = {
 			isa = PBXGroup;
 			children = (
-				5A2E7A032550A293002BAE79 /* drinks.json */,
-				5A2E7A022550A293002BAE79 /* Main.storyboard */,
-				5A2E7A0B2551BED6002BAE79 /* Attribution.rtf */,
-				5A2E79DA2550A24B002BAE79 /* AppDelegate.swift */,
-				5A2E79DC2550A24B002BAE79 /* SceneDelegate.swift */,
-				5A2E79DE2550A24B002BAE79 /* HomeViewController.swift */,
-				5A2E79E02550A24B002BAE79 /* TrackerViewController.swift */,
-				5AA5FA602553233900E574F2 /* DrinkTypeCell.swift */,
-				5A2E7A092550A37B002BAE79 /* HistoryViewController.swift */,
-				5A2E79E82550A24D002BAE79 /* Assets.xcassets */,
-				5A2E79EA2550A24D002BAE79 /* LaunchScreen.storyboard */,
 				5A2E79ED2550A24D002BAE79 /* Info.plist */,
-				5A2E79E52550A24B002BAE79 /* BACster.xcdatamodeld */,
+				5AA5FA79255C272F00E574F2 /* storyboards */,
+				5AA5FA70255C26F700E574F2 /* src */,
+				5AA5FA7A255C279200E574F2 /* resource */,
 			);
 			path = BACster;
 			sourceTree = "<group>";
@@ -115,6 +107,40 @@
 				5A2E79F82550A24E002BAE79 /* Info.plist */,
 			);
 			path = BACsterTests;
+			sourceTree = "<group>";
+		};
+		5AA5FA70255C26F700E574F2 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				5A2E79DA2550A24B002BAE79 /* AppDelegate.swift */,
+				5A2E79DC2550A24B002BAE79 /* SceneDelegate.swift */,
+				5A2E79DE2550A24B002BAE79 /* HomeViewController.swift */,
+				5A2E79E02550A24B002BAE79 /* TrackerViewController.swift */,
+				5AA5FA602553233900E574F2 /* DrinkTypeCell.swift */,
+				5AA5FA6A255B098A00E574F2 /* Main.txt */,
+				5A2E7A092550A37B002BAE79 /* HistoryViewController.swift */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		5AA5FA79255C272F00E574F2 /* storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				5A2E7A022550A293002BAE79 /* Main.storyboard */,
+				5A2E79EA2550A24D002BAE79 /* LaunchScreen.storyboard */,
+			);
+			path = storyboards;
+			sourceTree = "<group>";
+		};
+		5AA5FA7A255C279200E574F2 /* resource */ = {
+			isa = PBXGroup;
+			children = (
+				5A2E7A032550A293002BAE79 /* drinks.json */,
+				5A2E7A0B2551BED6002BAE79 /* Attribution.rtf */,
+				5A2E79E82550A24D002BAE79 /* Assets.xcassets */,
+				5A2E79E52550A24B002BAE79 /* BACster.xcdatamodeld */,
+			);
+			path = resource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
