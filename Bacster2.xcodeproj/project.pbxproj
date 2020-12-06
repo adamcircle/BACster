@@ -9,13 +9,16 @@
 /* Begin PBXBuildFile section */
 		5A9BA6022578279B00739E04 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9BA6012578279B00739E04 /* AppDelegate.swift */; };
 		5A9BA6042578279B00739E04 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9BA6032578279B00739E04 /* SceneDelegate.swift */; };
-		5A9BA6062578279B00739E04 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9BA6052578279B00739E04 /* ViewController.swift */; };
-		5A9BA6092578279B00739E04 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A9BA6072578279B00739E04 /* Main.storyboard */; };
+		5A9BA6062578279B00739E04 /* TrackerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9BA6052578279B00739E04 /* TrackerViewController.swift */; };
 		5A9BA60C2578279B00739E04 /* Bacster2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5A9BA60A2578279B00739E04 /* Bacster2.xcdatamodeld */; };
 		5A9BA60E2578279D00739E04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A9BA60D2578279D00739E04 /* Assets.xcassets */; };
 		5A9BA6112578279D00739E04 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A9BA60F2578279D00739E04 /* LaunchScreen.storyboard */; };
 		5A9BA61C2578279E00739E04 /* Bacster2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9BA61B2578279E00739E04 /* Bacster2Tests.swift */; };
 		5A9BA6272578279E00739E04 /* Bacster2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9BA6262578279E00739E04 /* Bacster2UITests.swift */; };
+		5A9BA6442578301200739E04 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9BA6432578301200739E04 /* HomeViewController.swift */; };
+		5A9BA6492578301A00739E04 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9BA6482578301A00739E04 /* HistoryViewController.swift */; };
+		5A9BA659257C88A500739E04 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9BA658257C88A500739E04 /* TabBarController.swift */; };
+		5A9BA65E257C8E4800739E04 /* UINavCon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9BA65D257C8E4800739E04 /* UINavCon.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,8 +42,7 @@
 		5A9BA5FE2578279B00739E04 /* Bacster2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bacster2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A9BA6012578279B00739E04 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5A9BA6032578279B00739E04 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		5A9BA6052578279B00739E04 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		5A9BA6082578279B00739E04 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		5A9BA6052578279B00739E04 /* TrackerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerViewController.swift; sourceTree = "<group>"; };
 		5A9BA60B2578279B00739E04 /* Bacster2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bacster2.xcdatamodel; sourceTree = "<group>"; };
 		5A9BA60D2578279D00739E04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5A9BA6102578279D00739E04 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -51,6 +53,10 @@
 		5A9BA6222578279E00739E04 /* Bacster2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Bacster2UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A9BA6262578279E00739E04 /* Bacster2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bacster2UITests.swift; sourceTree = "<group>"; };
 		5A9BA6282578279E00739E04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5A9BA6432578301200739E04 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		5A9BA6482578301A00739E04 /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
+		5A9BA658257C88A500739E04 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		5A9BA65D257C8E4800739E04 /* UINavCon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UINavCon.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,8 +109,11 @@
 			children = (
 				5A9BA6012578279B00739E04 /* AppDelegate.swift */,
 				5A9BA6032578279B00739E04 /* SceneDelegate.swift */,
-				5A9BA6052578279B00739E04 /* ViewController.swift */,
-				5A9BA6072578279B00739E04 /* Main.storyboard */,
+				5A9BA658257C88A500739E04 /* TabBarController.swift */,
+				5A9BA65D257C8E4800739E04 /* UINavCon.swift */,
+				5A9BA6052578279B00739E04 /* TrackerViewController.swift */,
+				5A9BA6432578301200739E04 /* HomeViewController.swift */,
+				5A9BA6482578301A00739E04 /* HistoryViewController.swift */,
 				5A9BA60D2578279D00739E04 /* Assets.xcassets */,
 				5A9BA60F2578279D00739E04 /* LaunchScreen.storyboard */,
 				5A9BA6122578279D00739E04 /* Info.plist */,
@@ -236,7 +245,6 @@
 			files = (
 				5A9BA6112578279D00739E04 /* LaunchScreen.storyboard in Resources */,
 				5A9BA60E2578279D00739E04 /* Assets.xcassets in Resources */,
-				5A9BA6092578279B00739E04 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,8 +269,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5A9BA6062578279B00739E04 /* ViewController.swift in Sources */,
+				5A9BA6442578301200739E04 /* HomeViewController.swift in Sources */,
+				5A9BA65E257C8E4800739E04 /* UINavCon.swift in Sources */,
+				5A9BA6062578279B00739E04 /* TrackerViewController.swift in Sources */,
 				5A9BA6022578279B00739E04 /* AppDelegate.swift in Sources */,
+				5A9BA6492578301A00739E04 /* HistoryViewController.swift in Sources */,
+				5A9BA659257C88A500739E04 /* TabBarController.swift in Sources */,
 				5A9BA6042578279B00739E04 /* SceneDelegate.swift in Sources */,
 				5A9BA60C2578279B00739E04 /* Bacster2.xcdatamodeld in Sources */,
 			);
@@ -300,14 +312,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		5A9BA6072578279B00739E04 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5A9BA6082578279B00739E04 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		5A9BA60F2578279D00739E04 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
