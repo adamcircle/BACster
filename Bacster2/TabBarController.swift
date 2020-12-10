@@ -32,6 +32,7 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
         // Create Tab two
         //let trackerVC = TrackerViewController()
         let trackerNavCon = UINavigationController.init(rootViewController: TrackerViewController())
+        trackerNavCon.theme()
         let trackerTabItem = UITabBarItem(title: "Tracker", image:  UIImage(systemName: "plus.app.fill"), tag: 1)
         trackerNavCon.tabBarItem = trackerTabItem
         

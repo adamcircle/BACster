@@ -21,9 +21,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Tab Bar
         let tabBarCon = TabBarController()
         
+        /*
         UINavigationBar.appearance().barTintColor = UIColor.black
         UINavigationBar.appearance().largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        UINavigationBar.appearance().prefersLargeTitles = false */
 
         window?.rootViewController = tabBarCon
         window?.makeKeyAndVisible()
