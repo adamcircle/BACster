@@ -77,8 +77,9 @@ class TrackerViewController: UITableViewController {
             let data: [Float] = [0.027, 0.035, 0.048, 0.068, 0.085, 0.115]
             drink.beerStrength = data[index]
         } else if questionID == "beerContainer" {
-            let data = ["Full Solo Cup", "Half Solo Cup", "Standard Can", "Tall Can", "Pint", "Half Pint"]
-            drink.beerContainer = data[index]
+            // let data = ["Full Solo Cup", "Half Solo Cup", "Standard Can/Bottle (12oz)", "Double Can/Bottle (24oz)", "Pint", "Half Pint"]
+            drink.beerContainer = question?.answers[index]
+            // drink.beerContainer = data[index]
         } else if questionID == "sipOrShotgun" {
             let data = ["Sipping", "Shotgunning"]
             drink.sipOrShotgun = data[index]
@@ -99,14 +100,16 @@ class TrackerViewController: UITableViewController {
             drink.hunger = data[index]
         } else if questionID == "wineColor" {
             drink.wineColor = question?.answers[index]
+        } else if questionID == "wineContainer" {
+            drink.wineContainer = question?.answers[index]
         } else if questionID == "spiritType" {
             drink.spiritType = question?.answers[index]
         } else if questionID == "spiritContainer" {
-            let data = ["Shot", "Tall shot", "Double shot", "Glencairn"]
-            drink.whiskeyContainer = data[index]
+            drink.spiritContainer = question?.answers[index]
+        } else if questionID == "whiskeyContainer" {
+            drink.spiritContainer = question?.answers[index]
         } else if questionID == "sakeContainer" {
-            let data = ["Tokkuri", "Masu", "2-go", "3-go", "4-go", "Shot", "Tall shot", "Double shot"]
-            drink.sakeContainer = data[index]
+            drink.spiritContainer = question?.answers[index]
         } else if questionID == "cordialType" {
             drink.cordialType = question?.answers[index]
         } else if questionID == "cocktailType" {
@@ -120,7 +123,7 @@ class TrackerViewController: UITableViewController {
                 case 3: multiplier = 3.0
                 default: break
             }
-            drink.cocktailSize = multiplier
+            drink.cocktailMultiplier = multiplier
         }
         
         if nextQuestionID != "done" {
@@ -137,10 +140,34 @@ class ResultsController: UIViewController {
     
     private var animationView: AnimationView?
     
-    var drink = Drink() {
-        didSet {
-            // resultsLabel.text = "You added your drink! Party on! ;)"
-        }
+    var drink = Drink()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        drink.timeAdded = Date()
+        navigationItem.title = "Done!"
+        view.backgroundColor = UIColor.white
+        navigationItem.setHidesBackButton(true, animated: true)
+        
+        // write the drink to the db
+        let rowID = saveDrink()
+        
+        // Add success text
+        view.addSubview(resultsLabel)
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": resultsLabel]))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]-300-|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": resultsLabel]))
+        
+        // Add success animation
+        animationView = .init(name: "checkmark")
+        let checkmarkSize: CGFloat = animationView!.frame.size.height * 0.9
+        successAnimation(size: checkmarkSize)
+        
+        // Add button to go back to start
+        addAnotherDrinkButton(size: checkmarkSize)
+        
+        // Add button to delete the drink
+        addDeleteButton(size: checkmarkSize, rowID: Int(rowID))
     }
     
     func saveDrink() -> Int64 {
@@ -215,33 +242,6 @@ class ResultsController: UIViewController {
         deleteButton.tag = rowID
         deleteButton.addTarget(self, action: #selector(deleteDrinkButton(_:)), for: .touchUpInside)
         view.addSubview(deleteButton)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        navigationItem.title = "Done!"
-        view.backgroundColor = UIColor.white
-        navigationItem.setHidesBackButton(true, animated: true)
-        
-        // write the drink to the db
-        let rowID = saveDrink()
-        
-        // Add success text
-        view.addSubview(resultsLabel)
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": resultsLabel]))
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]-300-|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": resultsLabel]))
-        
-        // Add success animation
-        animationView = .init(name: "checkmark")
-        let checkmarkSize: CGFloat = animationView!.frame.size.height * 0.9
-        successAnimation(size: checkmarkSize)
-        
-        // Add button to go back to start
-        addAnotherDrinkButton(size: checkmarkSize)
-        
-        // Add button to delete the drink
-        addDeleteButton(size: checkmarkSize, rowID: Int(rowID))
     }
     
     @objc func addAnother(_ sender:UIButton!) {

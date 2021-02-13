@@ -10,12 +10,12 @@ import UIKit
 
 class Drink {
     var gramsAlcohol: Float?
-    var percentAcohol: Float?
+    var percentAlcohol: Float?
     var timeBeganConsumption: Date?
     var timeAdded: Date?
     var consumptionDuration: DateInterval?
     var drinkClass: String?
-    var containerSize: Float? // units of mL
+    var containerSizeML: Float?
     var drinkUnits: String?
     var drinkFullLife: Date?
     var drinkHalfLife: Date?
@@ -32,17 +32,210 @@ class Drink {
     
     // Spirit Specific Data
     var spiritType: String?
-    var whiskeyContainer: String?
-    var sakeContainer: String?
+    var spiritContainer: String?
     var cordialType: String?
     
     // Cocktail Specific Data
     var cocktailType: String?
-    var cocktailSize: Float?
+    var cocktailMultiplier: Float?
     
-    private func getGramsAlcohol() {
-        self.gramsAlcohol = 4.0
+    
+    private func computeGramsAlcohol() {
+        let gramsAlcohol: Float
+        let percentAlcohol: Float
+        let volumeML: Int
+        switch drinkClass {
+        case "Beer":
+            switch beerContainer {
+            case "Full Solo Cup":
+                volumeML = 355
+            case "Half Solo Cup":
+                volumeML = 178
+            case "Standard Can/Bottle (12oz)":
+                volumeML = 355
+            case "Double Can/Bottle (24oz)":
+                volumeML = 355 * 2
+            case "Pint":
+                volumeML = 473
+            case "Half Pint":
+                volumeML = 237
+            default:
+                NSLog("Invalid beer container.")
+            }
+            percentAlcohol = beerStrength!
+        case "Wine":
+            switch wineContainer {
+            case "Glass":
+                volumeML = 148
+            case "Flute":
+                volumeML = 177
+            case "Half bottle":
+                volumeML = 375
+            case "Bottle":
+                volumeML = 750
+            case "Full Solo Cup":
+                volumeML = 355
+            case "Half Solo Cup":
+                volumeML = 178
+            default:
+                NSLog("Invalid wine container.")
+            }
+            
+            switch wineColor {
+            case "Red":
+                percentAlcohol = 0.135
+            case "White":
+                percentAlcohol = 0.10
+            case "Champagne":
+                percentAlcohol = 0.12
+            default: // Champagne
+                NSLog("Invalid wine color.")
+            }
+        case "Spirit":
+            switch spiritContainer {
+            case "Standard shot (1oz)":
+                volumeML = 30
+            case "Tall shot (1.5oz)":
+                volumeML = 45
+            case "Double shot (2oz)":
+                volumeML = 60
+            case "Quarter Solo Cup":
+                volumeML = 89
+            case "Half Solo Cup":
+                volumeML = 178
+            case "Glencairn":
+                volumeML = 50
+            case "Tokkuri (small flask)":
+                volumeML = 360
+            case "Masu (wooden box)":
+                volumeML = 180
+            case "2-go":
+                volumeML = 180 * 2
+            case "3-go":
+                volumeML = 180 * 3
+            case "4-go":
+                volumeML = 180 * 4
+            default:
+                NSLog("Invalid spirit container.")
+            }
+            
+            switch spiritType {
+            case "Vodka":
+                percentAlcohol = 0.4
+            case "Rum":
+                percentAlcohol = 0.4
+            case "Tequila":
+                percentAlcohol = 0.4
+            case "Gin":
+                percentAlcohol = 0.4
+            case "Whiskey":
+                percentAlcohol = 0.4
+            case "Sake":
+            case "Cordials":
+            default:
+                NSLog("Invalid spirit type.")
+            }
+        case "Cocktail":
+            switch cocktailType {
+            case "Bloody Mary":
+                percentAlcohol = 0.133
+                volumeML = 177
+            case "Jack & Coke":
+                percentAlcohol = 0.114
+                volumeML = 207
+            case "Gin & Tonic":
+                percentAlcohol = 0.133
+                volumeML = 207
+            case "Rum & Coke":
+                percentAlcohol = 0.114
+                volumeML = 207
+            case "Manhattan":
+                percentAlcohol = 0.317
+                volumeML = 89
+            case "Margarita":
+                percentAlcohol = 0.333
+                volumeML = 89
+            case "Mimosa":
+                percentAlcohol = 0.06
+                volumeML = 177
+            case "Mai Tai":
+                percentAlcohol = 0.224
+                volumeML = 133
+            case "Mojito":
+                percentAlcohol = 0.133
+                volumeML = 177
+            case "Daiquiri":
+                percentAlcohol = 0.213
+                volumeML = 111
+            case "Piña Colada":
+                percentAlcohol = 0.133
+                volumeML = 266
+            case "Martini":
+                percentAlcohol = 0.373
+                volumeML = 67
+            case "Aviation":
+                percentAlcohol = 0.289
+                volumeML = 104
+            case "Sidecar":
+                percentAlcohol = 0.245
+                volumeML = 81
+            default:
+                NSLog("Invalid cocktail.")
+            }
+        default:
+            NSLog("Invalid drink class.")
+        }
+        
+        switch spiritType {
+        case <#pattern#>:
+            <#code#>
+        default:
+            <#code#>
+        }
+        
     }
+    
+    private func computePercentAlcohol() {
+        
+    }
+    
+    private func computeConsumptionDuration() {
+        
+    }
+    
+    private func computeContainerSizeML() {
+        
+    }
+    
+    private func computeDrinkUnits() {
+        
+    }
+    
+    private func computeFullLife() {
+        
+    }
+    
+    private func computeHalfLife() {
+        
+    }
+    
+    func computeDerivedValues() {
+        computeGramsAlcohol()
+        computePercentAlcohol()
+        computeConsumptionDuration()
+        computeContainerSizeML()
+        computeDrinkUnits()
+        computeFullLife()
+        computeHalfLife()
+        computeHalfLife()
+    }
+    
+}
+
+
+enum DrinkError: Error {
+    case invalidBeerContainer
+    case invalidDrinkClass
 }
 
 
@@ -63,7 +256,7 @@ let questionsDict: [String:Question] = [
                  pushTo: [0: "beerContainer"]),
     "beerContainer":
         Question(questionString: "How much are you drinking?",
-                 answers: ["Full Solo Cup", "Half Solo Cup", "Standard Can", "Tall Can", "Pint", "Half Pint", "Custom"],
+                 answers: ["Full Solo Cup", "Half Solo Cup", "Standard Can/Bottle (12oz)", "Double Can/Bottle (24oz)", "Pint", "Half Pint"],
                  pushTo: [0: "sipOrShotgun"]),
     "sipOrShotgun":
         Question(questionString: "Are you sipping or shotgunning?",
@@ -83,7 +276,7 @@ let questionsDict: [String:Question] = [
                  pushTo: [0: "wineContainer"]),
     "wineContainer":
         Question(questionString: "How much are you drinking?",
-                 answers: ["Glass", "Flute", "Half bottle", "Bottle", "Solo Cup", "Half Solo Cup"],
+                 answers: ["Standard glass", "Flute", "Half bottle", "Bottle", "Full Solo Cup", "Half Solo Cup"],
                  pushTo: [0: "timeBeganConsumption"]),
     "spiritType":
         Question(questionString: "What are you drinking?",
@@ -99,14 +292,14 @@ let questionsDict: [String:Question] = [
                  pushTo: [0: "timeBeganConsumption"]),
     "sakeContainer":
         Question(questionString: "How much are you drinking?",
-                 answers: [ "Tokkuri (small flask)", "Masu (wooden box)", "2-go", "3-go", "4-go", "Standard shot (1oz)", "Tall shot (1.5oz)", "Double shot (2oz)"],
+                 answers: ["Tokkuri (small flask)", "Masu (wooden box)", "2-go", "3-go", "4-go", "Standard shot (1oz)", "Tall shot (1.5oz)", "Double shot (2oz)"],
                  pushTo: [0: "timeBeganConsumption"]),
     "cordialType":
         Question(questionString: "What are you drinking?",
                  answers: ["Amaretto", "Baileys", "Jägermeister", "Kahlúa", "Schnapps", "Amarula", "Pavan", "Licor 43", "Strega", "Custom"],
                  pushTo: [0: "spiritContainer"]),
     "cocktailType":
-        Question(questionString: "What are you drinking?", answers: ["Bloody Mary", "Jack & Coke", "Gin & Tonic", "Rum & Coke", "Manhattan", "Margarita", "Mimosa", "Mai Tai", "Mojito", "Daquiri", "Piña Colada", "Martini", "Aviation", "Sidecar"], pushTo: [0: "cocktailSize"]),
+        Question(questionString: "What are you drinking?", answers: ["Bloody Mary", "Jack & Coke", "Gin & Tonic", "Rum & Coke", "Manhattan", "Margarita", "Mimosa", "Mai Tai", "Mojito", "Daiquiri", "Piña Colada", "Martini", "Aviation", "Sidecar"], pushTo: [0: "cocktailSize"]),
     "cocktailSize":
         Question(questionString: "How big is the cocktail?",
                  answers: ["About standard size", "A drink and a half", "Double", "Triple"],
