@@ -143,11 +143,89 @@ class ResultsController: UIViewController {
         }
     }
     
+    func saveDrink() -> Int64 {
+        let path = NSSearchPathForDirectoriesInDomains(
+            .documentDirectory, .userDomainMask, true
+        ).first!
+        
+        let drinks = Table("drinks")
+        
+        let id = Expression<Int64>("id")
+        let time_added = Expression<Int64>("time_added")
+        let drink = Expression<SQLite.Blob>("drink")
+        do {
+            let db = try Connection("\(path)/db.sqlite3")
+            try db.run(drinks.create(ifNotExists: true) { t in     // CREATE TABLE "drinks" (
+                t.column(id, primaryKey: true) //     "id" INTEGER PRIMARY KEY NOT NULL,
+                t.column(time_added, unique: true)
+                t.column(drink)
+            })
+            let time_now = Int64(NSDate().timeIntervalSince1970)
+            let rowID = try db.run(drinks.insert(time_added <- time_now, drink <- drink))
+            return rowID
+
+        } catch let Result.error(message, code, statement) where code == SQLITE_CONSTRAINT {
+            NSLog("constraint failed: \(message), in \(String(describing: statement))")
+            return -1
+        } catch let error {
+            NSLog("insertion failed: \(error)")
+            return -1
+        }
+    }
+    
+    func deleteDrink(rowID: Int) {
+        let path = NSSearchPathForDirectoriesInDomains(
+            .documentDirectory, .userDomainMask, true
+        ).first!
+        
+        let drinks = Table("drinks")
+        let id = Expression<Int>("id")
+        do {
+            let db = try Connection("\(path)/db.sqlite3")
+            let drinkToDelete = drinks.filter(id == rowID)
+            try db.run(drinkToDelete.delete())
+        } catch let Result.error(message, code, statement) where code == SQLITE_CONSTRAINT {
+            NSLog("constraint failed: \(message), in \(String(describing: statement))")
+        } catch let error {
+            NSLog("insertion failed: \(error)")
+        }
+    }
+    
+    func successAnimation(size: CGFloat) {
+        animationView!.frame = CGRect(x: self.view.frame.size.width / 2 - size / 2, y: 125, width: size, height: size)
+        animationView!.contentMode = .scaleAspectFit
+        animationView!.loopMode = .playOnce
+        animationView!.animationSpeed = 0.8
+        view.addSubview(animationView!)
+        animationView!.play()
+    }
+    
+    func addAnotherDrinkButton(size: CGFloat) {
+        let addAnotherButton = MyButton()
+        addAnotherButton.frame = CGRect(x: self.view.frame.size.width / 2 - ((size + 50 ) / 2), y: 175 + size, width: size + 50, height: 30)
+        addAnotherButton.setTitle("Add another drink", for: .normal)
+        addAnotherButton.addTarget(self, action: #selector(addAnother(_:)), for: .touchUpInside)
+        view.addSubview(addAnotherButton)
+    }
+    
+    func addDeleteButton(size: CGFloat, rowID: Int) {
+        let deleteButton = MyButton()
+        deleteButton.frame = CGRect(x: self.view.frame.size.width / 2 - ((size + 50 ) / 2), y: 225 + size, width: size + 50, height: 30)
+        deleteButton.setTitle("Delete this drink", for: .normal)
+        deleteButton.tag = rowID
+        deleteButton.addTarget(self, action: #selector(deleteDrinkButton(_:)), for: .touchUpInside)
+        view.addSubview(deleteButton)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.title = "Done!"
         view.backgroundColor = UIColor.white
+        navigationItem.setHidesBackButton(true, animated: true)
+        
+        // write the drink to the db
+        let rowID = saveDrink()
         
         // Add success text
         view.addSubview(resultsLabel)
@@ -156,65 +234,25 @@ class ResultsController: UIViewController {
         
         // Add success animation
         animationView = .init(name: "checkmark")
-        let checkmarkSize = animationView!.frame.size.height * 0.9
-        animationView!.frame = CGRect(x: self.view.frame.size.width / 2 - checkmarkSize / 2, y: 125,
-                                      width: checkmarkSize, height: checkmarkSize)
-        animationView!.contentMode = .scaleAspectFit
-        animationView!.loopMode = .playOnce
-        animationView!.animationSpeed = 0.8
-        view.addSubview(animationView!)
-        animationView!.play()
+        let checkmarkSize: CGFloat = animationView!.frame.size.height * 0.9
+        successAnimation(size: checkmarkSize)
         
         // Add button to go back to start
-        let addAnotherButton = MyButton()
-        addAnotherButton.frame = CGRect(x: self.view.frame.size.width / 2 - ((checkmarkSize + 50 ) / 2), y: 175 + checkmarkSize, width: checkmarkSize + 50, height: 30)
-        addAnotherButton.setTitle("Add another drink", for: .normal)
-        addAnotherButton.addTarget(self, action: #selector(addAnother(_:)), for: .touchUpInside)
-        view.addSubview(addAnotherButton)
+        addAnotherDrinkButton(size: checkmarkSize)
         
         // Add button to delete the drink
-        
-        let deleteButton = MyButton()
-        deleteButton.frame = CGRect(x: self.view.frame.size.width / 2 - ((checkmarkSize + 50 ) / 2), y: 225 + checkmarkSize, width: checkmarkSize + 50, height: 30)
-        deleteButton.setTitle("Delete this drink", for: .normal)
-        deleteButton.addTarget(self, action: #selector(deleteDrink(_:)), for: .touchUpInside)
-        view.addSubview(deleteButton)
-        
-        
-        // Add drink to the db
-        
-        let path = NSSearchPathForDirectoriesInDomains(
-            .documentDirectory, .userDomainMask, true
-        ).first!
-
-        do {
-            let db = try Connection("\(path)/db.sqlite3")
-            
-            let drinks = Table("drinks")
-            
-            let id = Expression<Int64>("id")
-            let time_added = Expression<Int64>("time_added")
-            let drink = Expression<SQLite.Blob>("drink")
-            
-            try db.run(drinks.create(ifNotExists: true) { t in     // CREATE TABLE "drinks" (
-                t.column(id, primaryKey: true) //     "id" INTEGER PRIMARY KEY NOT NULL,
-                t.column(time_added, unique: true)
-                t.column(drink)
-            })
-            
-            let time_now = Int64(NSDate().timeIntervalSince1970)
-            try db.run(drinks.insert(time_added <- time_now, drink <- drink))
-        } catch {
-            print("DB ops failed")
-        }
-        
+        addDeleteButton(size: checkmarkSize, rowID: Int(rowID))
     }
     
     @objc func addAnother(_ sender:UIButton!) {
         self.navigationController?.popToRootViewController(animated: true)
     }
     
-    @objc func deleteDrink(_ sender:UIButton!) {
+    @objc func deleteDrinkButton(_ sender:MyButton!) {
+        if sender.tag == -1 {
+            NSLog("rowID not found; drink cannot be deleted")
+            return
+        }
         
         // Create the alert controller
         let alertController = UIAlertController(title: "Are you sure you want to delete this drink?", message: "The drink will be permanently deleted.", preferredStyle: .alert)
@@ -223,6 +261,7 @@ class ResultsController: UIViewController {
         let okAction = UIAlertAction(title: "Delete drink", style: UIAlertAction.Style.default) {
             UIAlertAction in
             NSLog("OK Pressed")
+            self.deleteDrink(rowID: sender.tag)
             self.navigationController?.popToRootViewController(animated: true)
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel) {
