@@ -7,111 +7,7 @@
 
 import UIKit
 import Lottie
-
-class Drink {
-    var gramsAlcohol: Float?
-    var percentAcohol: Float?
-    var timeBeganConsumption: Date?
-    var timeAdded: Date?
-    var consumptionDuration: DateInterval?
-    var drinkClass: String?
-    var containerSize: Float? // units of mL
-    var drinkUnits: String?
-    var drinkFullLife: Date?
-    var drinkHalfLife: Date?
-    var hunger: Float?
-    
-    // Beer Specific Data
-    var beerStrength: Float?  // lo: .027, med: .035, full: .048, dub: .0675, trip: .085, quad: .115
-    var sipOrShotgun: String?
-    var beerContainer: String?
-    
-    // Wine Specific Data
-    var wineColor: String?
-    var wineContainer: String?
-    
-    // Spirit Specific Data
-    var spiritType: String?
-    var whiskeyContainer: String?
-    var sakeContainer: String?
-    var cordialType: String?
-    
-    // Cocktail Specific Data
-    var cocktailType: String?
-    var cocktailSize: Float?
-    
-    private func getGramsAlcohol() {
-        self.gramsAlcohol = 4.0
-    }
-}
-
-
-struct Question {
-    var questionString: String
-    var answers: [String]
-    var pushTo: [Int:String]
-}
-
-let questionsDict: [String:Question] = [
-    "drinkClass":
-        Question(questionString: "What are you drinking?",
-                 answers: ["Beer", "Wine", "Spirits", "Cocktail", "Custom"],
-                 pushTo: [0: "beerStrength", 1: "wineColor", 2: "spiritType", 3: "cocktailType", 4: "hunger"]),
-    "beerStrength":
-        Question(questionString: "What is the strength of your beer? (most beers are 'Full')",
-                 answers: ["Low (2.7%)", "Medium (3.5%)", "Full (4.8%)", "Dubbel (6.8%)", "Trippel (8.5%)", "Quadruppel (11.5%)", "Custom"],
-                 pushTo: [0: "beerContainer"]),
-    "beerContainer":
-        Question(questionString: "How much are you drinking?",
-                 answers: ["Full Solo Cup", "Half Solo Cup", "Standard Can", "Tall Can", "Pint", "Half Pint", "Custom"],
-                 pushTo: [0: "sipOrShotgun"]),
-    "sipOrShotgun":
-        Question(questionString: "Are you sipping or shotgunning?",
-                 answers: ["Sipping", "Shotgunning"],
-                 pushTo: [0: "timeBeganConsumption"]),
-    "timeBeganConsumption":
-        Question(questionString: "When did you start drinking?",
-                 answers: ["Now", "15 minutes ago", "30 minutes ago", "45 minutes ago", "1 hour ago", "1.5 hour ago"],
-                 pushTo: [0: "hunger"]),
-    "hunger":
-        Question(questionString: "How hungry are you right now?",
-                 answers: ["Full", "Not Hungry", "Hungry", "Very Hungry"],
-                 pushTo: [0: "done"]),
-    "wineColor":
-        Question(questionString: "Red, white, or bubbly?",
-                 answers: ["Red", "White", "Champagne"],
-                 pushTo: [0: "wineContainer"]),
-    "wineContainer":
-        Question(questionString: "How much are you drinking?",
-                 answers: ["Glass", "Flute", "Half bottle", "Bottle", "Solo Cup", "Half Solo Cup"],
-                 pushTo: [0: "timeBeganConsumption"]),
-    "spiritType":
-        Question(questionString: "What are you drinking?",
-                 answers: ["Vodka", "Rum", "Tequila", "Gin", "Whiskey", "Sake", "Cordials"],
-                 pushTo: [0: "spiritContainer", 1: "spiritContainer", 2: "spiritContainer", 3: "spiritContainer", 4: "whiskeyContainer", 5: "sakeContainer", 6: "cordialType"]),
-    "spiritContainer":
-        Question(questionString: "How much are you drinking?",
-                 answers: ["Standard shot (1oz)", "Tall shot (1.5oz)", "Double shot (2oz)", "Quarter Solo Cup", "Half Solo Cup"],
-                 pushTo: [0: "timeBeganConsumption"]),
-    "whiskeyContainer":
-        Question(questionString: "How much are you drinking?",
-                 answers: ["Standard shot (1oz)", "Tall shot (1.5oz)", "Double shot (2oz)", "Glencairn"],
-                 pushTo: [0: "timeBeganConsumption"]),
-    "sakeContainer":
-        Question(questionString: "How much are you drinking?",
-                 answers: [ "Tokkuri (small flask)", "Masu (wooden box)", "2-go", "3-go", "4-go", "Standard shot (1oz)", "Tall shot (1.5oz)", "Double shot (2oz)"],
-                 pushTo: [0: "timeBeganConsumption"]),
-    "cordialType":
-        Question(questionString: "What are you drinking?",
-                 answers: ["Amaretto", "Baileys", "Jägermeister", "Kahlúa", "Schnapps", "Amarula", "Pavan", "Licor 43", "Strega", "Custom"],
-                 pushTo: [0: "spiritContainer"]),
-    "cocktailType":
-        Question(questionString: "What are you drinking?", answers: ["Bloody Mary", "Jack & Coke", "Gin & Tonic", "Rum & Coke", "Manhattan", "Margarita", "Mimosa", "Mai Tai", "Mojito", "Daquiri", "Piña Colada", "Martini", "Aviation", "Sidecar"], pushTo: [0: "cocktailSize"]),
-    "cocktailSize":
-        Question(questionString: "How big is the cocktail?",
-                 answers: ["About standard size", "A drink and a half", "Double", "Triple"],
-                 pushTo: [0: "timeBeganConsumption"])
-]
+import SQLite
 
 class TrackerViewController: UITableViewController {
     
@@ -235,7 +131,6 @@ class TrackerViewController: UITableViewController {
             navigationController?.pushViewController(controller, animated: true)
         }
     }
-    
 }
 
 class ResultsController: UIViewController {
@@ -244,7 +139,7 @@ class ResultsController: UIViewController {
     
     var drink = Drink() {
         didSet {
-            resultsLabel.text = "You added your drink! Party on! ;)"
+            // resultsLabel.text = "You added your drink! Party on! ;)"
         }
     }
     
@@ -254,27 +149,98 @@ class ResultsController: UIViewController {
         navigationItem.title = "Done!"
         view.backgroundColor = UIColor.white
         
+        // Add success text
         view.addSubview(resultsLabel)
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": resultsLabel]))
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]-300-|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": resultsLabel]))
         
         // Add success animation
         animationView = .init(name: "checkmark")
-        let size = animationView!.frame.size.height * 0.9
-        animationView!.frame = CGRect(x: self.view.frame.size.width / 2 - size / 2, y: 150,
-                                      width: size, height: size)
+        let checkmarkSize = animationView!.frame.size.height * 0.9
+        animationView!.frame = CGRect(x: self.view.frame.size.width / 2 - checkmarkSize / 2, y: 125,
+                                      width: checkmarkSize, height: checkmarkSize)
         animationView!.contentMode = .scaleAspectFit
         animationView!.loopMode = .playOnce
         animationView!.animationSpeed = 0.8
         view.addSubview(animationView!)
         animationView!.play()
         
+        // Add button to go back to start
+        let addAnotherButton = MyButton()
+        addAnotherButton.frame = CGRect(x: self.view.frame.size.width / 2 - ((checkmarkSize + 50 ) / 2), y: 175 + checkmarkSize, width: checkmarkSize + 50, height: 30)
+        addAnotherButton.setTitle("Add another drink", for: .normal)
+        addAnotherButton.addTarget(self, action: #selector(addAnother(_:)), for: .touchUpInside)
+        view.addSubview(addAnotherButton)
         
+        // Add button to delete the drink
+        
+        let deleteButton = MyButton()
+        deleteButton.frame = CGRect(x: self.view.frame.size.width / 2 - ((checkmarkSize + 50 ) / 2), y: 225 + checkmarkSize, width: checkmarkSize + 50, height: 30)
+        deleteButton.setTitle("Delete this drink", for: .normal)
+        deleteButton.addTarget(self, action: #selector(deleteDrink(_:)), for: .touchUpInside)
+        view.addSubview(deleteButton)
+        
+        
+        // Add drink to the db
+        
+        let path = NSSearchPathForDirectoriesInDomains(
+            .documentDirectory, .userDomainMask, true
+        ).first!
+
+        do {
+            let db = try Connection("\(path)/db.sqlite3")
+            
+            let drinks = Table("drinks")
+            
+            let id = Expression<Int64>("id")
+            let time_added = Expression<Int64>("time_added")
+            let drink = Expression<SQLite.Blob>("drink")
+            
+            try db.run(drinks.create(ifNotExists: true) { t in     // CREATE TABLE "drinks" (
+                t.column(id, primaryKey: true) //     "id" INTEGER PRIMARY KEY NOT NULL,
+                t.column(time_added, unique: true)
+                t.column(drink)
+            })
+            
+            let time_now = Int64(NSDate().timeIntervalSince1970)
+            try db.run(drinks.insert(time_added <- time_now, drink <- drink))
+        } catch {
+            print("DB ops failed")
+        }
+        
+    }
+    
+    @objc func addAnother(_ sender:UIButton!) {
+        self.navigationController?.popToRootViewController(animated: true)
+    }
+    
+    @objc func deleteDrink(_ sender:UIButton!) {
+        
+        // Create the alert controller
+        let alertController = UIAlertController(title: "Are you sure you want to delete this drink?", message: "The drink will be permanently deleted.", preferredStyle: .alert)
+
+        // Create the actions
+        let okAction = UIAlertAction(title: "Delete drink", style: UIAlertAction.Style.default) {
+            UIAlertAction in
+            NSLog("OK Pressed")
+            self.navigationController?.popToRootViewController(animated: true)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel) {
+            UIAlertAction in
+            NSLog("Cancel Pressed")
+        }
+
+        // Add the actions
+        alertController.addAction(okAction)
+        alertController.addAction(cancelAction)
+
+        // Present the controller
+        self.present(alertController, animated: true, completion: nil)
     }
     
     let resultsLabel: UILabel = {
         let label = UILabel()
-        label.text = "Congrats"
+        label.text = "You added your drink! Party on! ;)"
         label.textAlignment = .center
         label.font = UIFont.boldSystemFont(ofSize: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -291,8 +257,8 @@ class QuestionHeader: UITableViewHeaderFooterView {
     
     let nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Sample question"
         label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -322,7 +288,6 @@ class AnswerCell: UITableViewCell {
     
     let nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Sample answer"
         label.font = UIFont.systemFont(ofSize: 14)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -334,4 +299,25 @@ class AnswerCell: UITableViewCell {
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-10-[v0]-10-|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": nameLabel]))
     }
     
+}
+
+class MyButton : UIButton {
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
+    }
+
+    private func setup() {
+        self.layer.masksToBounds = true
+        self.backgroundColor = #colorLiteral(red: 0.5514355459, green: 0.6232073761, blue: 1, alpha: 1)
+        self.layer.cornerRadius = 15
+        self.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+    }
+
 }

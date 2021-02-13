@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1EA43CEC016857B9AA7BCC4E /* Pods_Bacster2Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F76BF657E712F4D98ACE9EA0 /* Pods_Bacster2Tests.framework */; };
 		5A457F3E25D35D26001D4772 /* checkmark.json in Resources */ = {isa = PBXBuildFile; fileRef = 5A457F3D25D35D26001D4772 /* checkmark.json */; };
+		5A457F5325D73157001D4772 /* DrinkQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A457F5225D73157001D4772 /* DrinkQuestions.swift */; };
 		5A9BA6022578279B00739E04 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9BA6012578279B00739E04 /* AppDelegate.swift */; };
 		5A9BA6042578279B00739E04 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9BA6032578279B00739E04 /* SceneDelegate.swift */; };
 		5A9BA6062578279B00739E04 /* TrackerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9BA6052578279B00739E04 /* TrackerViewController.swift */; };
@@ -47,6 +48,7 @@
 		30C937761DF23C8B91F87F0F /* Pods-Bacster2Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bacster2Tests.release.xcconfig"; path = "Target Support Files/Pods-Bacster2Tests/Pods-Bacster2Tests.release.xcconfig"; sourceTree = "<group>"; };
 		5A30D3842583939C002E22F4 /* testing.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = testing.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		5A457F3D25D35D26001D4772 /* checkmark.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = checkmark.json; path = Assets.xcassets/checkmark.json; sourceTree = "<group>"; };
+		5A457F5225D73157001D4772 /* DrinkQuestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkQuestions.swift; sourceTree = "<group>"; };
 		5A9BA5FE2578279B00739E04 /* Bacster2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bacster2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A9BA6012578279B00739E04 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5A9BA6032578279B00739E04 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 				5A9BA658257C88A500739E04 /* TabBarController.swift */,
 				5A9BA65D257C8E4800739E04 /* UINavCon.swift */,
 				5A9BA6052578279B00739E04 /* TrackerViewController.swift */,
+				5A457F5225D73157001D4772 /* DrinkQuestions.swift */,
 				5A9BA6432578301200739E04 /* HomeViewController.swift */,
 				5A9BA6482578301A00739E04 /* HistoryViewController.swift */,
 				5A9BA60D2578279D00739E04 /* Assets.xcassets */,
@@ -429,6 +432,7 @@
 				5A9BA6022578279B00739E04 /* AppDelegate.swift in Sources */,
 				5A9BA6492578301A00739E04 /* HistoryViewController.swift in Sources */,
 				5A9BA659257C88A500739E04 /* TabBarController.swift in Sources */,
+				5A457F5325D73157001D4772 /* DrinkQuestions.swift in Sources */,
 				5A9BA6042578279B00739E04 /* SceneDelegate.swift in Sources */,
 				5A9BA60C2578279B00739E04 /* Bacster2.xcdatamodeld in Sources */,
 			);
