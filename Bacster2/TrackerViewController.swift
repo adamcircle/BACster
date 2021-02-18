@@ -96,8 +96,8 @@ class TrackerViewController: UITableViewController {
             }
             drink.timeBeganConsumption = timeBegan
         } else if questionID == "hunger" {
-            let data: [Float] = [6.0, 9.0, 12.0, 15.0]
-            drink.hunger = data[index]
+            let data: [Int] = [6, 9, 12, 15]
+            drink.halfLife = data[index]
         } else if questionID == "wineColor" {
             drink.wineColor = question?.answers[index]
         } else if questionID == "wineContainer" {
@@ -146,6 +146,7 @@ class ResultsController: UIViewController {
         super.viewDidLoad()
         
         drink.timeAdded = Date()
+        drink.computeDerivedValues()
         navigationItem.title = "Done!"
         view.backgroundColor = UIColor.white
         navigationItem.setHidesBackButton(true, animated: true)

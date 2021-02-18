@@ -11,15 +11,14 @@ import UIKit
 class Drink {
     var gramsAlcohol: Float?
     var percentAlcohol: Float?
-    var timeBeganConsumption: Date?
-    var timeAdded: Date?
-    var consumptionDuration: DateInterval?
+    public var timeBeganConsumption: Date?
+    public var timeAdded: Date?
+    public var timeFullyAbsorbed: Date?
     var drinkClass: String?
-    var containerSizeML: Float?
+    var volumeML: Int?
     var drinkUnits: String?
-    var drinkFullLife: Date?
-    var drinkHalfLife: Date?
-    var hunger: Float?
+    var fullLife: Int?
+    var halfLife: Int?
     
     // Beer Specific Data
     var beerStrength: Float?  // lo: .027, med: .035, full: .048, dub: .0675, trip: .085, quad: .115
@@ -41,9 +40,8 @@ class Drink {
     
     
     private func computeGramsAlcohol() {
-        let gramsAlcohol: Float
-        let percentAlcohol: Float
-        let volumeML: Int
+        var percentAlcohol: Float = 0
+        var volumeML: Int = 0
         switch drinkClass {
         case "Beer":
             switch beerContainer {
@@ -91,7 +89,7 @@ class Drink {
             default: // Champagne
                 NSLog("Invalid wine color.")
             }
-        case "Spirit":
+        case "Spirits":
             switch spiritContainer {
             case "Standard shot (1oz)":
                 volumeML = 30
@@ -131,7 +129,30 @@ class Drink {
             case "Whiskey":
                 percentAlcohol = 0.4
             case "Sake":
+                percentAlcohol = 0.15
             case "Cordials":
+                switch cordialType {
+                case "Disaronno":
+                    percentAlcohol = 0.28
+                case "Baileys":
+                    percentAlcohol = 0.17
+                case "Jägermeister":
+                    percentAlcohol = 0.35
+                case "Kahlúa":
+                    percentAlcohol = 0.2
+                case "Schnapps":
+                    percentAlcohol = 0.15
+                case "Amarula":
+                    percentAlcohol = 0.17
+                case "Pavan":
+                    percentAlcohol = 0.18
+                case "Licor 43":
+                    percentAlcohol = 0.31
+                case "Strega":
+                    percentAlcohol = 0.4
+                default:
+                    NSLog("Invalid cordial.")
+                }
             default:
                 NSLog("Invalid spirit type.")
             }
@@ -186,56 +207,44 @@ class Drink {
             NSLog("Invalid drink class.")
         }
         
-        switch spiritType {
-        case <#pattern#>:
-            <#code#>
-        default:
-            <#code#>
+        self.percentAlcohol = percentAlcohol
+        self.volumeML = volumeML
+        self.gramsAlcohol = percentAlcohol * Float(volumeML) * 0.789
+    }
+    /*
+    private func computeConsumptionDuration() {
+        if self.sipOrShotgun == "Sipping" {
+            self.consumptionDuration = 1
+        } else if self.sipOrShotgun == "Shotgunning" {
+            self.consumptionDuration = 1
         }
         
-    }
-    
-    private func computePercentAlcohol() {
-        
-    }
-    
-    private func computeConsumptionDuration() {
-        
-    }
-    
-    private func computeContainerSizeML() {
-        
-    }
-    
-    private func computeDrinkUnits() {
-        
-    }
+        self.consumptionDuration
+    } */
     
     private func computeFullLife() {
-        
+        self.fullLife = Int(round(6.66 * Float(self.halfLife!)))
     }
     
-    private func computeHalfLife() {
-        
+    private func getTimeFullyAbsorbed() {
+        self.timeFullyAbsorbed = self.timeBeganConsumption?.addingTimeInterval(TimeInterval(self.fullLife! * 60))
+    }
+    
+    private func truncateSeconds(fromDate: Date) -> Date {
+        let calendar = Calendar.current
+        let fromDateComponents: DateComponents = calendar.dateComponents([.era , .year , .month , .day , .hour , .minute], from: fromDate)
+        return calendar.date(from: fromDateComponents)! as Date
     }
     
     func computeDerivedValues() {
         computeGramsAlcohol()
-        computePercentAlcohol()
-        computeConsumptionDuration()
-        computeContainerSizeML()
-        computeDrinkUnits()
+        // computeConsumptionDuration()
         computeFullLife()
-        computeHalfLife()
-        computeHalfLife()
+        self.timeBeganConsumption = truncateSeconds(fromDate: self.timeBeganConsumption!)
+        self.timeAdded = truncateSeconds(fromDate: self.timeAdded!)
+        getTimeFullyAbsorbed()
     }
     
-}
-
-
-enum DrinkError: Error {
-    case invalidBeerContainer
-    case invalidDrinkClass
 }
 
 
@@ -296,7 +305,7 @@ let questionsDict: [String:Question] = [
                  pushTo: [0: "timeBeganConsumption"]),
     "cordialType":
         Question(questionString: "What are you drinking?",
-                 answers: ["Amaretto", "Baileys", "Jägermeister", "Kahlúa", "Schnapps", "Amarula", "Pavan", "Licor 43", "Strega", "Custom"],
+                 answers: ["Amaretto", "Baileys", "Jägermeister", "Kahlúa", "Schnapps", "Amarula", "Pavan", "Licor 43", "Strega"],
                  pushTo: [0: "spiritContainer"]),
     "cocktailType":
         Question(questionString: "What are you drinking?", answers: ["Bloody Mary", "Jack & Coke", "Gin & Tonic", "Rum & Coke", "Manhattan", "Margarita", "Mimosa", "Mai Tai", "Mojito", "Daiquiri", "Piña Colada", "Martini", "Aviation", "Sidecar"], pushTo: [0: "cocktailSize"]),
