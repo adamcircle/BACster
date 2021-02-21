@@ -80,9 +80,6 @@ class TrackerViewController: UITableViewController {
             // let data = ["Full Solo Cup", "Half Solo Cup", "Standard Can/Bottle (12oz)", "Double Can/Bottle (24oz)", "Pint", "Half Pint"]
             drink.beerContainer = question?.answers[index]
             // drink.beerContainer = data[index]
-        } else if questionID == "sipOrShotgun" {
-            let data = ["Sipping", "Shotgunning"]
-            drink.sipOrShotgun = data[index]
         } else if questionID == "timeBeganConsumption" {
             var timeBegan = Date()
             switch index {
@@ -94,7 +91,7 @@ class TrackerViewController: UITableViewController {
             case 5: timeBegan = timeBegan.addingTimeInterval(TimeInterval(-90.0 * 60.0))
             default: break
             }
-            drink.timeBeganConsumption = timeBegan
+            drink.timeBeganConsumption = Double(timeBegan.timeIntervalSince1970)
         } else if questionID == "hunger" {
             let data: [Int] = [6, 9, 12, 15]
             drink.halfLife = data[index]
@@ -145,7 +142,7 @@ class ResultsController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        drink.timeAdded = Date()
+        drink.timeAdded = Double(Date().timeIntervalSince1970)
         drink.computeDerivedValues()
         navigationItem.title = "Done!"
         view.backgroundColor = UIColor.white
@@ -180,7 +177,7 @@ class ResultsController: UIViewController {
         
         let id = Expression<Int64>("id")
         let time_added = Expression<Int64>("time_added")
-        let drink = Expression<SQLite.Blob>("drink")
+        let drink = Expression<Drink>("drink")
         do {
             let db = try Connection("\(path)/db.sqlite3")
             try db.run(drinks.create(ifNotExists: true) { t in     // CREATE TABLE "drinks" (
@@ -189,7 +186,13 @@ class ResultsController: UIViewController {
                 t.column(drink)
             })
             let time_now = Int64(NSDate().timeIntervalSince1970)
-            let rowID = try db.run(drinks.insert(time_added <- time_now, drink <- drink))
+            var rowID: Int64
+            
+            try db.transaction {
+                rowID = try db.run(drinks.insert(self.drink))
+                let query = drinks.filter(id == rowID)
+                try db.run(query.update(time_added <- time_now))
+            }
             return rowID
 
         } catch let Result.error(message, code, statement) where code == SQLITE_CONSTRAINT {

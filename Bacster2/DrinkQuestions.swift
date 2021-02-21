@@ -7,13 +7,14 @@
 
 import Foundation
 import UIKit
+import SQLite
 
-class Drink {
+class Drink: Codable {
     var gramsAlcohol: Float?
     var percentAlcohol: Float?
-    public var timeBeganConsumption: Date?
-    public var timeAdded: Date?
-    public var timeFullyAbsorbed: Date?
+    var timeBeganConsumption: Double? // need to convert all the dates to ints since 1970
+    var timeAdded: Double?
+    var timeFullyAbsorbed: Double?
     var drinkClass: String?
     var volumeML: Int?
     var drinkUnits: String?
@@ -22,7 +23,6 @@ class Drink {
     
     // Beer Specific Data
     var beerStrength: Float?  // lo: .027, med: .035, full: .048, dub: .0675, trip: .085, quad: .115
-    var sipOrShotgun: String?
     var beerContainer: String?
     
     // Wine Specific Data
@@ -37,6 +37,32 @@ class Drink {
     // Cocktail Specific Data
     var cocktailType: String?
     var cocktailMultiplier: Float?
+    
+    private func setOptionalsToNil() {
+        self.gramsAlcohol = self.gramsAlcohol ?? nil
+        self.percentAlcohol = self.percentAlcohol ?? nil
+        self.volumeML = self.volumeML ?? nil
+        self.drinkUnits = self.drinkUnits ?? nil
+        self.fullLife = self.fullLife ?? nil
+        self.halfLife = self.halfLife ?? nil
+        
+        // Beer Specific Data
+        self.beerStrength = self.beerStrength ?? nil
+        self.beerContainer = self.beerContainer ?? nil
+        
+        // Wine Specific Data
+        self.wineColor = self.wineColor ?? nil
+        self.wineContainer = self.wineContainer ?? nil
+        
+        // Spirit Specific Data
+        self.spiritType = self.spiritType ?? nil
+        self.spiritContainer = self.spiritContainer ?? nil
+        self.cordialType = self.cordialType ?? nil
+        
+        // Cocktail Specific Data
+        self.cocktailType = self.cocktailType ?? nil
+        self.cocktailMultiplier = self.cocktailMultiplier ?? nil
+    }
     
     
     private func computeGramsAlcohol() {
@@ -227,13 +253,17 @@ class Drink {
     }
     
     private func getTimeFullyAbsorbed() {
-        self.timeFullyAbsorbed = self.timeBeganConsumption?.addingTimeInterval(TimeInterval(self.fullLife! * 60))
+        let timeBeganConsumption = Date(timeIntervalSince1970: self.timeBeganConsumption!)
+        let timeFullyAbsorbed = timeBeganConsumption.addingTimeInterval(TimeInterval(self.fullLife! * 60))
+        self.timeFullyAbsorbed = Double(timeFullyAbsorbed.timeIntervalSince1970)
     }
     
-    private func truncateSeconds(fromDate: Date) -> Date {
+    private func truncateSeconds(fromDate: Double) -> Double {
+        let fromDate = Date(timeIntervalSince1970: TimeInterval(fromDate))
         let calendar = Calendar.current
         let fromDateComponents: DateComponents = calendar.dateComponents([.era , .year , .month , .day , .hour , .minute], from: fromDate)
-        return calendar.date(from: fromDateComponents)! as Date
+        let truncated = calendar.date(from: fromDateComponents)! as Date
+        return Double(truncated.timeIntervalSince1970)
     }
     
     func computeDerivedValues() {
@@ -243,8 +273,8 @@ class Drink {
         self.timeBeganConsumption = truncateSeconds(fromDate: self.timeBeganConsumption!)
         self.timeAdded = truncateSeconds(fromDate: self.timeAdded!)
         getTimeFullyAbsorbed()
+        setOptionalsToNil()
     }
-    
 }
 
 
