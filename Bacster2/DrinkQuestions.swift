@@ -9,20 +9,21 @@ import Foundation
 import UIKit
 import SQLite
 
-class Drink: Codable {
-    var gramsAlcohol: Float?
-    var percentAlcohol: Float?
+class Drink {
+    var rowID: Int64?
+    var gramsAlcohol: Double?
+    var percentAlcohol: Double?
     var timeBeganConsumption: Double? // need to convert all the dates to ints since 1970
     var timeAdded: Double?
     var timeFullyAbsorbed: Double?
     var drinkClass: String?
-    var volumeML: Int?
+    var volumeML: Int64?
     var drinkUnits: String?
-    var fullLife: Int?
-    var halfLife: Int?
+    var fullLife: Int64?
+    var halfLife: Int64?
     
     // Beer Specific Data
-    var beerStrength: Float?  // lo: .027, med: .035, full: .048, dub: .0675, trip: .085, quad: .115
+    var beerStrength: Double?  // lo: .027, med: .035, full: .048, dub: .0675, trip: .085, quad: .115
     var beerContainer: String?
     
     // Wine Specific Data
@@ -36,15 +37,12 @@ class Drink: Codable {
     
     // Cocktail Specific Data
     var cocktailType: String?
-    var cocktailMultiplier: Float?
+    var cocktailMultiplier: Double?
     
     private func setOptionalsToNil() {
         self.gramsAlcohol = self.gramsAlcohol ?? nil
         self.percentAlcohol = self.percentAlcohol ?? nil
-        self.volumeML = self.volumeML ?? nil
         self.drinkUnits = self.drinkUnits ?? nil
-        self.fullLife = self.fullLife ?? nil
-        self.halfLife = self.halfLife ?? nil
         
         // Beer Specific Data
         self.beerStrength = self.beerStrength ?? nil
@@ -66,8 +64,8 @@ class Drink: Codable {
     
     
     private func computeGramsAlcohol() {
-        var percentAlcohol: Float = 0
-        var volumeML: Int = 0
+        var percentAlcohol: Double = 0
+        var volumeML: Int64 = 0
         switch drinkClass {
         case "Beer":
             switch beerContainer {
@@ -235,7 +233,7 @@ class Drink: Codable {
         
         self.percentAlcohol = percentAlcohol
         self.volumeML = volumeML
-        self.gramsAlcohol = percentAlcohol * Float(volumeML) * 0.789
+        self.gramsAlcohol = percentAlcohol * Double(volumeML) * 0.789
     }
     /*
     private func computeConsumptionDuration() {
@@ -249,7 +247,7 @@ class Drink: Codable {
     } */
     
     private func computeFullLife() {
-        self.fullLife = Int(round(6.66 * Float(self.halfLife!)))
+        self.fullLife = Int64(round(6.66 * Double(self.halfLife!)))
     }
     
     private func getTimeFullyAbsorbed() {
@@ -275,6 +273,127 @@ class Drink: Codable {
         getTimeFullyAbsorbed()
         setOptionalsToNil()
     }
+    
+    func save(to db: Connection) -> Int64 {
+        let drinks = Table("drinks")
+        
+        // let id = Expression<Int64>("id")
+        let timeAdded = Expression<Double>("timeAdded")
+        let gramsAlcohol = Expression<Double>("gramsAlcohol")
+        let percentAlcohol = Expression<Double>("percentAlcohol")
+        let timeBeganConsumption = Expression<Double>("timeBeganConsumption")
+        let timeFullyAbsorbed = Expression<Double>("timeFullyAbsorbed")
+        let drinkClass = Expression<String>("drinkClass")
+        let volumeML = Expression<Int64>("volumeML")
+        let drinkUnits = Expression<String?>("drinkUnits")
+        let fullLife = Expression<Int64>("fullLife")
+        let halfLife = Expression<Int64>("halfLife")
+        let beerStrength = Expression<Double?>("beerStrength")
+        let beerContainer = Expression<String?>("beerContainer")
+        let wineColor = Expression<String?>("wineColor")
+        let wineContainer = Expression<String?>("wineContainer")
+        let spiritType = Expression<String?>("spiritType")
+        let spiritContainer = Expression<String?>("spiritContainer")
+        let cordialType = Expression<String?>("cordialType")
+        let cocktailType = Expression<String?>("cocktailType")
+        let cocktailMultiplier = Expression<Double?>("cocktailMultiplier")
+        
+        do {
+            let time_now = Double(NSDate().timeIntervalSince1970)
+            self.rowID = try db.run(drinks.insert(
+                    timeAdded <-                time_now,
+                    gramsAlcohol <-             self.gramsAlcohol!,
+                    percentAlcohol <-           self.percentAlcohol!,
+                    timeBeganConsumption <-     self.timeBeganConsumption!,
+                    timeFullyAbsorbed <-        self.timeFullyAbsorbed!,
+                    drinkClass <-               self.drinkClass!,
+                    volumeML <-                 self.volumeML!,
+                    drinkUnits <-               self.drinkUnits,
+                    fullLife <-                 self.fullLife!,
+                    halfLife <-                 self.halfLife!,
+                    beerStrength <-             self.beerStrength,
+                    beerContainer <-            self.beerContainer,
+                    wineColor <-                self.wineColor,
+                    wineContainer <-            self.wineContainer,
+                    spiritType <-               self.spiritType,
+                    spiritContainer <-          self.spiritContainer,
+                    cordialType <-              self.cordialType,
+                    cocktailType <-             self.cocktailType,
+                    cocktailMultiplier <-       self.cocktailMultiplier))
+            
+            NSLog("Drink saved.")
+
+        } catch let Result.error(message, code, statement) where code == SQLITE_CONSTRAINT {
+            NSLog("constraint failed: \(message), in \(String(describing: statement))")
+            return -1
+        } catch let error {
+            NSLog("insertion failed: \(error)")
+            return -1
+        }
+        
+        return self.rowID!
+    }
+    
+    func load(from row: Row) -> Self {
+        // List of expressions
+        let timeAdded = Expression<Double>("timeAdded")
+        let gramsAlcohol = Expression<Double>("gramsAlcohol")
+        let percentAlcohol = Expression<Double>("percentAlcohol")
+        let timeBeganConsumption = Expression<Double>("timeBeganConsumption")
+        let timeFullyAbsorbed = Expression<Double>("timeFullyAbsorbed")
+        let drinkClass = Expression<String>("drinkClass")
+        let volumeML = Expression<Int64>("volumeML")
+        let drinkUnits = Expression<String?>("drinkUnits")
+        let fullLife = Expression<Int64>("fullLife")
+        let halfLife = Expression<Int64>("halfLife")
+        let beerStrength = Expression<Double?>("beerStrength")
+        let beerContainer = Expression<String?>("beerContainer")
+        let wineColor = Expression<String?>("wineColor")
+        let wineContainer = Expression<String?>("wineContainer")
+        let spiritType = Expression<String?>("spiritType")
+        let spiritContainer = Expression<String?>("spiritContainer")
+        let cordialType = Expression<String?>("cordialType")
+        let cocktailType = Expression<String?>("cocktailType")
+        let cocktailMultiplier = Expression<Double?>("cocktailMultiplier")
+        
+        
+        self.timeAdded = row[timeAdded]
+        self.gramsAlcohol = row[gramsAlcohol]
+        self.percentAlcohol = row[percentAlcohol]
+        self.timeBeganConsumption = row[timeBeganConsumption]
+        self.timeFullyAbsorbed = row[timeFullyAbsorbed]
+        self.drinkClass = row[drinkClass]
+        self.volumeML = row[volumeML]
+        self.drinkUnits = row[drinkUnits]
+        self.fullLife = row[fullLife]
+        self.halfLife = row[halfLife]
+        self.beerStrength = row[beerStrength]
+        self.beerContainer = row[beerContainer]
+        self.wineColor = row[wineColor]
+        self.wineContainer = row[wineContainer]
+        self.spiritType = row[spiritType]
+        self.spiritContainer = row[spiritContainer]
+        self.cordialType = row[cordialType]
+        self.cocktailType = row[cocktailType]
+        self.cocktailMultiplier = row[cocktailMultiplier]
+        
+        return self
+    }
+    
+    func delete(from db: Connection) {
+        let drinks = Table("drinks")
+        let id = Expression<Int64>("id")
+        do {
+            let drinkToDelete = drinks.filter(id == self.rowID!)
+            try db.run(drinkToDelete.delete())
+            NSLog("Drink deleted.")
+        } catch let Result.error(message, code, statement) where code == SQLITE_CONSTRAINT {
+            NSLog("constraint failed: \(message), in \(String(describing: statement))")
+        } catch let error {
+            NSLog("insertion failed: \(error)")
+        }
+    }
+    
 }
 
 

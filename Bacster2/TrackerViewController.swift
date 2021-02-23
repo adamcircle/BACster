@@ -74,7 +74,7 @@ class TrackerViewController: UITableViewController {
             drink.drinkClass = data[index]
             
         } else if questionID == "beerStrength" {
-            let data: [Float] = [0.027, 0.035, 0.048, 0.068, 0.085, 0.115]
+            let data: [Double] = [0.027, 0.035, 0.048, 0.068, 0.085, 0.115]
             drink.beerStrength = data[index]
         } else if questionID == "beerContainer" {
             // let data = ["Full Solo Cup", "Half Solo Cup", "Standard Can/Bottle (12oz)", "Double Can/Bottle (24oz)", "Pint", "Half Pint"]
@@ -93,7 +93,7 @@ class TrackerViewController: UITableViewController {
             }
             drink.timeBeganConsumption = Double(timeBegan.timeIntervalSince1970)
         } else if questionID == "hunger" {
-            let data: [Int] = [6, 9, 12, 15]
+            let data: [Int64] = [6, 9, 12, 15]
             drink.halfLife = data[index]
         } else if questionID == "wineColor" {
             drink.wineColor = question?.answers[index]
@@ -112,7 +112,7 @@ class TrackerViewController: UITableViewController {
         } else if questionID == "cocktailType" {
             drink.cocktailType = question?.answers[index]
         } else if questionID == "cocktailMultiplier" {
-            var multiplier: Float = 1.0
+            var multiplier: Double = 1.0
             switch index {
                 case 0: break
                 case 1: multiplier = 1.5
@@ -149,7 +149,18 @@ class ResultsController: UIViewController {
         navigationItem.setHidesBackButton(true, animated: true)
         
         // write the drink to the db
-        let rowID = saveDrink()
+        var db: Connection?
+        let rowID: Int64?
+        do {
+            let path = NSSearchPathForDirectoriesInDomains(.documentDirectory,
+                                                           .userDomainMask, true).first!
+            db = try Connection("\(path)/db.sqlite3")
+            
+            rowID = drink.save(to: db!)
+        } catch {
+            NSLog("Could not open connection: ")
+            rowID = -1
+        }
         
         // Add success text
         view.addSubview(resultsLabel)
@@ -165,61 +176,7 @@ class ResultsController: UIViewController {
         addAnotherDrinkButton(size: checkmarkSize)
         
         // Add button to delete the drink
-        addDeleteButton(size: checkmarkSize, rowID: Int(rowID))
-    }
-    
-    func saveDrink() -> Int64 {
-        let path = NSSearchPathForDirectoriesInDomains(
-            .documentDirectory, .userDomainMask, true
-        ).first!
-        
-        let drinks = Table("drinks")
-        
-        let id = Expression<Int64>("id")
-        let time_added = Expression<Int64>("time_added")
-        let drink = Expression<Drink>("drink")
-        do {
-            let db = try Connection("\(path)/db.sqlite3")
-            try db.run(drinks.create(ifNotExists: true) { t in     // CREATE TABLE "drinks" (
-                t.column(id, primaryKey: true) //     "id" INTEGER PRIMARY KEY NOT NULL,
-                t.column(time_added, unique: true)
-                t.column(drink)
-            })
-            let time_now = Int64(NSDate().timeIntervalSince1970)
-            var rowID: Int64
-            
-            try db.transaction {
-                rowID = try db.run(drinks.insert(self.drink))
-                let query = drinks.filter(id == rowID)
-                try db.run(query.update(time_added <- time_now))
-            }
-            return rowID
-
-        } catch let Result.error(message, code, statement) where code == SQLITE_CONSTRAINT {
-            NSLog("constraint failed: \(message), in \(String(describing: statement))")
-            return -1
-        } catch let error {
-            NSLog("insertion failed: \(error)")
-            return -1
-        }
-    }
-    
-    func deleteDrink(rowID: Int) {
-        let path = NSSearchPathForDirectoriesInDomains(
-            .documentDirectory, .userDomainMask, true
-        ).first!
-        
-        let drinks = Table("drinks")
-        let id = Expression<Int>("id")
-        do {
-            let db = try Connection("\(path)/db.sqlite3")
-            let drinkToDelete = drinks.filter(id == rowID)
-            try db.run(drinkToDelete.delete())
-        } catch let Result.error(message, code, statement) where code == SQLITE_CONSTRAINT {
-            NSLog("constraint failed: \(message), in \(String(describing: statement))")
-        } catch let error {
-            NSLog("insertion failed: \(error)")
-        }
+        addDeleteButton(size: checkmarkSize, rowID: Int(rowID!))
     }
     
     func successAnimation(size: CGFloat) {
@@ -264,13 +221,20 @@ class ResultsController: UIViewController {
         // Create the actions
         let okAction = UIAlertAction(title: "Delete drink", style: UIAlertAction.Style.default) {
             UIAlertAction in
-            NSLog("OK Pressed")
-            self.deleteDrink(rowID: sender.tag)
+            let path = NSSearchPathForDirectoriesInDomains(
+                .documentDirectory, .userDomainMask, true).first!
+            
+            do {
+                let db = try Connection("\(path)/db.sqlite3")
+                self.drink.delete(from: db)
+            } catch let error {
+                NSLog("connection failed: \(error)")
+            }
+            
             self.navigationController?.popToRootViewController(animated: true)
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel) {
             UIAlertAction in
-            NSLog("Cancel Pressed")
         }
 
         // Add the actions
