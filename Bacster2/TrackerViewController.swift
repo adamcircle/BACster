@@ -144,6 +144,7 @@ class ResultsController: UIViewController {
         
         drink.timeAdded = Double(Date().timeIntervalSince1970)
         drink.computeDerivedValues()
+        NSLog("time consumption \(String(describing: drink.timeBeganConsumption))")
         navigationItem.title = "Done!"
         view.backgroundColor = UIColor.white
         navigationItem.setHidesBackButton(true, animated: true)
@@ -176,7 +177,7 @@ class ResultsController: UIViewController {
         addAnotherDrinkButton(size: checkmarkSize)
         
         // Add button to delete the drink
-        addDeleteButton(size: checkmarkSize, rowID: Int(rowID!))
+        deleteButton(size: checkmarkSize, rowID: Int(rowID!))
     }
     
     func successAnimation(size: CGFloat) {
@@ -189,15 +190,15 @@ class ResultsController: UIViewController {
     }
     
     func addAnotherDrinkButton(size: CGFloat) {
-        let addAnotherButton = MyButton()
+        let addAnotherButton = ResultsButton()
         addAnotherButton.frame = CGRect(x: self.view.frame.size.width / 2 - ((size + 50 ) / 2), y: 175 + size, width: size + 50, height: 30)
         addAnotherButton.setTitle("Add another drink", for: .normal)
         addAnotherButton.addTarget(self, action: #selector(addAnother(_:)), for: .touchUpInside)
         view.addSubview(addAnotherButton)
     }
     
-    func addDeleteButton(size: CGFloat, rowID: Int) {
-        let deleteButton = MyButton()
+    func deleteButton(size: CGFloat, rowID: Int) {
+        let deleteButton = ResultsButton()
         deleteButton.frame = CGRect(x: self.view.frame.size.width / 2 - ((size + 50 ) / 2), y: 225 + size, width: size + 50, height: 30)
         deleteButton.setTitle("Delete this drink", for: .normal)
         deleteButton.tag = rowID
@@ -209,7 +210,7 @@ class ResultsController: UIViewController {
         self.navigationController?.popToRootViewController(animated: true)
     }
     
-    @objc func deleteDrinkButton(_ sender:MyButton!) {
+    @objc func deleteDrinkButton(_ sender:ResultsButton!) {
         if sender.tag == -1 {
             NSLog("rowID not found; drink cannot be deleted")
             return
@@ -308,7 +309,7 @@ class AnswerCell: UITableViewCell {
     
 }
 
-class MyButton : UIButton {
+class ResultsButton : UIButton {
 
     override init(frame: CGRect) {
         super.init(frame: frame)

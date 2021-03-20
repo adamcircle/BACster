@@ -17,19 +17,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let winScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: winScene)
+        //Core.shared.setIsNewUser()
         
-        // Tab Bar
         let tabBarCon = TabBarController()
-        
-        /*
-        UINavigationBar.appearance().barTintColor = UIColor.black
-        UINavigationBar.appearance().largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        UINavigationBar.appearance().prefersLargeTitles = false */
-
         window?.rootViewController = tabBarCon
         window?.makeKeyAndVisible()
-        
+        if Core.shared.isNewUser() {
+            let welcomeViewCon = UINavigationController.init(rootViewController: OBPage0())
+            welcomeViewCon.modalPresentationStyle = .fullScreen
+            tabBarCon.present(welcomeViewCon, animated: false, completion: nil)
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

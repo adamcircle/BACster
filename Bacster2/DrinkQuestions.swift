@@ -13,9 +13,9 @@ class Drink {
     var rowID: Int64?
     var gramsAlcohol: Double?
     var percentAlcohol: Double?
-    var timeBeganConsumption: Double? // need to convert all the dates to ints since 1970
-    var timeAdded: Double?
-    var timeFullyAbsorbed: Double?
+    var timeBeganConsumption: Double!
+    var timeAdded: Double!
+    var timeFullyAbsorbed: Double!
     var drinkClass: String?
     var volumeML: Int64?
     var drinkUnits: String?
@@ -235,16 +235,6 @@ class Drink {
         self.volumeML = volumeML
         self.gramsAlcohol = percentAlcohol * Double(volumeML) * 0.789
     }
-    /*
-    private func computeConsumptionDuration() {
-        if self.sipOrShotgun == "Sipping" {
-            self.consumptionDuration = 1
-        } else if self.sipOrShotgun == "Shotgunning" {
-            self.consumptionDuration = 1
-        }
-        
-        self.consumptionDuration
-    } */
     
     private func computeFullLife() {
         self.fullLife = Int64(round(6.66 * Double(self.halfLife!)))

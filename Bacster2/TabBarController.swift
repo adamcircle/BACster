@@ -24,9 +24,10 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
         self.tabBar.barTintColor = #colorLiteral(red: 0.07450980392, green: 0.07450980392, blue: 0.07450980392, alpha: 1)
         
         // Create Tab one
-        let homeVC = HomeViewController()
+        let layout = UICollectionViewFlowLayout()
+        let homeCVC = HomeCVController(collectionViewLayout: layout)
         let homeTabItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house.fill"), tag: 0)
-        homeVC.tabBarItem = homeTabItem
+        homeCVC.tabBarItem = homeTabItem
         
         
         // Create Tab two
@@ -42,7 +43,7 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
         historyVC.tabBarItem = historyTabItem
         
         
-        self.viewControllers = [homeVC, trackerNavCon, historyVC]
+        self.viewControllers = [homeCVC, trackerNavCon, historyVC]
     }
     
     // UITabBarControllerDelegate method

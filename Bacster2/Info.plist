@@ -55,6 +55,12 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSHealthClinicalHealthRecordsShareUsageDescription</key>
+	<string></string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>We require this information to accurately calculate your blood alcohol content. If you choose to deny access, you can enter it manually instead.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>We will record your blood alcohol content data into HealthKit. Denying access will not impact app functionality.</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
