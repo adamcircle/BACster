@@ -10,7 +10,6 @@ import UIKit
 import SQLite
 
 class Drink {
-    var rowID: Int64?
     var gramsAlcohol: Double?
     var percentAlcohol: Double?
     var timeBeganConsumption: Double!
@@ -264,10 +263,9 @@ class Drink {
         setOptionalsToNil()
     }
     
-    func save(to db: Connection) -> Int64 {
+    func save(to db: Connection) {
         let drinks = Table("drinks")
         
-        // let id = Expression<Int64>("id")
         let timeAdded = Expression<Double>("timeAdded")
         let gramsAlcohol = Expression<Double>("gramsAlcohol")
         let percentAlcohol = Expression<Double>("percentAlcohol")
@@ -290,7 +288,7 @@ class Drink {
         
         do {
             let time_now = Double(NSDate().timeIntervalSince1970)
-            self.rowID = try db.run(drinks.insert(
+            try db.run(drinks.insert(
                     timeAdded <-                time_now,
                     gramsAlcohol <-             self.gramsAlcohol!,
                     percentAlcohol <-           self.percentAlcohol!,
@@ -315,13 +313,9 @@ class Drink {
 
         } catch let Result.error(message, code, statement) where code == SQLITE_CONSTRAINT {
             NSLog("constraint failed: \(message), in \(String(describing: statement))")
-            return -1
         } catch let error {
             NSLog("insertion failed: \(error)")
-            return -1
         }
-        
-        return self.rowID!
     }
     
     func load(from row: Row) -> Self {
@@ -372,9 +366,9 @@ class Drink {
     
     func delete(from db: Connection) {
         let drinks = Table("drinks")
-        let id = Expression<Int64>("id")
+        let timeAdded = Expression<Double>("timeAdded")
         do {
-            let drinkToDelete = drinks.filter(id == self.rowID!)
+            let drinkToDelete = drinks.filter(timeAdded == self.timeAdded)
             try db.run(drinkToDelete.delete())
             NSLog("Drink deleted.")
         } catch let Result.error(message, code, statement) where code == SQLITE_CONSTRAINT {

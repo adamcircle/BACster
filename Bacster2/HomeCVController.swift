@@ -7,6 +7,7 @@
 
 import UIKit
 import SQLite
+import CoreData
 
 class HomeCVController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
@@ -14,13 +15,15 @@ class HomeCVController: UICollectionViewController, UICollectionViewDelegateFlow
     var timeLastUpdated: Int64 = 0
     var updateTimer: Timer!
     var db: Connection!
-    var profile: UserHealthProfile!
+    var profile: UserHealthProfile! //= loadUHP()
+    var stats: BACStats = BACStats()
     let ident = "ident"
     let cell_descs = ["Peak BAC", "Time to Peak BAC", "Time to Zero BAC", "Drinks in the last 24 hours", "Time since sober", "Time since last drink"]
         
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
         collectionView?.backgroundColor = .systemBlue   // WHERE "name" IS NOT NULL
         db = self.create_db()
         updateTimer = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
@@ -55,21 +58,21 @@ class HomeCVController: UICollectionViewController, UICollectionViewDelegateFlow
         switch indexPath.item {
         case 0:
             if indexPath.section == 0 {
-                cell.quantityLabel.text = String(self.calculateCurrentBAC())
+                cell.quantityLabel.text = String(self.stats.currBAC ?? 0)
             } else {
                 // peak bac
-                //cell.quantityLabel.text = self.calculatePeakBAC()
+                cell.quantityLabel.text = String(self.stats.peakBAC ?? 0)
             }
         case 1:  // time to peak bac
-            cell.quantityLabel.text = "peakbac"
+            cell.quantityLabel.text = self.stats.timeToPeak
         case 2:
-            cell.quantityLabel.text = self.getTimeToZero()
+            cell.quantityLabel.text = self.stats.timeToZero
         case 3:
-            cell.quantityLabel.text = String(self.drinksConsumed.count)
+            cell.quantityLabel.text = String(self.stats.numDrinksInLast24Hours ?? 0)
         case 4:
-            cell.quantityLabel.text = self.getTimeSinceSober()
+            cell.quantityLabel.text = self.stats.timeSinceSober
         case 5:
-            cell.quantityLabel.text = self.getTimeSinceLastDrink()
+            cell.quantityLabel.text = self.stats.timeSinceLastDrink
         default:
             cell.quantityLabel.text = "Test qty"
         }
@@ -93,47 +96,8 @@ class HomeCVController: UICollectionViewController, UICollectionViewDelegateFlow
         return 2
     }
     
-    func getTimeToZero() -> String {
-        if drinksConsumed.count == 0 || calculateCurrentBAC() == 0.0 {
-            return "You're sober!"
-        }
-        // let e = setDateObjectSecondsAndMillisecondsToZero(new Date(getTimeOfLastDrinkAsDateObject().getTime() + 6e4))
-        var now: Double = truncateSeconds(fromDate: Date()).timeIntervalSince1970
-        if now == drinksConsumed[-1].timeBeganConsumption {
-            now += 60
-        }
-        
-        let BACNow = calculateBAC(atTime: Date(timeIntervalSince1970: now))
-        let timeMaxAbsorbed = getTimeMaxAbsorbed();
-        //    for (; t > 0; )
-        //        t = (e = setDateObjectSecondsAndMillisecondsToZero(new Date(e.getTime() + 6e4))) > o ? t - 25e-5 : calculateBAC(e);
-        //    return timeZero
-    }
-    
-    func getTimeMaxAbsorbed() -> Double {
-        var timeFullyAbsorbed = 0.0
-        for drink in self.drinksConsumed {
-            timeFullyAbsorbed = max(timeFullyAbsorbed, drink.timeFullyAbsorbed!)
-        }
-        return timeFullyAbsorbed
-    }
-    
-    func getTimeSinceSober() -> String {
-        if self.drinksConsumed.count == 0 {
-            return "You're sober!"
-        }
-        let timeOfFirstDrink = Date(timeIntervalSince1970: self.drinksConsumed[0].timeBeganConsumption!)
-  
-        return timeOfFirstDrink.getElapsedInterval()
-    }
-    
-    func getTimeSinceLastDrink() -> String {
-        if self.drinksConsumed.count == 0 {
-            return "You're still sober!"
-        }
-        let timeOfLastDrink = Date(timeIntervalSince1970: self.drinksConsumed[-1].timeBeganConsumption!)
-  
-        return timeOfLastDrink.getElapsedInterval()
+    func loadUHP() -> UserHealthProfile {
+        return UserHealthProfile()
     }
     
     func getDrinksConsumed() {
@@ -142,7 +106,7 @@ class HomeCVController: UICollectionViewController, UICollectionViewDelegateFlow
         ).first!
         
         let drinks = Table("drinks")
-        var cutoff_time = Int64(Date().addingTimeInterval(TimeInterval(-1 * 24 * 60.0 * 60.0)).timeIntervalSince1970) // 24 hours ago
+        var cutoff_time = Int64(Date().addingTimeInterval(TimeInterval(-1 * 48 * 60.0 * 60.0)).timeIntervalSince1970) // 24 hours ago
         if cutoff_time < self.timeLastUpdated {
             cutoff_time = self.timeLastUpdated
         }
@@ -163,94 +127,6 @@ class HomeCVController: UICollectionViewController, UICollectionViewDelegateFlow
         }
     }
     
-    func calculateWeightKilograms(weightInLbs: Double) -> Double {
-        return weightInLbs / 2.205
-    }
-
-    func calculateHeightMeters(heightInInches: Double) -> Double {
-        return heightInInches / 39.37
-    }
-
-    func calculateWeightLbs(weightInKgs: Double) -> Double {
-        return weightInKgs * 2.205
-    }
-
-    func calculateHeightInches(heightInMeters: Double) -> Double {
-        return heightInMeters * 39.37
-    }
-    
-    func truncateSeconds(fromDate: Date) -> Date {
-        // Keep things simple by operating in units of minutes
-        let calendar = Calendar.current
-        let fromDateComponents: DateComponents = calendar.dateComponents([.era , .year , .month , .day , .hour , .minute], from: fromDate)
-        return calendar.date(from: fromDateComponents)! as Date
-    }
-    
-    
-    func calculateCurrentBAC() -> Double {
-        return calculateBAC(atTime: truncateSeconds(fromDate: Date()))
-    }
-    
-    func calculatePeakBAC() -> (Double, Date) {
-        var current = truncateSeconds(fromDate: Date())
-        var currentBAC = calculateCurrentBAC()
-        var oneMinuteLater: Date = current.addingTimeInterval(60.0)
-        var laterBAC = calculateBAC(atTime: oneMinuteLater)
-        while (laterBAC >= currentBAC && (0 != laterBAC || 0 != currentBAC)) {
-            laterBAC = calculateBAC(atTime: oneMinuteLater)
-            if laterBAC > currentBAC {
-                currentBAC = laterBAC
-                current = oneMinuteLater
-                oneMinuteLater = current.addingTimeInterval(60.0)
-            } else {
-                return (currentBAC, current)
-            }
-        }
-        return (-1, Date()) // this line is added to make the program compile
-    }
-    
-    func calculateBAC(atTime: Date) -> Double {
-        if drinksConsumed.count == 0 {
-            return 0.0
-        }
-        
-        var minutes: Int = (Calendar.current.dateComponents([.minute], from: Date(timeIntervalSince1970: drinksConsumed[0].timeBeganConsumption!), to: atTime)).minute!
-        var bac: Double = 0
-        while minutes >= 0 {
-            bac += increaseBACEveryMinute(untilTime: atTime, minute: minutes)
-            bac -= reduceBACEveryMinute(bac: bac)
-            minutes -= 1;
-        }
-        return bac
-    }
-    
-    func calculateBACtoAdd(drink: Drink, time: Int) -> Double {
-        let part1: Double = (pow(2.0, (1.0 - Double(time)) / Double(drink.halfLife!)) - pow(2.0, Double(time) / Double(drink.halfLife!)))
-        let part2: Double = drink.gramsAlcohol! / (10.0 * self.profile.widmarkFactor! * self.profile.weightInKilograms!)
-        return part1 * part2
-    }
-    
-    func reduceBACEveryMinute(bac: Double) -> Double {
-        if bac >= 0.00025 {
-            return 0.00025
-        } else {
-            return bac
-        }
-    }
-    
-    func increaseBACEveryMinute(untilTime: Date, minute: Int) -> Double {
-        var BACchange: Double = 0;
-        let startTime: Date = untilTime.addingTimeInterval(Double(minute) * -1) // pretty sure this should be * 60
-        for drink in self.drinksConsumed {
-            let timeDiffMinutes: Int = Int(startTime.timeIntervalSince(Date(timeIntervalSince1970: drink.timeBeganConsumption!))) / 60
-            
-            if (timeDiffMinutes > 0 && Date(timeIntervalSince1970: drink.timeFullyAbsorbed!) >= startTime) {
-                BACchange += calculateBACtoAdd(drink: drink, time: timeDiffMinutes)
-            }
-        }
-        return BACchange
-    }
-    
     func create_db() -> Connection? {
         let path = NSSearchPathForDirectoriesInDomains(
             .documentDirectory, .userDomainMask, true
@@ -258,7 +134,6 @@ class HomeCVController: UICollectionViewController, UICollectionViewDelegateFlow
         
         let drinks = Table("drinks")
         
-        let id = Expression<Int64>("id")
         let timeAdded = Expression<Double>("timeAdded")
         let gramsAlcohol = Expression<Double>("gramsAlcohol")
         let percentAlcohol = Expression<Double>("percentAlcohol")
@@ -282,8 +157,7 @@ class HomeCVController: UICollectionViewController, UICollectionViewDelegateFlow
         do {
             let db = try Connection("\(path)/db.sqlite3")
             try db.run(drinks.create(ifNotExists: true) { t in     // CREATE TABLE "drinks" (
-                t.column(id, primaryKey: true) //     "id" INTEGER PRIMARY KEY NOT NULL,
-                t.column(timeAdded, unique: true)
+                t.column(timeAdded, primaryKey: true)
                 t.column(gramsAlcohol)
                 t.column(percentAlcohol)
                 t.column(timeBeganConsumption)
@@ -314,6 +188,7 @@ class HomeCVController: UICollectionViewController, UICollectionViewDelegateFlow
         
     @objc func update() {
         self.getDrinksConsumed()
+        self.stats.update(drinks: self.drinksConsumed, healthProfile: self.profile)
         self.collectionView.reloadData()
         if drinksConsumed.count > 0 {
             for drink in drinksConsumed {
@@ -427,4 +302,179 @@ extension Date
         
         return returnStr
     }
+}
+
+class BACStats {
+    var currBAC: Double!
+    var peakBAC: Double!
+    var timeToPeak: String!
+    var timeToZero: String!
+    var numDrinksInLast24Hours: Int!
+    var timeSinceSober: String!
+    var timeSinceLastDrink: String!
+    var drinksConsumed: [Drink]!
+    var profile: UserHealthProfile!
+    
+    func update(drinks: [Drink], healthProfile: UserHealthProfile) {
+        drinksConsumed = drinks
+        profile = healthProfile
+        currBAC = calculateCurrentBAC()
+        let result = calculatePeakBAC()
+        peakBAC = result.peakBac
+        //timeToPeak = result.atTime
+        timeToZero = MygetTimeToZero()
+        numDrinksInLast24Hours = drinksConsumed.count
+        timeSinceSober = getTimeSinceSober()
+        timeSinceLastDrink = getTimeSinceLastDrink()
+    }
+    
+    func calculateCurrentBAC() -> Double {
+        return calculateBAC(atTime: truncateSeconds(fromDate: Date()))
+    }
+    
+    func calculatePeakBAC() -> (peakBac: Double, atTime: Date) {
+        var current_time = truncateSeconds(fromDate: Date())
+        var currentBAC = calculateCurrentBAC()
+        var oneMinuteLater: Date = current_time.addingTimeInterval(60.0)
+        var laterBAC = calculateBAC(atTime: oneMinuteLater)
+        while (laterBAC >= currentBAC && (0 != laterBAC || 0 != currentBAC)) {
+            laterBAC = calculateBAC(atTime: oneMinuteLater)
+            if laterBAC > currentBAC {
+                currentBAC = laterBAC
+                current_time = oneMinuteLater
+                oneMinuteLater = current_time.addingTimeInterval(60.0)
+            } else {
+                return (currentBAC, current_time)
+            }
+        }
+        return (-1, truncateSeconds(fromDate: Date())) // this line is added to make the program compile
+    }
+    
+    func calculateBAC(atTime: Date) -> Double {
+        if drinksConsumed.count == 0 {
+            return 0.0
+        }
+        
+        var minutes: Int = (Calendar.current.dateComponents([.minute], from: Date(timeIntervalSince1970: drinksConsumed[0].timeBeganConsumption!), to: atTime)).minute!
+        var bac: Double = 0
+        while minutes >= 0 {
+            bac += increaseBACEveryMinute(untilTime: atTime, minute: minutes)
+            bac -= reduceBACEveryMinute(bac: bac)
+            minutes -= 1;
+        }
+        return bac
+    }
+    
+    func truncateSeconds(fromDate: Date) -> Date {
+        // Keep things simple by operating in units of minutes
+        let calendar = Calendar.current
+        let fromDateComponents: DateComponents = calendar.dateComponents([.era , .year , .month , .day , .hour , .minute], from: fromDate)
+        return calendar.date(from: fromDateComponents)! as Date
+    }
+    
+    func calculateBACtoAdd(drink: Drink, time: Int) -> Double {
+        let part1: Double = (pow(2.0, (1.0 - Double(time)) / Double(drink.halfLife!)) - pow(2.0, Double(time) / Double(drink.halfLife!)))
+        let part2: Double = drink.gramsAlcohol! / (10.0 * self.profile.widmarkFactor! * self.profile.weightInKilograms!)
+        return part1 * part2
+    }
+    
+    func reduceBACEveryMinute(bac: Double) -> Double {
+        if bac >= 0.00025 {
+            return 0.00025
+        } else {
+            return bac
+        }
+    }
+    
+    func increaseBACEveryMinute(untilTime: Date, minute: Int) -> Double {
+        var BACchange: Double = 0;
+        let startTime: Date = untilTime.addingTimeInterval(Double(minute) * -1) // pretty sure this should be * 60
+        for drink in self.drinksConsumed {
+            let timeDiffMinutes: Int = Int(startTime.timeIntervalSince(Date(timeIntervalSince1970: drink.timeBeganConsumption!))) / 60
+            
+            if (timeDiffMinutes > 0 && Date(timeIntervalSince1970: drink.timeFullyAbsorbed!) >= startTime) {
+                BACchange += calculateBACtoAdd(drink: drink, time: timeDiffMinutes)
+            }
+        }
+        return BACchange
+    }
+    
+    func getTimeToZero() -> String {
+        if drinksConsumed.count == 0 || calculateCurrentBAC() == 0.0 {
+            return "You're sober!"
+        }
+        // let e = setDateObjectSecondsAndMillisecondsToZero(new Date(getTimeOfLastDrinkAsDateObject().getTime() + 6e4))
+        var now: Double = truncateSeconds(fromDate: Date()).timeIntervalSince1970
+        if now == drinksConsumed[-1].timeBeganConsumption {
+            now += 60
+        }
+        
+        let BACNow = calculateBAC(atTime: Date(timeIntervalSince1970: now))
+        let timeMaxAbsorbed = getTimeMaxAbsorbed();
+        //    for (; t > 0; )
+        //        t = (e = setDateObjectSecondsAndMillisecondsToZero(new Date(e.getTime() + 6e4))) > o ? t - 25e-5 : calculateBAC(e);
+        //    return timeZero
+        return "fail"
+    }
+    
+    func MygetTimeToZero() -> String {
+        if drinksConsumed.count == 0 || calculateCurrentBAC() == 0.0 {
+            return "You're sober!"
+        }
+        
+        var now: Double = truncateSeconds(fromDate: Date()).timeIntervalSince1970 - 60
+        var prevBAC = calculateBAC(atTime: Date(timeIntervalSince1970: now))
+        var currBAC = calculateBAC(atTime: Date(timeIntervalSince1970: now + 60))
+        var minutes = 1
+        while prevBAC - currBAC > 25e-5 {
+            prevBAC = currBAC
+            currBAC = calculateBAC(atTime: Date(timeIntervalSince1970: now + 60.0 * Double(minutes)))
+            minutes += 1
+        }
+        let total_mins = (currBAC / 25e-5) + Double(minutes)
+        return Date().addingTimeInterval(total_mins * 60.0).getElapsedInterval()
+    }
+    
+    func getTimeMaxAbsorbed() -> Double {
+        var timeFullyAbsorbed = 0.0
+        for drink in self.drinksConsumed {
+            timeFullyAbsorbed = max(timeFullyAbsorbed, drink.timeFullyAbsorbed!)
+        }
+        return timeFullyAbsorbed
+    }
+    
+    func getTimeSinceSober() -> String {
+        if self.drinksConsumed.count == 0 {
+            return "You're sober!"
+        }
+        let timeOfFirstDrink = Date(timeIntervalSince1970: self.drinksConsumed[0].timeBeganConsumption!)
+  
+        return timeOfFirstDrink.getElapsedInterval()
+    }
+    
+    func getTimeSinceLastDrink() -> String {
+        if self.drinksConsumed.count == 0 {
+            return "N/A"
+        }
+        let timeOfLastDrink = Date(timeIntervalSince1970: self.drinksConsumed[-1].timeBeganConsumption!)
+  
+        return timeOfLastDrink.getElapsedInterval()
+    }
+    
+    func calculateWeightKilograms(weightInLbs: Double) -> Double {
+        return weightInLbs / 2.205
+    }
+
+    func calculateHeightMeters(heightInInches: Double) -> Double {
+        return heightInInches / 39.37
+    }
+
+    func calculateWeightLbs(weightInKgs: Double) -> Double {
+        return weightInKgs * 2.205
+    }
+
+    func calculateHeightInches(heightInMeters: Double) -> Double {
+        return heightInMeters * 39.37
+    }
+    
 }

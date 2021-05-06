@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 class TabBarController: UITabBarController, UITabBarControllerDelegate {
     
     override func viewDidLoad() {

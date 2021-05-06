@@ -9,6 +9,8 @@ import Foundation
 import UIKit
 import Lottie
 import HealthKit
+import CoreData
+import SQLite
 
 /*
 class OBNavCon: UINavigationController {
@@ -84,9 +86,9 @@ class OBPage1: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     @objc func didTapButton(_ button: UIButton) {
         if sexPicker.selectedRow(inComponent: 0) == 0 {
-            profile.sex = true
+            profile.sex = 1
         } else {
-            profile.sex = false
+            profile.sex = 0
         }
         let nextVC = OBPage2()
         nextVC.profile = profile
@@ -381,8 +383,9 @@ class Core {
 }
 
 class UserHealthProfile {
+    
     var age: Int?
-    var sex: Bool?
+    var sex: Int?
     var heightInMeters: Double?
     var weightInKilograms: Double?
     var widmarkFactor: Double? {
@@ -396,12 +399,62 @@ class UserHealthProfile {
         else {
             return nil
         }
-        if sex {  // male
+        if sex != 0 {  // male
             return 0.62544 + 0.13664 * heightMeters - weightKG * (0.00189 + 0.002425 / pow(heightMeters, 2)) + 1 / (weightKG * (0.57986 + 2.54 * heightMeters - 0.02255 * Double(age)))
         }
         return 0.50766 + 0.11165 * heightMeters - weightKG * (0.001612 + 0.0031 / pow(heightMeters, 2)) - 1 / (weightKG * (0.62115 - 3.1665 * heightMeters))
     }
+    func save() {
+        let path = NSSearchPathForDirectoriesInDomains(
+            .documentDirectory, .userDomainMask, true
+        ).first!
+        
+        let drinks = Table("UserHealthProfile")
+        
+        let timeAdded = Expression<Double>("timeAdded")
+        let age = Expression<Int64>("age")
+        let sex = Expression<Int64>("sex")
+        let heightInMeters = Expression<Double>("heightInMeters")
+        let weightInKilograms = Expression<Double>("weightInKilograms")
+        let widmarkFactor = Expression<Double>("widmarkFactor")
+        
+        do {
+            let db = try Connection("\(path)/db.sqlite3")
+            try db.run(drinks.create(ifNotExists: true) { t in     // CREATE TABLE "drinks" (
+                t.column(timeAdded, primaryKey: true) //     "id" INTEGER PRIMARY KEY NOT NULL,
+                t.column(age)
+                t.column(sex)
+                t.column(heightInMeters)
+                t.column(weightInKilograms)
+                t.column(widmarkFactor)
+            })
+            
+            NSLog("Table created successfully at: \(path)")
+        } catch let error {
+            NSLog("Table creation failed: \(error)")
+        }
+    }
 }
+/*
+class CoreDataManager {
+    static let shared = CoreDataManager()
+    private init() {}
+    private lazy var persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "UserHealthProfile")
+        container.loadPersistentStores(completionHandler: { _, error in
+            _ = error.map { fatalError("Unresolved error \($0)") }
+        })
+        return container
+    }()
+    
+    var mainContext: NSManagedObjectContext {
+        return persistentContainer.viewContext
+    }
+    
+    func backgroundContext() -> NSManagedObjectContext {
+        return persistentContainer.newBackgroundContext()
+    }
+} */
 
 /*
 class ProfileDataStore {
