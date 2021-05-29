@@ -8,8 +8,6 @@
 import Foundation
 import UIKit
 import Lottie
-import HealthKit
-import CoreData
 import SQLite
 
 /*
@@ -21,16 +19,22 @@ class OBPage0: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .green
+        self.view.backgroundColor = #colorLiteral(red: 0.9333333333, green: 0.9607843137, blue: 0.9921568627, alpha: 1)
         navigationController?.isNavigationBarHidden = true
         // configure the title label
         let titleLabel = OnboardingLabel(frame: CGRect(x: 10, y: 100, width: self.view.frame.size.width - 20, height: 200))
-        titleLabel.text = "Welcome to BACster! We're going to get started by collecting some basic health information necessary to calculate your BAC."
+        titleLabel.text = "Welcome to BACster!"
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 32)
         view.addSubview(titleLabel)
+        
+        let subtitleLabel = OnboardingLabel(frame: CGRect(x: 50, y: 200, width: self.view.frame.size.width - 100, height: 200))
+        subtitleLabel.text = "We're going to get started by collecting some basic health information necessary to calculate your BAC."
+        subtitleLabel.font = UIFont.systemFont(ofSize: 18)
+        view.addSubview(subtitleLabel)
         
         // Add button to continue
         let length: CGFloat = self.view.frame.size.width * 0.85
-        let continueButton = ContinueButton(frame: CGRect(x: self.view.frame.size.width / 2 - (length / 2), y: self.view.frame.size.height - 150, width: length, height: 50))
+        let continueButton = ContinueButton(frame: CGRect(x: self.view.frame.size.width / 2 - (length / 2), y: self.view.frame.size.height * 0.96 - 50, width: length, height: 50))
         continueButton.setTitle("Continue", for: .normal)
         continueButton.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
         self.view.addSubview(continueButton)
@@ -51,14 +55,16 @@ class OBPage1: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .systemPink
+        self.view.backgroundColor = #colorLiteral(red: 0.9333333333, green: 0.9607843137, blue: 0.9921568627, alpha: 1)
+        
+        navigationController?.isNavigationBarHidden = true
         
         // configure the title label
-        let titleLabel = OnboardingLabel(frame: CGRect(x: 10, y: 100, width: self.view.frame.size.width - 20, height: 200))
+        let titleLabel = OnboardingLabel(frame: CGRect(x: 10, y: self.view.frame.size.height / 4, width: self.view.frame.size.width - 20, height: 50))
         titleLabel.text = "What is your sex?"
         view.addSubview(titleLabel)
         
-        sexPicker = UIPickerView(frame: CGRect(x: 100, y: 400, width: view.frame.size.width - 200, height: 200))
+        sexPicker = UIPickerView(frame: CGRect(x: 100, y: self.view.frame.size.height / 4 + 80, width: view.frame.size.width - 200, height: 200))
         //sexPicker.translatesAutoresizingMaskIntoConstraints = false
         sexPicker.delegate = self as UIPickerViewDelegate
         sexPicker.dataSource = self as UIPickerViewDataSource
@@ -66,7 +72,7 @@ class OBPage1: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
         
         // Add button to continue
         let length: CGFloat = self.view.frame.size.width * 0.85
-        let continueButton = ContinueButton(frame: CGRect(x: self.view.frame.size.width / 2 - (length / 2), y: self.view.frame.size.height - 150, width: length, height: 50))
+        let continueButton = ContinueButton(frame: CGRect(x: self.view.frame.size.width / 2 - (length / 2), y: self.view.frame.size.height * 0.96 - 50, width: length, height: 50))
         continueButton.setTitle("Continue", for: .normal)
         continueButton.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
         self.view.addSubview(continueButton)
@@ -104,21 +110,21 @@ class OBPage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .lightGray
+        self.view.backgroundColor = #colorLiteral(red: 0.9333333333, green: 0.9607843137, blue: 0.9921568627, alpha: 1)
         
         // configure the title label
-        let titleLabel = OnboardingLabel(frame: CGRect(x: 10, y: 100, width: self.view.frame.size.width - 20, height: 200))
+        let titleLabel = OnboardingLabel(frame: CGRect(x: 10, y: self.view.frame.size.height / 4, width: self.view.frame.size.width - 20, height: 50))
         titleLabel.text = "How old are you?"
         view.addSubview(titleLabel)
         
-        agePicker = UIPickerView(frame: CGRect(x: 100, y: 400, width: view.frame.size.width - 200, height: 200))
+        agePicker = UIPickerView(frame: CGRect(x: 100, y: self.view.frame.size.height / 4 + 80, width: view.frame.size.width - 200, height: 200))
         agePicker.delegate = self as UIPickerViewDelegate
         agePicker.dataSource = self as UIPickerViewDataSource
         view.addSubview(agePicker)
         
         // Add button to continue
         let length: CGFloat = self.view.frame.size.width * 0.85
-        let continueButton = ContinueButton(frame: CGRect(x: self.view.frame.size.width / 2 - (length / 2), y: self.view.frame.size.height - 150, width: length, height: 50))
+        let continueButton = ContinueButton(frame: CGRect(x: self.view.frame.size.width / 2 - (length / 2), y: self.view.frame.size.height * 0.96 - 50, width: length, height: 50))
         continueButton.setTitle("Continue", for: .normal)
         continueButton.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
         self.view.addSubview(continueButton)
@@ -139,7 +145,7 @@ class OBPage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     @objc func didTapButton(_ button: UIButton) {
         //self.authorizeHealthkit()
         let nextVC = OBPage3()
-        profile.age = Int(ageArray[agePicker.selectedRow(inComponent: 0)])
+        profile.age = Int64(ageArray[agePicker.selectedRow(inComponent: 0)])
         nextVC.profile = profile
         navigationController?.pushViewController(nextVC, animated: true)
     }
@@ -154,21 +160,21 @@ class OBPage3: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .lightGray
+        self.view.backgroundColor = #colorLiteral(red: 0.9333333333, green: 0.9607843137, blue: 0.9921568627, alpha: 1)
         
         // configure the title label
-        let titleLabel = OnboardingLabel(frame: CGRect(x: 10, y: 100, width: self.view.frame.size.width - 20, height: 200))
-        titleLabel.text = "How old are you?"
+        let titleLabel = OnboardingLabel(frame: CGRect(x: 10, y: self.view.frame.size.height / 4, width: self.view.frame.size.width - 20, height: 50))
+        titleLabel.text = "How tall are you?"
         view.addSubview(titleLabel)
         
-        heightPicker = UIPickerView(frame: CGRect(x: 50, y: 400, width: view.frame.size.width - 100, height: 300))
+        heightPicker = UIPickerView(frame: CGRect(x: 50, y: self.view.frame.size.height / 4 + 80, width: view.frame.size.width - 100, height: 300))
         heightPicker.delegate = self as UIPickerViewDelegate
         heightPicker.dataSource = self as UIPickerViewDataSource
         view.addSubview(heightPicker)
         
         // Add button to continue
         let length: CGFloat = self.view.frame.size.width * 0.85
-        let continueButton = ContinueButton(frame: CGRect(x: self.view.frame.size.width / 2 - (length / 2), y: self.view.frame.size.height - 150, width: length, height: 50))
+        let continueButton = ContinueButton(frame: CGRect(x: self.view.frame.size.width / 2 - (length / 2), y: self.view.frame.size.height * 0.96 - 50, width: length, height: 50))
         continueButton.setTitle("Continue", for: .normal)
         continueButton.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
         self.view.addSubview(continueButton)
@@ -218,10 +224,10 @@ class OBPage4: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .green
+        self.view.backgroundColor = #colorLiteral(red: 0.9333333333, green: 0.9607843137, blue: 0.9921568627, alpha: 1)
         
         // configure the title label
-        let titleLabel = OnboardingLabel(frame: CGRect(x: 10, y: 100, width: self.view.frame.size.width - 20, height: 200))
+        let titleLabel = OnboardingLabel(frame: CGRect(x: 10, y: self.view.frame.size.height / 4, width: self.view.frame.size.width - 20, height: 50))
         titleLabel.text = "How much do you weigh?"
         view.addSubview(titleLabel)
         
@@ -244,7 +250,7 @@ class OBPage4: UIViewController, UITextFieldDelegate {
         
         // Add button to continue
         let length: CGFloat = self.view.frame.size.width * 0.85
-        let continueButton = ContinueButton(frame: CGRect(x: self.view.frame.size.width / 2 - (length / 2), y: self.view.frame.size.height - 150, width: length, height: 50))
+        let continueButton = ContinueButton(frame: CGRect(x: self.view.frame.size.width / 2 - (length / 2), y: self.view.frame.size.height * 0.96 - 50, width: length, height: 50))
         continueButton.setTitle("Continue", for: .normal)
         continueButton.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
         self.view.addSubview(continueButton)
@@ -265,7 +271,7 @@ class OBPage4: UIViewController, UITextFieldDelegate {
         if weightField.hasText && Int(weightField.text!)! > 20 {
             let nextVC = OBPage5()
             profile.weightInKilograms = Double(weightField.text!)! * 0.453592
-            NSLog(String(profile.weightInKilograms!))
+            //NSLog(String(profile.weightInKilograms!))
             nextVC.profile = profile
             navigationController?.pushViewController(nextVC, animated: true)
         }
@@ -279,10 +285,10 @@ class OBPage5: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .green
+        self.view.backgroundColor = #colorLiteral(red: 0.9333333333, green: 0.9607843137, blue: 0.9921568627, alpha: 1)
         
         // configure the title label
-        let titleLabel = OnboardingLabel(frame: CGRect(x: 10, y: 100, width: self.view.frame.size.width - 20, height: 200))
+        let titleLabel = OnboardingLabel(frame: CGRect(x: 10, y: self.view.frame.size.height / 4.8, width: self.view.frame.size.width - 20, height: 50))
         titleLabel.text = "Great! We're all done!"
         view.addSubview(titleLabel)
         
@@ -293,7 +299,7 @@ class OBPage5: UIViewController {
         
         // Add button to continue
         let length: CGFloat = self.view.frame.size.width * 0.85
-        let continueButton = ContinueButton(frame: CGRect(x: self.view.frame.size.width / 2 - (length / 2), y: self.view.frame.size.height - 150, width: length, height: 50))
+        let continueButton = ContinueButton(frame: CGRect(x: self.view.frame.size.width / 2 - (length / 2), y: self.view.frame.size.height * 0.96 - 50, width: length, height: 50))
         continueButton.setTitle("Continue", for: .normal)
         continueButton.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
         self.view.addSubview(continueButton)
@@ -301,7 +307,7 @@ class OBPage5: UIViewController {
     
     
     func successAnimation(size: CGFloat) {
-        animationView!.frame = CGRect(x: self.view.frame.size.width / 2 - size / 2 - 30, y: 125, width: size, height: size)
+        animationView!.frame = CGRect(x: self.view.frame.size.width / 2 - size / 2 - 10, y: self.view.frame.size.height / 5 - 60, width: size, height: size)
         animationView!.contentMode = .scaleAspectFit
         animationView!.loopMode = .playOnce
         animationView!.animationSpeed = 0.8
@@ -315,6 +321,7 @@ class OBPage5: UIViewController {
         //self.view.window?.rootViewController = tabBarCon
         let homeVC = UIApplication.shared.windows[0].rootViewController?.children[0] as? HomeCVController
         homeVC?.profile = profile
+        profile.save()
         Core.shared.setIsNotNewUser()
         self.dismiss(animated: true, completion: nil)
         //self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
@@ -358,7 +365,7 @@ class ContinueButton : UIButton {
 
     private func setup() {
         self.layer.masksToBounds = true
-        self.backgroundColor = #colorLiteral(red: 0.5514355459, green: 0.6232073761, blue: 1, alpha: 1)
+        self.backgroundColor = #colorLiteral(red: 0.5529411765, green: 0.6235294118, blue: 1, alpha: 1)
         self.layer.cornerRadius = 15
         self.titleLabel?.font = UIFont.systemFont(ofSize: 20)
         self.setTitle("Continue", for: .normal)
@@ -370,22 +377,22 @@ class Core {
     static let shared = Core()
     
     func isNewUser() -> Bool {
-        return UserDefaults.standard.bool(forKey: "isNewUser")
+        return !UserDefaults.standard.bool(forKey: "isNewUser")
     }
     
     func setIsNotNewUser() {
-        UserDefaults.standard.set(false, forKey: "isNewUser")
+        UserDefaults.standard.set(true, forKey: "isNewUser")
     }
     
     func setIsNewUser() {
-        UserDefaults.standard.set(true, forKey: "isNewUser")
+        UserDefaults.standard.set(false, forKey: "isNewUser")
     }
 }
 
 class UserHealthProfile {
-    
-    var age: Int?
-    var sex: Int?
+    var timeAdded: Double?
+    var age: Int64?
+    var sex: Int64?
     var heightInMeters: Double?
     var weightInKilograms: Double?
     var widmarkFactor: Double? {
@@ -404,37 +411,102 @@ class UserHealthProfile {
         }
         return 0.50766 + 0.11165 * heightMeters - weightKG * (0.001612 + 0.0031 / pow(heightMeters, 2)) - 1 / (weightKG * (0.62115 - 3.1665 * heightMeters))
     }
-    func save() {
+    
+    func load() -> Self {
         let path = NSSearchPathForDirectoriesInDomains(
             .documentDirectory, .userDomainMask, true
         ).first!
         
-        let drinks = Table("UserHealthProfile")
+        let uhp = Table("UserHealthProfile")
+        
+        let timeAdded = Expression<Double>("timeAdded")
+        let age = Expression<Int64?>("age")
+        let sex = Expression<Int64?>("sex")
+        let heightInMeters = Expression<Double?>("heightInMeters")
+        let weightInKilograms = Expression<Double?>("weightInKilograms")
+        
+        do {
+            let db = try Connection("\(path)/db.sqlite3")
+            if let row = try db.pluck(uhp) {
+                self.timeAdded = row[timeAdded]
+                self.age = row[age]
+                self.sex = row[sex]
+                self.heightInMeters = row[heightInMeters]
+                self.weightInKilograms = row[weightInKilograms]
+            }
+        } catch let Result.error(message, code, statement) where code == SQLITE_CONSTRAINT {
+            NSLog("constraint failed, could not load UHP: \(message), in \(String(describing: statement))")
+        } catch let error {
+            NSLog("could not load UHP: \(error)")
+        }
+        return self
+    }
+    
+    func save() {
+        self.createTable()
+        let path = NSSearchPathForDirectoriesInDomains(
+            .documentDirectory, .userDomainMask, true
+        ).first!
+        
+        let uhp = Table("UserHealthProfile")
+        
+        let timeAdded = Expression<Double>("timeAdded")
+        let age = Expression<Int64?>("age")
+        let sex = Expression<Int64?>("sex")
+        let heightInMeters = Expression<Double?>("heightInMeters")
+        let weightInKilograms = Expression<Double?>("weightInKilograms")
+        
+        do {
+            let db = try Connection("\(path)/db.sqlite3")
+            let time_now = Double(NSDate().timeIntervalSince1970)
+            try db.run(uhp.insert(or: .replace,
+                            timeAdded <-            time_now,
+                            age <-                  self.age,
+                            sex <-                  self.sex,
+                            heightInMeters <-       self.heightInMeters,
+                            weightInKilograms <-    self.weightInKilograms))
+            
+            NSLog("UserHealthProfile saved.")
+        } catch let Result.error(message, code, statement) where code == SQLITE_CONSTRAINT {
+            NSLog("constraint failed, UHP Save failed: \(message), in \(String(describing: statement))")
+        } catch let error {
+            NSLog("UHP Save failed: \(error)")
+        }
+    }
+    
+    private func createTable() -> Connection? {
+        let path = NSSearchPathForDirectoriesInDomains(
+            .documentDirectory, .userDomainMask, true
+        ).first!
+        
+        let uhp = Table("UserHealthProfile")
         
         let timeAdded = Expression<Double>("timeAdded")
         let age = Expression<Int64>("age")
         let sex = Expression<Int64>("sex")
         let heightInMeters = Expression<Double>("heightInMeters")
         let weightInKilograms = Expression<Double>("weightInKilograms")
-        let widmarkFactor = Expression<Double>("widmarkFactor")
         
         do {
             let db = try Connection("\(path)/db.sqlite3")
-            try db.run(drinks.create(ifNotExists: true) { t in     // CREATE TABLE "drinks" (
+            try db.run(uhp.create(ifNotExists: true) { t in     // CREATE TABLE "uhp" (
                 t.column(timeAdded, primaryKey: true) //     "id" INTEGER PRIMARY KEY NOT NULL,
                 t.column(age)
                 t.column(sex)
                 t.column(heightInMeters)
                 t.column(weightInKilograms)
-                t.column(widmarkFactor)
             })
             
-            NSLog("Table created successfully at: \(path)")
+            //NSLog("Table created successfully at: \(path)")
+            return db
         } catch let error {
-            NSLog("Table creation failed: \(error)")
+            NSLog("UHP table creation failed: \(error)")
+            return nil
         }
     }
 }
+
+
 /*
 class CoreDataManager {
     static let shared = CoreDataManager()

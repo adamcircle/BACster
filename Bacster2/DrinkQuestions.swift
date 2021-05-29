@@ -10,6 +10,7 @@ import UIKit
 import SQLite
 
 class Drink {
+    var rowID: Int64?
     var gramsAlcohol: Double?
     var percentAlcohol: Double?
     var timeBeganConsumption: Double!
@@ -24,6 +25,7 @@ class Drink {
     // Beer Specific Data
     var beerStrength: Double?  // lo: .027, med: .035, full: .048, dub: .0675, trip: .085, quad: .115
     var beerContainer: String?
+    var sipOrShotgun: String?
     
     // Wine Specific Data
     var wineColor: String?
@@ -38,28 +40,28 @@ class Drink {
     var cocktailType: String?
     var cocktailMultiplier: Double?
     
-    private func setOptionalsToNil() {
-        self.gramsAlcohol = self.gramsAlcohol ?? nil
-        self.percentAlcohol = self.percentAlcohol ?? nil
-        self.drinkUnits = self.drinkUnits ?? nil
-        
-        // Beer Specific Data
-        self.beerStrength = self.beerStrength ?? nil
-        self.beerContainer = self.beerContainer ?? nil
-        
-        // Wine Specific Data
-        self.wineColor = self.wineColor ?? nil
-        self.wineContainer = self.wineContainer ?? nil
-        
-        // Spirit Specific Data
-        self.spiritType = self.spiritType ?? nil
-        self.spiritContainer = self.spiritContainer ?? nil
-        self.cordialType = self.cordialType ?? nil
-        
-        // Cocktail Specific Data
-        self.cocktailType = self.cocktailType ?? nil
-        self.cocktailMultiplier = self.cocktailMultiplier ?? nil
-    }
+//    private func setOptionalsToNil() {
+//        self.gramsAlcohol = self.gramsAlcohol ?? nil
+//        self.percentAlcohol = self.percentAlcohol ?? nil
+//        self.drinkUnits = self.drinkUnits ?? nil
+//
+//        // Beer Specific Data
+//        self.beerStrength = self.beerStrength ?? nil
+//        self.beerContainer = self.beerContainer ?? nil
+//
+//        // Wine Specific Data
+//        self.wineColor = self.wineColor ?? nil
+//        self.wineContainer = self.wineContainer ?? nil
+//
+//        // Spirit Specific Data
+//        self.spiritType = self.spiritType ?? nil
+//        self.spiritContainer = self.spiritContainer ?? nil
+//        self.cordialType = self.cordialType ?? nil
+//
+//        // Cocktail Specific Data
+//        self.cocktailType = self.cocktailType ?? nil
+//        self.cocktailMultiplier = self.cocktailMultiplier ?? nil
+//    }
     
     
     private func computeGramsAlcohol() {
@@ -86,7 +88,7 @@ class Drink {
             percentAlcohol = beerStrength!
         case "Wine":
             switch wineContainer {
-            case "Glass":
+            case "Standard glass":
                 volumeML = 148
             case "Flute":
                 volumeML = 177
@@ -241,7 +243,12 @@ class Drink {
     
     private func getTimeFullyAbsorbed() {
         let timeBeganConsumption = Date(timeIntervalSince1970: self.timeBeganConsumption!)
-        let timeFullyAbsorbed = timeBeganConsumption.addingTimeInterval(TimeInterval(self.fullLife! * 60))
+        let timeFullyAbsorbed: Date
+        if self.drinkClass == "Beer" && self.sipOrShotgun == "Sipping" {
+            timeFullyAbsorbed = timeBeganConsumption
+        } else {
+            timeFullyAbsorbed = timeBeganConsumption.addingTimeInterval(TimeInterval(self.fullLife! * 60))
+        }
         self.timeFullyAbsorbed = Double(timeFullyAbsorbed.timeIntervalSince1970)
     }
     
@@ -260,10 +267,10 @@ class Drink {
         self.timeBeganConsumption = truncateSeconds(fromDate: self.timeBeganConsumption!)
         self.timeAdded = truncateSeconds(fromDate: self.timeAdded!)
         getTimeFullyAbsorbed()
-        setOptionalsToNil()
+        // setOptionalsToNil()
     }
     
-    func save(to db: Connection) {
+    func save(to db: Connection) -> Int64 {
         let drinks = Table("drinks")
         
         let timeAdded = Expression<Double>("timeAdded")
@@ -288,7 +295,7 @@ class Drink {
         
         do {
             let time_now = Double(NSDate().timeIntervalSince1970)
-            try db.run(drinks.insert(
+            self.rowID = try db.run(drinks.insert(
                     timeAdded <-                time_now,
                     gramsAlcohol <-             self.gramsAlcohol!,
                     percentAlcohol <-           self.percentAlcohol!,
@@ -312,14 +319,19 @@ class Drink {
             NSLog("Drink saved.")
 
         } catch let Result.error(message, code, statement) where code == SQLITE_CONSTRAINT {
-            NSLog("constraint failed: \(message), in \(String(describing: statement))")
+            NSLog("constraint failed, drink not saved: \(message), in \(String(describing: statement))")
+            return -1
         } catch let error {
-            NSLog("insertion failed: \(error)")
+            NSLog("insertion failed, drink not saved: \(error)")
+            return -1
         }
+        
+        return self.rowID!
     }
     
     func load(from row: Row) -> Self {
         // List of expressions
+        let rowID = Expression<Int64>("id")
         let timeAdded = Expression<Double>("timeAdded")
         let gramsAlcohol = Expression<Double>("gramsAlcohol")
         let percentAlcohol = Expression<Double>("percentAlcohol")
@@ -340,7 +352,7 @@ class Drink {
         let cocktailType = Expression<String?>("cocktailType")
         let cocktailMultiplier = Expression<Double?>("cocktailMultiplier")
         
-        
+        self.rowID = row[rowID]
         self.timeAdded = row[timeAdded]
         self.gramsAlcohol = row[gramsAlcohol]
         self.percentAlcohol = row[percentAlcohol]
@@ -366,15 +378,15 @@ class Drink {
     
     func delete(from db: Connection) {
         let drinks = Table("drinks")
-        let timeAdded = Expression<Double>("timeAdded")
+        let id = Expression<Int64>("id")
         do {
-            let drinkToDelete = drinks.filter(timeAdded == self.timeAdded)
+            let drinkToDelete = drinks.filter(id == self.rowID!)
             try db.run(drinkToDelete.delete())
             NSLog("Drink deleted.")
         } catch let Result.error(message, code, statement) where code == SQLITE_CONSTRAINT {
-            NSLog("constraint failed: \(message), in \(String(describing: statement))")
+            NSLog("constraint failed, drink not deleted: \(message), in \(String(describing: statement))")
         } catch let error {
-            NSLog("insertion failed: \(error)")
+            NSLog("drink not deleted: \(error)")
         }
     }
     
@@ -390,11 +402,11 @@ struct Question {
 let questionsDict: [String:Question] = [
     "drinkClass":
         Question(questionString: "What are you drinking?",
-                 answers: ["Beer", "Wine", "Spirits", "Cocktail", "Custom"],
+                 answers: ["Beer", "Wine", "Spirits", "Cocktail"],
                  pushTo: [0: "beerStrength", 1: "wineColor", 2: "spiritType", 3: "cocktailType", 4: "hunger"]),
     "beerStrength":
-        Question(questionString: "What is the strength of your beer? (most beers are 'Full')",
-                 answers: ["Low (2.7%)", "Medium (3.5%)", "Full (4.8%)", "Dubbel (6.8%)", "Trippel (8.5%)", "Quadruppel (11.5%)", "Custom"],
+        Question(questionString: "What is the strength of your beer?\n(most beers are 'Full')",
+                 answers: ["Low (2.7%)", "Medium (3.5%)", "Full (4.8%)", "Dubbel (6.8%)", "Trippel (8.5%)", "Quadruppel (11.5%)"],
                  pushTo: [0: "beerContainer"]),
     "beerContainer":
         Question(questionString: "How much are you drinking?",

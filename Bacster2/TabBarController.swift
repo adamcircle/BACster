@@ -39,12 +39,13 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
         trackerNavCon.tabBarItem = trackerTabItem
         
         // Create Tab three
-        let historyVC = HistoryViewController()
+        let historyNavCon = UINavigationController.init(rootViewController: HistoryTVController())
+        historyNavCon.theme()
         let historyTabItem = UITabBarItem(title: "History", image:  UIImage(systemName: "chart.bar.fill"), tag: 2)
-        historyVC.tabBarItem = historyTabItem
+        historyNavCon.tabBarItem = historyTabItem
         
         
-        self.viewControllers = [homeCVC, trackerNavCon, historyVC]
+        self.viewControllers = [homeCVC, trackerNavCon, historyNavCon]
     }
     
     // UITabBarControllerDelegate method

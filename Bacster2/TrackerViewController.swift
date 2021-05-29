@@ -28,7 +28,7 @@ class TrackerViewController: UITableViewController {
         tableView.register(AnswerCell.self, forCellReuseIdentifier: cellID)
         tableView.register(QuestionHeader.self, forHeaderFooterViewReuseIdentifier: headerID)
         
-        tableView.sectionHeaderHeight = 50
+        tableView.sectionHeaderHeight = 70
         tableView.tableFooterView = UIView()
     }
     
@@ -70,18 +70,16 @@ class TrackerViewController: UITableViewController {
         
         // Response for each question
         if questionID == "drinkClass" {
-            let data = ["Beer", "Wine", "Spirits", "Cocktail", "Custom"]
+            let data = ["Beer", "Wine", "Spirits", "Cocktail"]
             drink.drinkClass = data[index]
             
         } else if questionID == "beerStrength" {
             let data: [Double] = [0.027, 0.035, 0.048, 0.068, 0.085, 0.115]
             drink.beerStrength = data[index]
         } else if questionID == "beerContainer" {
-            // let data = ["Full Solo Cup", "Half Solo Cup", "Standard Can/Bottle (12oz)", "Double Can/Bottle (24oz)", "Pint", "Half Pint"]
             drink.beerContainer = question?.answers[index]
-            // drink.beerContainer = data[index]
         } else if questionID == "timeBeganConsumption" {
-            var timeBegan = Date()
+            var timeBegan = Date().addingTimeInterval(TimeInterval(-1 * 60.0))
             switch index {
             case 0: break
             case 1: timeBegan = timeBegan.addingTimeInterval(TimeInterval(-15.0 * 60.0))
@@ -93,7 +91,7 @@ class TrackerViewController: UITableViewController {
             }
             drink.timeBeganConsumption = Double(timeBegan.timeIntervalSince1970)
         } else if questionID == "hunger" {
-            let data: [Int64] = [6, 9, 12, 15]
+            let data: [Int64] = [15, 12, 9, 6]
             drink.halfLife = data[index]
         } else if questionID == "wineColor" {
             drink.wineColor = question?.answers[index]
@@ -121,6 +119,8 @@ class TrackerViewController: UITableViewController {
                 default: break
             }
             drink.cocktailMultiplier = multiplier
+        } else if questionID == "sipOrShotgun" {
+            drink.sipOrShotgun = question?.answers[index]
         }
         
         if nextQuestionID != "done" {
@@ -144,7 +144,7 @@ class ResultsController: UIViewController {
         
         drink.timeAdded = Double(Date().timeIntervalSince1970)
         drink.computeDerivedValues()
-        NSLog("time consumption \(String(describing: drink.timeBeganConsumption))")
+        NSLog("time consumption: \(String(describing: drink.timeBeganConsumption!))")
         navigationItem.title = "Done!"
         view.backgroundColor = UIColor.white
         navigationItem.setHidesBackButton(true, animated: true)
@@ -159,9 +159,12 @@ class ResultsController: UIViewController {
             
             rowID = drink.save(to: db!)
         } catch {
-            NSLog("Could not open connection: ")
+            NSLog("Could not open connection to save drink: ")
             rowID = -1
         }
+        
+        // Update stats
+        NotificationCenter.default.post(name: Notification.Name("updateDashboard"), object: nil)
         
         // Add success text
         view.addSubview(resultsLabel)
@@ -191,7 +194,7 @@ class ResultsController: UIViewController {
     
     func addAnotherDrinkButton(size: CGFloat) {
         let addAnotherButton = ResultsButton()
-        addAnotherButton.frame = CGRect(x: self.view.frame.size.width / 2 - ((size + 50 ) / 2), y: 175 + size, width: size + 50, height: 30)
+        addAnotherButton.frame = CGRect(x: self.view.frame.size.width / 2 - ((size + 50 ) / 2), y: self.view.frame.size.height - 250, width: size + 50, height: 30)
         addAnotherButton.setTitle("Add another drink", for: .normal)
         addAnotherButton.addTarget(self, action: #selector(addAnother(_:)), for: .touchUpInside)
         view.addSubview(addAnotherButton)
@@ -199,7 +202,7 @@ class ResultsController: UIViewController {
     
     func deleteButton(size: CGFloat, rowID: Int) {
         let deleteButton = ResultsButton()
-        deleteButton.frame = CGRect(x: self.view.frame.size.width / 2 - ((size + 50 ) / 2), y: 225 + size, width: size + 50, height: 30)
+        deleteButton.frame = CGRect(x: self.view.frame.size.width / 2 - ((size + 50 ) / 2), y: self.view.frame.size.height - 150, width: size + 50, height: 30)
         deleteButton.setTitle("Delete this drink", for: .normal)
         deleteButton.tag = rowID
         deleteButton.addTarget(self, action: #selector(deleteDrinkButton(_:)), for: .touchUpInside)
@@ -228,8 +231,11 @@ class ResultsController: UIViewController {
             do {
                 let db = try Connection("\(path)/db.sqlite3")
                 self.drink.delete(from: db)
+                
+                // Update stats
+                NotificationCenter.default.post(name: Notification.Name("updateDashboard"), object: nil)
             } catch let error {
-                NSLog("connection failed: \(error)")
+                NSLog("connection failed, could not delete drink: \(error)")
             }
             
             self.navigationController?.popToRootViewController(animated: true)
@@ -265,7 +271,8 @@ class QuestionHeader: UITableViewHeaderFooterView {
     
     let nameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 20)
+        label.textAlignment = .center
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -273,7 +280,8 @@ class QuestionHeader: UITableViewHeaderFooterView {
     
     func setupViews() {
         addSubview(nameLabel)
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-16-[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": nameLabel]))
+//        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-16-[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": nameLabel]))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": nameLabel]))
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": nameLabel]))
     }
     
@@ -296,15 +304,15 @@ class AnswerCell: UITableViewCell {
     
     let nameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     func setupViews() {
         addSubview(nameLabel)
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-16-[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": nameLabel]))
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-10-[v0]-10-|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": nameLabel]))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-18-[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": nameLabel]))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-14-[v0]-10-|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": nameLabel]))
     }
     
 }
