@@ -148,11 +148,11 @@ class HomeCVController: UICollectionViewController, UICollectionViewDelegateFlow
             cutoff_time = self.timeLastUpdated
         }
         
-        let timeBeganConsumption = Expression<Int64>("timeBeganConsumption")
+        let timeAdded = Expression<Int64>("timeAdded")
         
         do {
             let db = try Connection("\(path)/db.sqlite3")
-            let query = drinks.filter(timeBeganConsumption >= cutoff_time)   // WHERE timeAdded >= cutoff time
+            let query = drinks.filter(timeAdded >= cutoff_time)   // WHERE timeAdded >= cutoff time
             self.drinksConsumed = []
             for drink in try db.prepare(query) {
                 self.drinksConsumed.append(Drink().load(from: drink))
@@ -179,7 +179,6 @@ class HomeCVController: UICollectionViewController, UICollectionViewDelegateFlow
         let timeFullyAbsorbed = Expression<Double>("timeFullyAbsorbed")
         let drinkClass = Expression<String>("drinkClass")
         let volumeML = Expression<Int64>("volumeML")
-        let drinkUnits = Expression<String?>("drinkUnits")
         let fullLife = Expression<Int64>("fullLife")
         let halfLife = Expression<Int64>("halfLife")
         let beerStrength = Expression<Double?>("beerStrength")
@@ -203,7 +202,6 @@ class HomeCVController: UICollectionViewController, UICollectionViewDelegateFlow
                 t.column(timeFullyAbsorbed)
                 t.column(drinkClass)
                 t.column(volumeML)
-                t.column(drinkUnits)
                 t.column(fullLife)
                 t.column(halfLife)
                 t.column(beerStrength)

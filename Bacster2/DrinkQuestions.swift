@@ -18,7 +18,6 @@ class Drink {
     var timeFullyAbsorbed: Double!
     var drinkClass: String?
     var volumeML: Int64?
-    var drinkUnits: String?
     var fullLife: Int64?
     var halfLife: Int64?
     
@@ -39,29 +38,6 @@ class Drink {
     // Cocktail Specific Data
     var cocktailType: String?
     var cocktailMultiplier: Double?
-    
-//    private func setOptionalsToNil() {
-//        self.gramsAlcohol = self.gramsAlcohol ?? nil
-//        self.percentAlcohol = self.percentAlcohol ?? nil
-//        self.drinkUnits = self.drinkUnits ?? nil
-//
-//        // Beer Specific Data
-//        self.beerStrength = self.beerStrength ?? nil
-//        self.beerContainer = self.beerContainer ?? nil
-//
-//        // Wine Specific Data
-//        self.wineColor = self.wineColor ?? nil
-//        self.wineContainer = self.wineContainer ?? nil
-//
-//        // Spirit Specific Data
-//        self.spiritType = self.spiritType ?? nil
-//        self.spiritContainer = self.spiritContainer ?? nil
-//        self.cordialType = self.cordialType ?? nil
-//
-//        // Cocktail Specific Data
-//        self.cocktailType = self.cocktailType ?? nil
-//        self.cocktailMultiplier = self.cocktailMultiplier ?? nil
-//    }
     
     
     private func computeGramsAlcohol() {
@@ -280,7 +256,6 @@ class Drink {
         let timeFullyAbsorbed = Expression<Double>("timeFullyAbsorbed")
         let drinkClass = Expression<String>("drinkClass")
         let volumeML = Expression<Int64>("volumeML")
-        let drinkUnits = Expression<String?>("drinkUnits")
         let fullLife = Expression<Int64>("fullLife")
         let halfLife = Expression<Int64>("halfLife")
         let beerStrength = Expression<Double?>("beerStrength")
@@ -303,7 +278,6 @@ class Drink {
                     timeFullyAbsorbed <-        self.timeFullyAbsorbed!,
                     drinkClass <-               self.drinkClass!,
                     volumeML <-                 self.volumeML!,
-                    drinkUnits <-               self.drinkUnits,
                     fullLife <-                 self.fullLife!,
                     halfLife <-                 self.halfLife!,
                     beerStrength <-             self.beerStrength,
@@ -339,7 +313,6 @@ class Drink {
         let timeFullyAbsorbed = Expression<Double>("timeFullyAbsorbed")
         let drinkClass = Expression<String>("drinkClass")
         let volumeML = Expression<Int64>("volumeML")
-        let drinkUnits = Expression<String?>("drinkUnits")
         let fullLife = Expression<Int64>("fullLife")
         let halfLife = Expression<Int64>("halfLife")
         let beerStrength = Expression<Double?>("beerStrength")
@@ -360,7 +333,6 @@ class Drink {
         self.timeFullyAbsorbed = row[timeFullyAbsorbed]
         self.drinkClass = row[drinkClass]
         self.volumeML = row[volumeML]
-        self.drinkUnits = row[drinkUnits]
         self.fullLife = row[fullLife]
         self.halfLife = row[halfLife]
         self.beerStrength = row[beerStrength]
@@ -453,8 +425,8 @@ let questionsDict: [String:Question] = [
                  answers: ["Amaretto", "Baileys", "Jägermeister", "Kahlúa", "Schnapps", "Amarula", "Pavan", "Licor 43", "Strega"],
                  pushTo: [0: "spiritContainer"]),
     "cocktailType":
-        Question(questionString: "What are you drinking?", answers: ["Bloody Mary", "Jack & Coke", "Gin & Tonic", "Rum & Coke", "Manhattan", "Margarita", "Mimosa", "Mai Tai", "Mojito", "Daiquiri", "Piña Colada", "Martini", "Aviation", "Sidecar"], pushTo: [0: "cocktailSize"]),
-    "cocktailSize":
+        Question(questionString: "What are you drinking?", answers: ["Bloody Mary", "Jack & Coke", "Gin & Tonic", "Rum & Coke", "Manhattan", "Margarita", "Mimosa", "Mai Tai", "Mojito", "Daiquiri", "Piña Colada", "Martini", "Aviation", "Sidecar"], pushTo: [0: "cocktailMultiplier"]),
+    "cocktailMultiplier":
         Question(questionString: "How big is the cocktail?",
                  answers: ["About standard size", "A drink and a half", "Double", "Triple"],
                  pushTo: [0: "timeBeganConsumption"])
