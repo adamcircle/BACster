@@ -7,18 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1EA43CEC016857B9AA7BCC4E /* Pods_Bacster2Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F76BF657E712F4D98ACE9EA0 /* Pods_Bacster2Tests.framework */; };
+		031603F48B79323B574769C8 /* Pods_BACsterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323B2B6827573E37E0785BB /* Pods_BACsterTests.framework */; };
+		2EA9264E0A0D8B1A78C0AFE4 /* libPods-WatchBACster Extension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 48E87C772568AD031F546A30 /* libPods-WatchBACster Extension.a */; };
 		5A457F3E25D35D26001D4772 /* checkmark.json in Resources */ = {isa = PBXBuildFile; fileRef = 5A457F3D25D35D26001D4772 /* checkmark.json */; };
 		5A457F5325D73157001D4772 /* DrinkQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A457F5225D73157001D4772 /* DrinkQuestions.swift */; };
 		5A7731C325F3FE04009611E8 /* OnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7731C225F3FE04009611E8 /* OnboardingFlow.swift */; };
 		5A7731C825F456AA009611E8 /* champagne.json in Resources */ = {isa = PBXBuildFile; fileRef = 5A7731C725F456AA009611E8 /* champagne.json */; };
 		5A8D30F325E98D0200E70DBA /* WelcomeViewCon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8D30F225E98D0200E70DBA /* WelcomeViewCon.swift */; };
-		5A91CAAC25EC1AE500F79E9F /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A91CAAB25EC1AE500F79E9F /* HealthKit.framework */; };
 		5A91CAB125EC1CCE00F79E9F /* HealthKitSetupAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A91CAB025EC1CCE00F79E9F /* HealthKitSetupAssistant.swift */; };
 		5A9BA6022578279B00739E04 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9BA6012578279B00739E04 /* AppDelegate.swift */; };
-		5A9BA6042578279B00739E04 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9BA6032578279B00739E04 /* SceneDelegate.swift */; };
 		5A9BA6062578279B00739E04 /* TrackerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9BA6052578279B00739E04 /* TrackerViewController.swift */; };
-		5A9BA60C2578279B00739E04 /* Bacster2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5A9BA60A2578279B00739E04 /* Bacster2.xcdatamodeld */; };
 		5A9BA60E2578279D00739E04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A9BA60D2578279D00739E04 /* Assets.xcassets */; };
 		5A9BA6112578279D00739E04 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A9BA60F2578279D00739E04 /* LaunchScreen.storyboard */; };
 		5A9BA61C2578279E00739E04 /* Bacster2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9BA61B2578279E00739E04 /* Bacster2Tests.swift */; };
@@ -27,8 +25,17 @@
 		5A9BA6492578301A00739E04 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9BA6482578301A00739E04 /* HistoryViewController.swift */; };
 		5A9BA659257C88A500739E04 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9BA658257C88A500739E04 /* TabBarController.swift */; };
 		5A9BA65E257C8E4800739E04 /* UINavCon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9BA65D257C8E4800739E04 /* UINavCon.swift */; };
-		7A0415EA0DB7BF3F26F9CFC8 /* Pods_Bacster2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE2F4CA90C99893A6E8DBD8E /* Pods_Bacster2.framework */; };
-		976DDB8800441EDFC826CACA /* Pods_Bacster2_Bacster2UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A93CD629D4B62D218D01142 /* Pods_Bacster2_Bacster2UITests.framework */; };
+		5AD498A62665A13400A864C2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD498A52665A13400A864C2 /* SceneDelegate.swift */; };
+		5AD498B02665A4E400A864C2 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5AD498AE2665A4E400A864C2 /* Interface.storyboard */; };
+		5AD498B22665A4E600A864C2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5AD498B12665A4E600A864C2 /* Assets.xcassets */; };
+		5AD498B92665A4E700A864C2 /* WatchBACster Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 5AD498B82665A4E700A864C2 /* WatchBACster Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		5AD498C02665A4E700A864C2 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD498BF2665A4E700A864C2 /* ExtensionDelegate.swift */; };
+		5AD498C22665A4E700A864C2 /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD498C12665A4E700A864C2 /* ComplicationController.swift */; };
+		5AD498C42665A4E700A864C2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5AD498C32665A4E700A864C2 /* Assets.xcassets */; };
+		5AD498F9266A867E00A864C2 /* DrinkQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A457F5225D73157001D4772 /* DrinkQuestions.swift */; };
+		5AD4991F266D249F00A864C2 /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD498DC266A7EAF00A864C2 /* InterfaceController.swift */; };
+		658F1A990066055D231DC767 /* Pods_BACster.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B9BCA2FC44C89C51ABBA852 /* Pods_BACster.framework */; };
+		CEE0BD633FD6970DC5D04326 /* Pods_BACster_BACsterUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C233853D07FB761D337E7FD1 /* Pods_BACster_BACsterUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,45 +53,86 @@
 			remoteGlobalIDString = 5A9BA5FD2578279B00739E04;
 			remoteInfo = Bacster2;
 		};
+		5AD498BA2665A4E700A864C2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5A9BA5F62578279B00739E04 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5AD498B72665A4E700A864C2;
+			remoteInfo = "WatchBACster Extension";
+		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		5AD498CC2665A4E700A864C2 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				5AD498B92665A4E700A864C2 /* WatchBACster Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5AD498D02665A4E700A864C2 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		1A93CD629D4B62D218D01142 /* Pods_Bacster2_Bacster2UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bacster2_Bacster2UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		30C937761DF23C8B91F87F0F /* Pods-Bacster2Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bacster2Tests.release.xcconfig"; path = "Target Support Files/Pods-Bacster2Tests/Pods-Bacster2Tests.release.xcconfig"; sourceTree = "<group>"; };
+		48E87C772568AD031F546A30 /* libPods-WatchBACster Extension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WatchBACster Extension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B102B9480EF55B1876E9134 /* Pods-BACster.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BACster.release.xcconfig"; path = "Target Support Files/Pods-BACster/Pods-BACster.release.xcconfig"; sourceTree = "<group>"; };
+		5323B2B6827573E37E0785BB /* Pods_BACsterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BACsterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A30D3842583939C002E22F4 /* testing.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = testing.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		5A457F3D25D35D26001D4772 /* checkmark.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = checkmark.json; path = Assets.xcassets/checkmark.json; sourceTree = "<group>"; };
 		5A457F5225D73157001D4772 /* DrinkQuestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkQuestions.swift; sourceTree = "<group>"; };
 		5A7731C225F3FE04009611E8 /* OnboardingFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlow.swift; sourceTree = "<group>"; };
 		5A7731C725F456AA009611E8 /* champagne.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = champagne.json; sourceTree = "<group>"; };
+		5A7C4A21266D2C91003A4C0E /* BACsterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BACsterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5A7C4A22266D2C91003A4C0E /* BACsterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BACsterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A8D30F225E98D0200E70DBA /* WelcomeViewCon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewCon.swift; sourceTree = "<group>"; };
-		5A91CAAA25EC1AE500F79E9F /* Bacster2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bacster2.entitlements; sourceTree = "<group>"; };
-		5A91CAAB25EC1AE500F79E9F /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		5A91CAB025EC1CCE00F79E9F /* HealthKitSetupAssistant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitSetupAssistant.swift; sourceTree = "<group>"; };
-		5A9BA5FE2578279B00739E04 /* Bacster2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bacster2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A9BA6012578279B00739E04 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5A9BA6032578279B00739E04 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		5A9BA6052578279B00739E04 /* TrackerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerViewController.swift; sourceTree = "<group>"; };
-		5A9BA60B2578279B00739E04 /* Bacster2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bacster2.xcdatamodel; sourceTree = "<group>"; };
 		5A9BA60D2578279D00739E04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5A9BA6102578279D00739E04 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5A9BA6122578279D00739E04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5A9BA6172578279D00739E04 /* Bacster2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Bacster2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A9BA61B2578279E00739E04 /* Bacster2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bacster2Tests.swift; sourceTree = "<group>"; };
 		5A9BA61D2578279E00739E04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5A9BA6222578279E00739E04 /* Bacster2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Bacster2UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A9BA6262578279E00739E04 /* Bacster2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bacster2UITests.swift; sourceTree = "<group>"; };
 		5A9BA6282578279E00739E04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5A9BA6432578301200739E04 /* HomeCVController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCVController.swift; sourceTree = "<group>"; };
 		5A9BA6482578301A00739E04 /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		5A9BA658257C88A500739E04 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		5A9BA65D257C8E4800739E04 /* UINavCon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UINavCon.swift; sourceTree = "<group>"; };
-		5C2C3DBF382DAAC873A5140C /* Pods-Bacster2Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bacster2Tests.debug.xcconfig"; path = "Target Support Files/Pods-Bacster2Tests/Pods-Bacster2Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		6B9574C6FAA5771DA3845858 /* Pods-Bacster2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bacster2.release.xcconfig"; path = "Target Support Files/Pods-Bacster2/Pods-Bacster2.release.xcconfig"; sourceTree = "<group>"; };
-		7C14DED6EFDBF5A83A877C56 /* Pods-Bacster2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bacster2.debug.xcconfig"; path = "Target Support Files/Pods-Bacster2/Pods-Bacster2.debug.xcconfig"; sourceTree = "<group>"; };
-		E7EB60493FB25569D478C948 /* Pods-Bacster2-Bacster2UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bacster2-Bacster2UITests.debug.xcconfig"; path = "Target Support Files/Pods-Bacster2-Bacster2UITests/Pods-Bacster2-Bacster2UITests.debug.xcconfig"; sourceTree = "<group>"; };
-		EE2F4CA90C99893A6E8DBD8E /* Pods_Bacster2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bacster2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F26E22EFA9F35B014D943A2A /* Pods-Bacster2-Bacster2UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bacster2-Bacster2UITests.release.xcconfig"; path = "Target Support Files/Pods-Bacster2-Bacster2UITests/Pods-Bacster2-Bacster2UITests.release.xcconfig"; sourceTree = "<group>"; };
-		F76BF657E712F4D98ACE9EA0 /* Pods_Bacster2Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bacster2Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5AD4989626659F1000A864C2 /* BACster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BACster.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5AD498A52665A13400A864C2 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		5AD498AC2665A4E400A864C2 /* WatchBACster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchBACster.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5AD498AF2665A4E400A864C2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		5AD498B12665A4E600A864C2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5AD498B32665A4E600A864C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5AD498B82665A4E700A864C2 /* WatchBACster Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WatchBACster Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5AD498BF2665A4E700A864C2 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
+		5AD498C12665A4E700A864C2 /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
+		5AD498C32665A4E700A864C2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5AD498C52665A4E700A864C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5AD498DC266A7EAF00A864C2 /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
+		5F229398C9A853A1E84B2287 /* Pods-BACsterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BACsterTests.debug.xcconfig"; path = "Target Support Files/Pods-BACsterTests/Pods-BACsterTests.debug.xcconfig"; sourceTree = "<group>"; };
+		8B9BCA2FC44C89C51ABBA852 /* Pods_BACster.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BACster.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C233853D07FB761D337E7FD1 /* Pods_BACster_BACsterUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BACster_BACsterUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C38B7571EBF0983376A78B16 /* Pods-BACster-BACsterUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BACster-BACsterUITests.release.xcconfig"; path = "Target Support Files/Pods-BACster-BACsterUITests/Pods-BACster-BACsterUITests.release.xcconfig"; sourceTree = "<group>"; };
+		C4954D83FDD18C03942BF2D5 /* Pods-BACsterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BACsterTests.release.xcconfig"; path = "Target Support Files/Pods-BACsterTests/Pods-BACsterTests.release.xcconfig"; sourceTree = "<group>"; };
+		CB3B3C51F3E53434B2A852E8 /* Pods-WatchBACster Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WatchBACster Extension.release.xcconfig"; path = "Target Support Files/Pods-WatchBACster Extension/Pods-WatchBACster Extension.release.xcconfig"; sourceTree = "<group>"; };
+		D5D7B8AA13EE21AC382CD5CA /* Pods-WatchBACster Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WatchBACster Extension.debug.xcconfig"; path = "Target Support Files/Pods-WatchBACster Extension/Pods-WatchBACster Extension.debug.xcconfig"; sourceTree = "<group>"; };
+		DB17CB55367669F2199BA50D /* Pods-BACster-BACsterUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BACster-BACsterUITests.debug.xcconfig"; path = "Target Support Files/Pods-BACster-BACsterUITests/Pods-BACster-BACsterUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		F9029089421E7CEE4619C9EC /* Pods-BACster.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BACster.debug.xcconfig"; path = "Target Support Files/Pods-BACster/Pods-BACster.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,8 +140,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7A0415EA0DB7BF3F26F9CFC8 /* Pods_Bacster2.framework in Frameworks */,
-				5A91CAAC25EC1AE500F79E9F /* HealthKit.framework in Frameworks */,
+				658F1A990066055D231DC767 /* Pods_BACster.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,7 +148,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1EA43CEC016857B9AA7BCC4E /* Pods_Bacster2Tests.framework in Frameworks */,
+				031603F48B79323B574769C8 /* Pods_BACsterTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,42 +156,63 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				976DDB8800441EDFC826CACA /* Pods_Bacster2_Bacster2UITests.framework in Frameworks */,
+				CEE0BD633FD6970DC5D04326 /* Pods_BACster_BACsterUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5AD498B52665A4E700A864C2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2EA9264E0A0D8B1A78C0AFE4 /* libPods-WatchBACster Extension.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6BBD22C2403EEE641E6488B5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		45EA2423833B529395F51734 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8B9BCA2FC44C89C51ABBA852 /* Pods_BACster.framework */,
+				C233853D07FB761D337E7FD1 /* Pods_BACster_BACsterUITests.framework */,
+				5323B2B6827573E37E0785BB /* Pods_BACsterTests.framework */,
+				48E87C772568AD031F546A30 /* libPods-WatchBACster Extension.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		5A9BA5F52578279B00739E04 = {
 			isa = PBXGroup;
 			children = (
-				5A9BA6002578279B00739E04 /* Bacster2 */,
+				5A9BA6002578279B00739E04 /* BACster */,
 				5A9BA61A2578279D00739E04 /* Bacster2Tests */,
 				5A9BA6252578279E00739E04 /* Bacster2UITests */,
-				5A9BA5FF2578279B00739E04 /* Products */,
 				644691E1D0CAEB8903524538 /* Pods */,
-				DF6C979E0D17C37512CF83CA /* Frameworks */,
+				5AD4989626659F1000A864C2 /* BACster.app */,
+				5AD498AC2665A4E400A864C2 /* WatchBACster.app */,
+				5AD498AD2665A4E400A864C2 /* WatchBACster */,
+				5AD498B82665A4E700A864C2 /* WatchBACster Extension.appex */,
+				5AD498BC2665A4E700A864C2 /* WatchBACster Extension */,
+				45EA2423833B529395F51734 /* Frameworks */,
+				5A7C4A21266D2C91003A4C0E /* BACsterTests.xctest */,
+				5A7C4A22266D2C91003A4C0E /* BACsterUITests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
-		5A9BA5FF2578279B00739E04 /* Products */ = {
+		5A9BA6002578279B00739E04 /* BACster */ = {
 			isa = PBXGroup;
 			children = (
-				5A9BA5FE2578279B00739E04 /* Bacster2.app */,
-				5A9BA6172578279D00739E04 /* Bacster2Tests.xctest */,
-				5A9BA6222578279E00739E04 /* Bacster2UITests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		5A9BA6002578279B00739E04 /* Bacster2 */ = {
-			isa = PBXGroup;
-			children = (
-				5A91CAAA25EC1AE500F79E9F /* Bacster2.entitlements */,
+				5AD498A52665A13400A864C2 /* SceneDelegate.swift */,
 				5A91CAB025EC1CCE00F79E9F /* HealthKitSetupAssistant.swift */,
 				5A9BA6012578279B00739E04 /* AppDelegate.swift */,
-				5A9BA6032578279B00739E04 /* SceneDelegate.swift */,
 				5A9BA658257C88A500739E04 /* TabBarController.swift */,
 				5A9BA65D257C8E4800739E04 /* UINavCon.swift */,
 				5A9BA6052578279B00739E04 /* TrackerViewController.swift */,
@@ -158,10 +226,9 @@
 				5A457F3D25D35D26001D4772 /* checkmark.json */,
 				5A9BA60F2578279D00739E04 /* LaunchScreen.storyboard */,
 				5A9BA6122578279D00739E04 /* Info.plist */,
-				5A9BA60A2578279B00739E04 /* Bacster2.xcdatamodeld */,
 				5A30D3842583939C002E22F4 /* testing.playground */,
 			);
-			path = Bacster2;
+			path = BACster;
 			sourceTree = "<group>";
 		};
 		5A9BA61A2578279D00739E04 /* Bacster2Tests */ = {
@@ -170,7 +237,8 @@
 				5A9BA61B2578279E00739E04 /* Bacster2Tests.swift */,
 				5A9BA61D2578279E00739E04 /* Info.plist */,
 			);
-			path = Bacster2Tests;
+			name = Bacster2Tests;
+			path = BACsterTests;
 			sourceTree = "<group>";
 		};
 		5A9BA6252578279E00739E04 /* Bacster2UITests */ = {
@@ -179,58 +247,73 @@
 				5A9BA6262578279E00739E04 /* Bacster2UITests.swift */,
 				5A9BA6282578279E00739E04 /* Info.plist */,
 			);
-			path = Bacster2UITests;
+			name = Bacster2UITests;
+			path = BACsterUITests;
+			sourceTree = "<group>";
+		};
+		5AD498AD2665A4E400A864C2 /* WatchBACster */ = {
+			isa = PBXGroup;
+			children = (
+				5AD498AE2665A4E400A864C2 /* Interface.storyboard */,
+				5AD498B12665A4E600A864C2 /* Assets.xcassets */,
+				5AD498B32665A4E600A864C2 /* Info.plist */,
+				5AD498DC266A7EAF00A864C2 /* InterfaceController.swift */,
+			);
+			path = WatchBACster;
+			sourceTree = "<group>";
+		};
+		5AD498BC2665A4E700A864C2 /* WatchBACster Extension */ = {
+			isa = PBXGroup;
+			children = (
+				5AD498BF2665A4E700A864C2 /* ExtensionDelegate.swift */,
+				5AD498C12665A4E700A864C2 /* ComplicationController.swift */,
+				5AD498C32665A4E700A864C2 /* Assets.xcassets */,
+				5AD498C52665A4E700A864C2 /* Info.plist */,
+			);
+			path = "WatchBACster Extension";
 			sourceTree = "<group>";
 		};
 		644691E1D0CAEB8903524538 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				7C14DED6EFDBF5A83A877C56 /* Pods-Bacster2.debug.xcconfig */,
-				6B9574C6FAA5771DA3845858 /* Pods-Bacster2.release.xcconfig */,
-				E7EB60493FB25569D478C948 /* Pods-Bacster2-Bacster2UITests.debug.xcconfig */,
-				F26E22EFA9F35B014D943A2A /* Pods-Bacster2-Bacster2UITests.release.xcconfig */,
-				5C2C3DBF382DAAC873A5140C /* Pods-Bacster2Tests.debug.xcconfig */,
-				30C937761DF23C8B91F87F0F /* Pods-Bacster2Tests.release.xcconfig */,
+				F9029089421E7CEE4619C9EC /* Pods-BACster.debug.xcconfig */,
+				4B102B9480EF55B1876E9134 /* Pods-BACster.release.xcconfig */,
+				DB17CB55367669F2199BA50D /* Pods-BACster-BACsterUITests.debug.xcconfig */,
+				C38B7571EBF0983376A78B16 /* Pods-BACster-BACsterUITests.release.xcconfig */,
+				5F229398C9A853A1E84B2287 /* Pods-BACsterTests.debug.xcconfig */,
+				C4954D83FDD18C03942BF2D5 /* Pods-BACsterTests.release.xcconfig */,
+				D5D7B8AA13EE21AC382CD5CA /* Pods-WatchBACster Extension.debug.xcconfig */,
+				CB3B3C51F3E53434B2A852E8 /* Pods-WatchBACster Extension.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		DF6C979E0D17C37512CF83CA /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				5A91CAAB25EC1AE500F79E9F /* HealthKit.framework */,
-				EE2F4CA90C99893A6E8DBD8E /* Pods_Bacster2.framework */,
-				1A93CD629D4B62D218D01142 /* Pods_Bacster2_Bacster2UITests.framework */,
-				F76BF657E712F4D98ACE9EA0 /* Pods_Bacster2Tests.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5A9BA5FD2578279B00739E04 /* Bacster2 */ = {
+		5A9BA5FD2578279B00739E04 /* BACster */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5A9BA62B2578279E00739E04 /* Build configuration list for PBXNativeTarget "Bacster2" */;
+			buildConfigurationList = 5A9BA62B2578279E00739E04 /* Build configuration list for PBXNativeTarget "BACster" */;
 			buildPhases = (
 				90AC55E9C1838265CFFF733E /* [CP] Check Pods Manifest.lock */,
 				5A9BA5FA2578279B00739E04 /* Sources */,
 				5A9BA5FB2578279B00739E04 /* Frameworks */,
 				5A9BA5FC2578279B00739E04 /* Resources */,
 				21141C501309DC5F0544C5BC /* [CP] Embed Pods Frameworks */,
+				5AD498D02665A4E700A864C2 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = Bacster2;
+			name = BACster;
 			productName = Bacster2;
-			productReference = 5A9BA5FE2578279B00739E04 /* Bacster2.app */;
+			productReference = 5AD4989626659F1000A864C2 /* BACster.app */;
 			productType = "com.apple.product-type.application";
 		};
-		5A9BA6162578279D00739E04 /* Bacster2Tests */ = {
+		5A9BA6162578279D00739E04 /* BACsterTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5A9BA62E2578279E00739E04 /* Build configuration list for PBXNativeTarget "Bacster2Tests" */;
+			buildConfigurationList = 5A9BA62E2578279E00739E04 /* Build configuration list for PBXNativeTarget "BACsterTests" */;
 			buildPhases = (
 				6C18FD7F6D66E889408134E4 /* [CP] Check Pods Manifest.lock */,
 				5A9BA6132578279D00739E04 /* Sources */,
@@ -242,14 +325,14 @@
 			dependencies = (
 				5A9BA6192578279D00739E04 /* PBXTargetDependency */,
 			);
-			name = Bacster2Tests;
+			name = BACsterTests;
 			productName = Bacster2Tests;
-			productReference = 5A9BA6172578279D00739E04 /* Bacster2Tests.xctest */;
+			productReference = 5A7C4A21266D2C91003A4C0E /* BACsterTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		5A9BA6212578279E00739E04 /* Bacster2UITests */ = {
+		5A9BA6212578279E00739E04 /* BACsterUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5A9BA6312578279E00739E04 /* Build configuration list for PBXNativeTarget "Bacster2UITests" */;
+			buildConfigurationList = 5A9BA6312578279E00739E04 /* Build configuration list for PBXNativeTarget "BACsterUITests" */;
 			buildPhases = (
 				09968DA959F576180DD001B1 /* [CP] Check Pods Manifest.lock */,
 				5A9BA61E2578279E00739E04 /* Sources */,
@@ -262,10 +345,46 @@
 			dependencies = (
 				5A9BA6242578279E00739E04 /* PBXTargetDependency */,
 			);
-			name = Bacster2UITests;
+			name = BACsterUITests;
 			productName = Bacster2UITests;
-			productReference = 5A9BA6222578279E00739E04 /* Bacster2UITests.xctest */;
+			productReference = 5A7C4A22266D2C91003A4C0E /* BACsterUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		5AD498AB2665A4E400A864C2 /* WatchBACster */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5AD498CD2665A4E700A864C2 /* Build configuration list for PBXNativeTarget "WatchBACster" */;
+			buildPhases = (
+				5AD498AA2665A4E400A864C2 /* Resources */,
+				5AD498CC2665A4E700A864C2 /* Embed App Extensions */,
+				6BBD22C2403EEE641E6488B5 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5AD498BB2665A4E700A864C2 /* PBXTargetDependency */,
+			);
+			name = WatchBACster;
+			productName = WatchBACster;
+			productReference = 5AD498AC2665A4E400A864C2 /* WatchBACster.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		5AD498B72665A4E700A864C2 /* WatchBACster Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5AD498C92665A4E700A864C2 /* Build configuration list for PBXNativeTarget "WatchBACster Extension" */;
+			buildPhases = (
+				DF5B4935288E4C5514F158DF /* [CP] Check Pods Manifest.lock */,
+				5AD498B42665A4E700A864C2 /* Sources */,
+				5AD498B52665A4E700A864C2 /* Frameworks */,
+				5AD498B62665A4E700A864C2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "WatchBACster Extension";
+			productName = "WatchBACster Extension";
+			productReference = 5AD498B82665A4E700A864C2 /* WatchBACster Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -287,9 +406,15 @@
 						CreatedOnToolsVersion = 12.1;
 						TestTargetID = 5A9BA5FD2578279B00739E04;
 					};
+					5AD498AB2665A4E400A864C2 = {
+						CreatedOnToolsVersion = 12.1;
+					};
+					5AD498B72665A4E700A864C2 = {
+						CreatedOnToolsVersion = 12.1;
+					};
 				};
 			};
-			buildConfigurationList = 5A9BA5F92578279B00739E04 /* Build configuration list for PBXProject "Bacster2" */;
+			buildConfigurationList = 5A9BA5F92578279B00739E04 /* Build configuration list for PBXProject "BACster" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -298,13 +423,15 @@
 				Base,
 			);
 			mainGroup = 5A9BA5F52578279B00739E04;
-			productRefGroup = 5A9BA5FF2578279B00739E04 /* Products */;
+			productRefGroup = 5A9BA5F52578279B00739E04;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5A9BA5FD2578279B00739E04 /* Bacster2 */,
-				5A9BA6162578279D00739E04 /* Bacster2Tests */,
-				5A9BA6212578279E00739E04 /* Bacster2UITests */,
+				5A9BA5FD2578279B00739E04 /* BACster */,
+				5A9BA6162578279D00739E04 /* BACsterTests */,
+				5A9BA6212578279E00739E04 /* BACsterUITests */,
+				5AD498AB2665A4E400A864C2 /* WatchBACster */,
+				5AD498B72665A4E700A864C2 /* WatchBACster Extension */,
 			);
 		};
 /* End PBXProject section */
@@ -335,6 +462,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5AD498AA2665A4E400A864C2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5AD498B22665A4E600A864C2 /* Assets.xcassets in Resources */,
+				5AD498B02665A4E400A864C2 /* Interface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5AD498B62665A4E700A864C2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5AD498C42665A4E700A864C2 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -353,7 +497,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Bacster2-Bacster2UITests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-BACster-BACsterUITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -366,15 +510,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Bacster2/Pods-Bacster2-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-BACster/Pods-BACster-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Bacster2/Pods-Bacster2-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-BACster/Pods-BACster-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Bacster2/Pods-Bacster2-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BACster/Pods-BACster-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6C18FD7F6D66E889408134E4 /* [CP] Check Pods Manifest.lock */ = {
@@ -392,7 +536,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Bacster2Tests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-BACsterTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -414,7 +558,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Bacster2-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-BACster-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -427,15 +571,37 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Bacster2-Bacster2UITests/Pods-Bacster2-Bacster2UITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-BACster-BACsterUITests/Pods-BACster-BACsterUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Bacster2-Bacster2UITests/Pods-Bacster2-Bacster2UITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-BACster-BACsterUITests/Pods-BACster-BACsterUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Bacster2-Bacster2UITests/Pods-Bacster2-Bacster2UITests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BACster-BACsterUITests/Pods-BACster-BACsterUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DF5B4935288E4C5514F158DF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-WatchBACster Extension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -455,8 +621,7 @@
 				5A91CAB125EC1CCE00F79E9F /* HealthKitSetupAssistant.swift in Sources */,
 				5A9BA659257C88A500739E04 /* TabBarController.swift in Sources */,
 				5A457F5325D73157001D4772 /* DrinkQuestions.swift in Sources */,
-				5A9BA6042578279B00739E04 /* SceneDelegate.swift in Sources */,
-				5A9BA60C2578279B00739E04 /* Bacster2.xcdatamodeld in Sources */,
+				5AD498A62665A13400A864C2 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,18 +641,34 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5AD498B42665A4E700A864C2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5AD498C02665A4E700A864C2 /* ExtensionDelegate.swift in Sources */,
+				5AD4991F266D249F00A864C2 /* InterfaceController.swift in Sources */,
+				5AD498F9266A867E00A864C2 /* DrinkQuestions.swift in Sources */,
+				5AD498C22665A4E700A864C2 /* ComplicationController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
 		5A9BA6192578279D00739E04 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 5A9BA5FD2578279B00739E04 /* Bacster2 */;
+			target = 5A9BA5FD2578279B00739E04 /* BACster */;
 			targetProxy = 5A9BA6182578279D00739E04 /* PBXContainerItemProxy */;
 		};
 		5A9BA6242578279E00739E04 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 5A9BA5FD2578279B00739E04 /* Bacster2 */;
+			target = 5A9BA5FD2578279B00739E04 /* BACster */;
 			targetProxy = 5A9BA6232578279E00739E04 /* PBXContainerItemProxy */;
+		};
+		5AD498BB2665A4E700A864C2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5AD498B72665A4E700A864C2 /* WatchBACster Extension */;
+			targetProxy = 5AD498BA2665A4E700A864C2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -498,6 +679,14 @@
 				5A9BA6102578279D00739E04 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		5AD498AE2665A4E400A864C2 /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5AD498AF2665A4E400A864C2 /* Base */,
+			);
+			name = Interface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -621,19 +810,19 @@
 		};
 		5A9BA62C2578279E00739E04 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7C14DED6EFDBF5A83A877C56 /* Pods-Bacster2.debug.xcconfig */;
+			baseConfigurationReference = F9029089421E7CEE4619C9EC /* Pods-BACster.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Bacster2/Bacster2.entitlements;
+				CODE_SIGN_ENTITLEMENTS = BACster/BACster.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				EXCLUDED_SOURCE_FILE_NAMES = Main.swift;
-				INFOPLIST_FILE = Bacster2/Info.plist;
+				INFOPLIST_FILE = BACster/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "Adam-Circle.Bacster2";
+				PRODUCT_BUNDLE_IDENTIFIER = "Adam-Circle.BACster";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -642,19 +831,19 @@
 		};
 		5A9BA62D2578279E00739E04 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6B9574C6FAA5771DA3845858 /* Pods-Bacster2.release.xcconfig */;
+			baseConfigurationReference = 4B102B9480EF55B1876E9134 /* Pods-BACster.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Bacster2/Bacster2.entitlements;
+				CODE_SIGN_ENTITLEMENTS = BACster/BACster.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				EXCLUDED_SOURCE_FILE_NAMES = Main.swift;
-				INFOPLIST_FILE = Bacster2/Info.plist;
+				INFOPLIST_FILE = BACster/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "Adam-Circle.Bacster2";
+				PRODUCT_BUNDLE_IDENTIFIER = "Adam-Circle.BACster";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -663,7 +852,7 @@
 		};
 		5A9BA62F2578279E00739E04 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5C2C3DBF382DAAC873A5140C /* Pods-Bacster2Tests.debug.xcconfig */;
+			baseConfigurationReference = 5F229398C9A853A1E84B2287 /* Pods-BACsterTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -679,13 +868,13 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bacster2.app/Bacster2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BACster.app/BACster";
 			};
 			name = Debug;
 		};
 		5A9BA6302578279E00739E04 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 30C937761DF23C8B91F87F0F /* Pods-Bacster2Tests.release.xcconfig */;
+			baseConfigurationReference = C4954D83FDD18C03942BF2D5 /* Pods-BACsterTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -701,13 +890,13 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bacster2.app/Bacster2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BACster.app/BACster";
 			};
 			name = Release;
 		};
 		5A9BA6322578279E00739E04 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E7EB60493FB25569D478C948 /* Pods-Bacster2-Bacster2UITests.debug.xcconfig */;
+			baseConfigurationReference = DB17CB55367669F2199BA50D /* Pods-BACster-BACsterUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -727,7 +916,7 @@
 		};
 		5A9BA6332578279E00739E04 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F26E22EFA9F35B014D943A2A /* Pods-Bacster2-Bacster2UITests.release.xcconfig */;
+			baseConfigurationReference = C38B7571EBF0983376A78B16 /* Pods-BACster-BACsterUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -745,10 +934,92 @@
 			};
 			name = Release;
 		};
+		5AD498CA2665A4E700A864C2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D5D7B8AA13EE21AC382CD5CA /* Pods-WatchBACster Extension.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "WatchBACster Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "Adam-Circle.BACster.watchkitapp.watchkitextension";
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 7.0;
+			};
+			name = Debug;
+		};
+		5AD498CB2665A4E700A864C2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CB3B3C51F3E53434B2A852E8 /* Pods-WatchBACster Extension.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "WatchBACster Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "Adam-Circle.BACster.watchkitapp.watchkitextension";
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 7.0;
+			};
+			name = Release;
+		};
+		5AD498CE2665A4E700A864C2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				IBSC_MODULE = WatchBACster_Extension;
+				INFOPLIST_FILE = WatchBACster/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = "Adam-Circle.BACster.watchkitapp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 7.0;
+			};
+			name = Debug;
+		};
+		5AD498CF2665A4E700A864C2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				IBSC_MODULE = WatchBACster_Extension;
+				INFOPLIST_FILE = WatchBACster/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = "Adam-Circle.BACster.watchkitapp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 7.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5A9BA5F92578279B00739E04 /* Build configuration list for PBXProject "Bacster2" */ = {
+		5A9BA5F92578279B00739E04 /* Build configuration list for PBXProject "BACster" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5A9BA6292578279E00739E04 /* Debug */,
@@ -757,7 +1028,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5A9BA62B2578279E00739E04 /* Build configuration list for PBXNativeTarget "Bacster2" */ = {
+		5A9BA62B2578279E00739E04 /* Build configuration list for PBXNativeTarget "BACster" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5A9BA62C2578279E00739E04 /* Debug */,
@@ -766,7 +1037,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5A9BA62E2578279E00739E04 /* Build configuration list for PBXNativeTarget "Bacster2Tests" */ = {
+		5A9BA62E2578279E00739E04 /* Build configuration list for PBXNativeTarget "BACsterTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5A9BA62F2578279E00739E04 /* Debug */,
@@ -775,7 +1046,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5A9BA6312578279E00739E04 /* Build configuration list for PBXNativeTarget "Bacster2UITests" */ = {
+		5A9BA6312578279E00739E04 /* Build configuration list for PBXNativeTarget "BACsterUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5A9BA6322578279E00739E04 /* Debug */,
@@ -784,20 +1055,25 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-/* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		5A9BA60A2578279B00739E04 /* Bacster2.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				5A9BA60B2578279B00739E04 /* Bacster2.xcdatamodel */,
+		5AD498C92665A4E700A864C2 /* Build configuration list for PBXNativeTarget "WatchBACster Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5AD498CA2665A4E700A864C2 /* Debug */,
+				5AD498CB2665A4E700A864C2 /* Release */,
 			);
-			currentVersion = 5A9BA60B2578279B00739E04 /* Bacster2.xcdatamodel */;
-			path = Bacster2.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
-/* End XCVersionGroup section */
+		5AD498CD2665A4E700A864C2 /* Build configuration list for PBXNativeTarget "WatchBACster" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5AD498CE2665A4E700A864C2 /* Debug */,
+				5AD498CF2665A4E700A864C2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
 	};
 	rootObject = 5A9BA5F62578279B00739E04 /* Project object */;
 }
