@@ -20,7 +20,7 @@ class HistoryTVController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        view.backgroundColor = .systemGreen
+        view.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
         self.getDrinksConsumed()
         self.background()
         
@@ -94,13 +94,6 @@ class HistoryTVController: UITableViewController {
         page.drink = drink
         navigationController?.pushViewController(page, animated: true)
     }
-    
-//    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerID) as! HistoryHeader
-//        
-//        header.nameLabel.text = "History"
-//        return header
-//    }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return drinksConsumed.count
@@ -199,7 +192,6 @@ class DrinkDataPage: UICollectionViewController, UICollectionViewDelegateFlowLay
         collectionView.setCollectionViewLayout(layout, animated: true)
         
         collectionView.isScrollEnabled = true
-        // collectionView.isScrollEnabled = collectionView.collectionViewLayout.collectionViewContentSize.height > collectionView.frame.size.height - (self.tabBarController?.tabBar.frame.size.height)!
         collectionView.bounces = false
         collectionView.contentInsetAdjustmentBehavior = .scrollableAxes
         collectionView.insetsLayoutMarginsFromSafeArea = true
@@ -530,10 +522,6 @@ class DrinkEntry: UITableViewCell {
             
         NSLayoutConstraint.activate(constraints)
         
-//        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-18-[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": nameLabel]))
-//        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-2-[v0]-10-|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": nameLabel]))
-//        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-18-[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": descriptionLabel]))
-//        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-18-[v0]-4-|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": descriptionLabel]))
     }
 }
 
@@ -554,7 +542,6 @@ class HistoryHeader: UITableViewHeaderFooterView {
     
     func setupViews() {
         addSubview(nameLabel)
-//        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-16-[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": nameLabel]))
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": nameLabel]))
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": nameLabel]))
     }

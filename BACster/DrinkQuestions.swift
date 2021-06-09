@@ -238,12 +238,10 @@ class Drink {
     
     func computeDerivedValues() {
         computeGramsAlcohol()
-        // computeConsumptionDuration()
         computeFullLife()
         self.timeBeganConsumption = truncateSeconds(fromDate: self.timeBeganConsumption!)
         self.timeAdded = truncateSeconds(fromDate: self.timeAdded!)
         getTimeFullyAbsorbed()
-        // setOptionalsToNil()
     }
     
     func save(to db: Connection) -> Int64 {

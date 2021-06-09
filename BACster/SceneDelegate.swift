@@ -17,12 +17,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let winScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: winScene)
-        //Core.shared.setIsNewUser()
         
         let tabBarCon = TabBarController()
         window?.rootViewController = tabBarCon
         window?.makeKeyAndVisible()
-        if Core.shared.isNewUser() {
+        if Core.shared.isNewUser() {  // start onboarding if new user
             let welcomeViewCon = UINavigationController.init(rootViewController: OBPage0())
             welcomeViewCon.modalPresentationStyle = .fullScreen
             tabBarCon.present(welcomeViewCon, animated: false, completion: nil)

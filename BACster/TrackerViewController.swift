@@ -22,9 +22,10 @@ class TrackerViewController: UITableViewController {
         // Do any additional setup after loading the view.
         
         navigationItem.title = "Tracker"
-        view.backgroundColor = .systemRed
+        view.backgroundColor = #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1)
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
         
+        // register cells
         tableView.register(AnswerCell.self, forCellReuseIdentifier: cellID)
         tableView.register(QuestionHeader.self, forHeaderFooterViewReuseIdentifier: headerID)
         
@@ -109,7 +110,7 @@ class TrackerViewController: UITableViewController {
             drink.cordialType = question?.answers[index]
         } else if questionID == "cocktailType" {
             drink.cocktailType = question?.answers[index]
-        } else if questionID == "cocktailMultiplier" {
+        } else if questionID == "cocktailMultiplier" { // hunger level
             var multiplier: Double = 1.0
             switch index {
                 case 0: break
@@ -183,7 +184,7 @@ class ResultsController: UIViewController {
     }
     
     func successAnimation(size: CGFloat) {
-        animationView!.frame = CGRect(x: self.view.frame.size.width / 2 - size / 2, y: 200, width: size, height: size)
+        animationView!.frame = CGRect(x: self.view.frame.size.width / 2 - size / 2, y: self.view.frame.size.height - 450, width: size, height: size)
         animationView!.contentMode = .scaleAspectFit
         animationView!.loopMode = .playOnce
         animationView!.animationSpeed = 0.8

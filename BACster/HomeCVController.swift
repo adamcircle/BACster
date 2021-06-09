@@ -33,10 +33,12 @@ class HomeCVController: UICollectionViewController, UICollectionViewDelegateFlow
             self.profile = UserHealthProfile().load()
         }
         
+        // watch for new drinks
         NotificationCenter.default.addObserver(self, selector: #selector(update), name: Notification.Name("updateDashboard"), object: nil)
         
         collectionView?.register(InfoCell.self, forCellWithReuseIdentifier: ident)
         
+        // create the layout
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical //.horizontal
         layout.minimumLineSpacing = 10
@@ -44,6 +46,7 @@ class HomeCVController: UICollectionViewController, UICollectionViewDelegateFlow
         layout.sectionInsetReference = .fromSafeArea
         collectionView.setCollectionViewLayout(layout, animated: true)
         
+        // prevent/enable scroll
         collectionView.isScrollEnabled = collectionView.collectionViewLayout.collectionViewContentSize.height > collectionView.frame.size.height - (self.tabBarController?.tabBar.frame.size.height)!
         collectionView.bounces = false
         collectionView.contentInsetAdjustmentBehavior = .scrollableAxes
@@ -67,8 +70,6 @@ class HomeCVController: UICollectionViewController, UICollectionViewDelegateFlow
             let widthPerItem = collectionView.frame.width / 2 - lay.minimumInteritemSpacing * 2 - 20
             
             return CGSize(width: widthPerItem, height: widthPerItem - 0.09 * UIScreen.main.bounds.width)
-            
-            //return CGSize(width: (self.view.frame.width / 2) - 20, height: 140)
         }
         return CGSize(width: self.view.frame.width - 100, height: self.view.frame.height / 3 - 0.05 * UIScreen.main.bounds.width)
     }
@@ -320,11 +321,6 @@ class RoundedUILabel: UILabel {
         textToDraw.draw(in: targetRect)
     }
     
-//    override func drawText(in rect: CGRect) {
-//        var targetRect = textRect(forBounds: rect, limitedToNumberOfLines: numberOfLines)
-//        targetRect.origin.y = rect.size.height - targetRect.size.height / 2
-//        super.drawText(in: targetRect)
-//    }
 }
 
 
@@ -401,6 +397,8 @@ class BACStats {
     }
     
     func calculatePeakBAC() -> (peakBac: Double, atTime: String) {
+        // iterates one minute at a time until there is a decline in BAC
+        
         var current_time = truncateSeconds(fromDate: Date())
         var currentBAC = calculateCurrentBAC()
         var oneMinuteLater: Date = current_time.addingTimeInterval(60.0)
@@ -432,10 +430,8 @@ class BACStats {
         var minutes: Int = (Calendar.current.dateComponents([.minute], from: Date(timeIntervalSince1970: drinksConsumed[0].timeBeganConsumption!), to: time)).minute!
         var bac: Double = 0
         while minutes >= 0 {
-            bac += increaseBACEveryMinute(untilTime: time, minute: minutes)
-            //NSLog("Bac after increase: \(bac)")
-            bac -= reduceBACEveryMinute(bac: bac)
-            //NSLog("Bac after decrease: \(bac), \(minutes)")
+            bac += increaseBACEveryMinute(untilTime: time, minute: minutes) // increase due to absorbtion
+            bac -= reduceBACEveryMinute(bac: bac)  // decrease due to liver
             minutes -= 1;
         }
         return bac
@@ -487,6 +483,8 @@ class BACStats {
     }
     
     func getZeroTime() -> String {
+        // get the time when all the alcohol is flushed from the blood
+        
         if drinksConsumed.count == 0 || calculateCurrentBAC() == 0.0 {
             return "You're sober!"
         }
@@ -508,25 +506,9 @@ class BACStats {
         return Date().addingTimeInterval(time - now.timeIntervalSince1970).getElapsedInterval()
     }
     
-//    func getTimeToZero() -> String {
-//        if drinksConsumed.count == 0 || calculateCurrentBAC() == 0.0 {
-//            return "You're sober!"
-//        }
-//
-//        let now = drinksConsumed.last!.timeBeganConsumption + 60
-//        var prevBAC = calculateBAC(at: Date(timeIntervalSince1970: now))
-//        var currBAC = calculateBAC(at: Date(timeIntervalSince1970: now + 60))
-//        var minutes = 1
-//        while prevBAC - currBAC > 25e-5 {
-//            prevBAC = currBAC
-//            currBAC = calculateBAC(at: Date(timeIntervalSince1970: now + 60.0 * Double(minutes)))
-//            minutes += 1
-//        }
-//        let total_mins = (currBAC / 25e-5) + Double(minutes)
-//        return Date().addingTimeInterval(total_mins * 60.0).getElapsedInterval()
-//    }
-    
     func getTimeMaxAbsorbed() -> Double {
+        // time at peakBAC
+        
         var timeFullyAbsorbed = 0.0
         for drink in self.drinksConsumed {
             timeFullyAbsorbed = max(timeFullyAbsorbed, drink.timeFullyAbsorbed!)
@@ -551,21 +533,4 @@ class BACStats {
   
         return timeOfLastDrink.getElapsedInterval()
     }
-    
-    func calculateWeightKilograms(weightInLbs: Double) -> Double {
-        return weightInLbs / 2.205
-    }
-
-    func calculateHeightMeters(heightInInches: Double) -> Double {
-        return heightInInches / 39.37
-    }
-
-    func calculateWeightLbs(weightInKgs: Double) -> Double {
-        return weightInKgs * 2.205
-    }
-
-    func calculateHeightInches(heightInMeters: Double) -> Double {
-        return heightInMeters * 39.37
-    }
-    
 }

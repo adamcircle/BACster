@@ -65,7 +65,6 @@ class OBPage1: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
         view.addSubview(titleLabel)
         
         sexPicker = UIPickerView(frame: CGRect(x: 100, y: self.view.frame.size.height / 4 + 80, width: view.frame.size.width - 200, height: 200))
-        //sexPicker.translatesAutoresizingMaskIntoConstraints = false
         sexPicker.delegate = self as UIPickerViewDelegate
         sexPicker.dataSource = self as UIPickerViewDataSource
         view.addSubview(sexPicker)
@@ -271,7 +270,6 @@ class OBPage4: UIViewController, UITextFieldDelegate {
         if weightField.hasText && Int(weightField.text!)! > 20 {
             let nextVC = OBPage5()
             profile.weightInKilograms = Double(weightField.text!)! * 0.453592
-            //NSLog(String(profile.weightInKilograms!))
             nextVC.profile = profile
             navigationController?.pushViewController(nextVC, animated: true)
         }
@@ -316,17 +314,11 @@ class OBPage5: UIViewController {
     }
     
     @objc func didTapButton(_ button: UIButton) {
-        //self.authorizeHealthkit()
-        //let tabBarCon = TabBarController()
-        //self.view.window?.rootViewController = tabBarCon
         let homeVC = UIApplication.shared.windows[0].rootViewController?.children[0] as? HomeCVController
         homeVC?.profile = profile
         profile.save()
         Core.shared.setIsNotNewUser()
         self.dismiss(animated: true, completion: nil)
-        //self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
-        //self.navigationController?.popToRootViewController(animated: true)
-        //self.window?.rootViewController = tabBarCon
     }
 }
 
@@ -505,133 +497,6 @@ class UserHealthProfile {
         }
     }
 }
-
-
-/*
-class CoreDataManager {
-    static let shared = CoreDataManager()
-    private init() {}
-    private lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "UserHealthProfile")
-        container.loadPersistentStores(completionHandler: { _, error in
-            _ = error.map { fatalError("Unresolved error \($0)") }
-        })
-        return container
-    }()
-    
-    var mainContext: NSManagedObjectContext {
-        return persistentContainer.viewContext
-    }
-    
-    func backgroundContext() -> NSManagedObjectContext {
-        return persistentContainer.newBackgroundContext()
-    }
-} */
-
-/*
-class ProfileDataStore {
-    private enum ProfileSection: Int {
-        case ageSex
-        case weightHeight
-        case readHealthKitData
-        case saveBAC
-    }
-    
-    private let userHealthProfile = UserHealthProfile()
-    
-    private func loadAndDisplayAgeSexAndBloodType() {
-        do {
-            let userAgeAndSex = try ProfileDataStore.getAgeAndSex()
-            userHealthProfile.age = userAgeAndSex.age
-            userHealthProfile.sex = userAgeAndSex.sex
-        } catch let error {
-            //self.displayAlert(for: error)
-        }
-    }
-    
-    
-    
-    class func getAgeAndSex() throws -> (age: Int, sex: Bool?) {
-        
-        let healthKitStore = HKHealthStore()
-
-        do {
-
-            //1. This method throws an error if these data are not available.
-            let birthdayComponents =  try healthKitStore.dateOfBirthComponents()
-            let biologicalSex =       try healthKitStore.biologicalSex()
-              
-            //2. Use Calendar to calculate age.
-            let today = Date()
-            let calendar = Calendar.current
-            let todayDateComponents = calendar.dateComponents([.year],
-                                                                from: today)
-            let thisYear = todayDateComponents.year!
-            let age = thisYear - birthdayComponents.year!
-             
-            //3. Unwrap the wrappers to get the underlying enum values.
-            let sex: Bool?
-            if biologicalSex.biologicalSex.rawValue == 2 {
-                sex = true
-            } else if biologicalSex.biologicalSex.rawValue == 0 {
-                sex = nil
-            } else {
-                sex = false
-            }
-      
-            return (age, sex)
-        }
-    }
-    
-    class func getMostRecentSample(for sampleType: HKSampleType,
-                                   completion: @escaping (HKQuantitySample?, Error?) -> Swift.Void) {
-      
-        //1. Use HKQuery to load the most recent samples.
-        let mostRecentPredicate = HKQuery.predicateForSamples(withStart: Date.distantPast,
-                                                              end: Date(),
-                                                              options: .strictEndDate)
-            
-        let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate,
-                                              ascending: false)
-            
-        let limit = 1
-            
-        let sampleQuery = HKSampleQuery(sampleType: sampleType,
-                                        predicate: mostRecentPredicate,
-                                        limit: limit,
-                                        sortDescriptors: [sortDescriptor]) { (query, samples, error) in
-            
-            //2. Always dispatch to the main thread when complete.
-            DispatchQueue.main.async {
-                
-                guard let samples = samples,
-                      let mostRecentSample = samples.first as? HKQuantitySample else {
-                        
-                    completion(nil, error)
-                    return
-                }
-                
-                completion(mostRecentSample, nil)
-                
-            }
-        }
-         
-        HKHealthStore().execute(sampleQuery)
-    }
-    
-    private enum ProfileDataError: Error {
-      
-        case missingWidmarkFactor
-
-        var localizedDescription: String {
-            switch self {
-                case .missingWidmarkFactor:
-                    return "Unable to calculate Widmark Factor with available profile data."
-            }
-        }
-    }
-}
-*/
 
 extension UIView {
 
