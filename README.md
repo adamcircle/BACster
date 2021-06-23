@@ -1,3 +1,5 @@
+![icon_image](https://github.com/adamcircle/BACster/blob/main/BACster/Assets.xcassets/AppIcon.appiconset/180.png)
+
 # BACster: Track your drinking and calculate your BAC
 
 ## Unfortunately, BACster was rejected by Apple because software BAC calculators are banned 😓. So, I'm open sourcing the code. Hopefully someone will find this helpful! 
